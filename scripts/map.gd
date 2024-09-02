@@ -8,6 +8,7 @@ class_name Map extends Node2D
 
 # Data
 var entities: Array[Entity];
+var environment_entities: Array[EnvironmentEntity];
 var selected_entity: Entity;
 
 # The entity currently controlled by the player.
@@ -25,15 +26,22 @@ func _ready() -> void:
 			add_entity(child);
 
 func add_entity(entity: Entity) -> void:
-	entities.append(entity);
-	entity.entity_moved.connect(on_entity_moved);
-	entity.entity_captured.connect(on_entity_captured);
-	entity.entity_possessed.connect(on_entity_possessed);
+	if entity is EnvironmentEntity:
+		environment_entities.append(entity);
+	else:
+		entities.append(entity);
+		entity.entity_moved.connect(on_entity_moved);
+		entity.entity_captured.connect(on_entity_captured);
+		entity.entity_possessed.connect(on_entity_possessed);
 
 func on_entity_moved(entity: Entity) -> void:
 	%StepAudio.play();
 	if entity.is_player:
 		advance_simulation();
+
+	var env_entity := get_entity_at(entity.pos, true);
+	if env_entity:
+		env_entity.on_pass(entity);
 
 func on_entity_captured(entity: Entity) -> void:
 	%CaptureAudio.play();
@@ -44,24 +52,28 @@ func on_entity_possessed(entity: Entity) -> void:
 	advance_simulation();
 
 func advance_simulation() -> void:
-	for entity in entities:
+	for entity in entities + environment_entities:
 		entity.on_tick();
 
 func remove_entity(entity: Entity) -> void:
 	entities.erase(entity);
 
-func get_entity_at(pos: Vector2i) -> Entity:
+func get_entity_at(pos: Vector2i, env_entities_only: bool = false) -> Entity:
 	var entity: Entity = null;
-	for e in entities:
-		if e.pos == pos:
-			entity = e;
+	if env_entities_only:
+		for e in environment_entities:
+			if e.pos == pos:
+				entity = e;
+	else:
+		for e in entities:
+			if e.pos == pos:
+				entity = e;
 
 	return entity;
 
-func is_cell_occupied(pos: Vector2i, include_walls: bool = false) -> bool:
-	for e in entities:
-		if e.pos == pos:
-			return true;
+func is_cell_occupied(pos: Vector2i, include_walls: bool = false, include_env_entities: bool = false) -> bool:
+	if get_entity_at(pos) or (include_env_entities and get_entity_at(pos, true)):
+		return true;
 
 	if include_walls and is_cell_wall(pos):
 		return true;
@@ -139,16 +151,16 @@ func _input(event: InputEvent) -> void:
 		else:
 			move_choice_active = false;
 	elif Input.is_action_pressed("possess"):
-		if posession_choice_active:
-			posession_choice_active = false;
-			clear_highlights();
-		else:
-			posession_choice_active = true;
+		posession_choice_active = true;
 
-			move_choice_active = false;
-			selected_entity = null;
+		move_choice_active = false;
+		selected_entity = null;
 
-			show_posession_higlights(player, 3);
+		show_posession_higlights(player, 3);
+	elif Input.is_action_pressed("ui_cancel"):
+		move_choice_active = false;
+		posession_choice_active = false;
+		clear_highlights();
 
 func get_inbetween_tiles(posi: Vector2i, posf: Vector2i) -> Array[Vector2i]:
 	var inbetweens: Array[Vector2i] = [];
@@ -182,7 +194,6 @@ func get_ray_cells(pos: Vector2i, dir: Vector2i) -> Array[Vector2i]:
 	var iterations := 0;
 	var cells: Array[Vector2i] = [];
 	while not collided and iterations < 16:
-		print(iterations);
 		iterations += 1;
 		cells.append(pos + iterations * dir);
 		if is_cell_occupied(pos + iterations * dir):

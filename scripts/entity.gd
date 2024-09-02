@@ -12,7 +12,8 @@ class_name Entity extends Sprite2D
 @export var map: Map = owner;
 
 @export_category("Gameplay")
-@export var is_player := false;
+@export var is_player := false:
+	set(b): is_player = b; set_player_visual();
 @export var is_king := false;
 @export var is_ai_controlled := false;
 @export var ai: EnemyAI;
@@ -31,7 +32,16 @@ func _ready() -> void:
 	if is_king:
 		map.king = self;
 
+	set_player_visual();
+
 func move(move: MoveInstance) -> bool:
+	if not move.is_floating:
+		for cell in map.get_inbetween_tiles(move.start_position, move.end_position):
+			var env_entity := map.get_entity_at(cell, true);
+			if env_entity and env_entity.on_pass(self):
+				pos = cell;
+				return true;
+
 	if move.is_capture:
 		return capture(move.end_position);
 	elif move.is_posession:
@@ -67,6 +77,9 @@ func capture(target_pos: Vector2i) -> bool:
 	entity_moved.emit(self);
 	return true;
 
+func set_player_visual() -> void:
+	material.set_shader_parameter("blinking", is_player);
+
 func possess(target_pos: Vector2i) -> bool:
 	# If there's nothing to possess, get outta here with this target position!
 	if not map.is_cell_occupied(target_pos):
@@ -95,7 +108,11 @@ func get_legal_moves() -> Array[MoveInstance]:
 					MoveInstance.new(pos, cell, map.is_cell_occupied(cell), false, move.floating)
 				);
 		else:
-			if move.floating:
+			# Is the target of the move a wall?
+			if map.is_cell_wall(pos + move.offset):
+				continue;
+
+			if not move.floating:
 				var obstructed := false;
 				for cell in map.get_inbetween_tiles(pos, pos + move.offset):
 					if map.is_cell_occupied(cell, true):
@@ -131,6 +148,9 @@ func get_possessions() -> Array[MoveInstance]:
 
 func on_capture() -> void:
 	entity_captured.emit(self);
+
+	if is_player and not is_king:
+		map.king.on_possess();
 	queue_free();
 
 func on_possess() -> void:
