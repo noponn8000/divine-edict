@@ -14,12 +14,14 @@ func _ready() -> void:
 
 func on_interact(entity: Entity) -> void:
 	if active:
+		entity.pos = pos;
 		entity.on_capture();
 	elif not activation_period_started:
 		if activation_time > 0:
 			activation_period_started = true;
 			ticks_left = activation_time;
 		else:
+			entity.pos = pos;
 			active = true;
 			entity.on_capture();
 

@@ -7,6 +7,7 @@ class_name Entity extends Sprite2D
 @export_category("Visuals")
 @export var animate := true;
 @export var tile_by_tile := false;
+@export var capture_anim_scene: PackedScene = preload("res://scenes/capture_animation.tscn");
 
 @export_category("References")
 @export var map: Map = owner;
@@ -20,10 +21,12 @@ class_name Entity extends Sprite2D
 
 var pos: Vector2i:
 	set(new_pos):  set_pos(new_pos); pos = new_pos;
+var is_animating := false;
 
 signal entity_moved(Entity);
 signal entity_captured(Entity);
 signal entity_possessed(Entity);
+signal move_animation_finished();
 
 func _ready() -> void:
 	pos = position / map.cell_size;
@@ -39,7 +42,6 @@ func move(move: MoveInstance) -> bool:
 		for cell in map.get_inbetween_tiles(move.start_position, move.end_position):
 			var env_entity := map.get_entity_at(cell, true);
 			if env_entity and env_entity.on_pass(self):
-				pos = cell;
 				return true;
 
 	if move.is_capture:
@@ -54,6 +56,7 @@ func move(move: MoveInstance) -> bool:
 
 func set_pos(new_pos: Vector2i) -> void:
 	if animate:
+		is_animating = true;
 		if tile_by_tile:
 			for tile in map.get_inbetween_tiles(pos, new_pos) + [new_pos]:
 				var tween := get_tree().create_tween();
@@ -63,6 +66,10 @@ func set_pos(new_pos: Vector2i) -> void:
 		else:
 			var tween := get_tree().create_tween();
 			tween.tween_property(self, "position", Vector2(new_pos * map.cell_size), 0.25);
+
+			await tween.finished;
+			is_animating = false;
+			move_animation_finished.emit();
 	else:
 		position = Vector2(new_pos * map.cell_size);
 
@@ -148,9 +155,18 @@ func get_possessions() -> Array[MoveInstance]:
 
 func on_capture() -> void:
 	entity_captured.emit(self);
+	var anim := capture_anim_scene.instantiate();
+	anim.position = pos * map.cell_size;
+	get_tree().root.add_child(anim);
 
 	if is_player and not is_king:
 		map.king.on_possess();
+
+	is_ai_controlled = false;
+	is_player = false;
+
+	if is_animating:
+		await move_animation_finished;
 	queue_free();
 
 func on_possess() -> void:

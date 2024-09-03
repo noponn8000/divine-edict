@@ -34,6 +34,11 @@ func add_entity(entity: Entity) -> void:
 		entity.entity_captured.connect(on_entity_captured);
 		entity.entity_possessed.connect(on_entity_possessed);
 
+	if not entity.get_parent():
+		entity_parent_node.add_child(entity);
+
+	entity.map = self;
+
 func on_entity_moved(entity: Entity) -> void:
 	%StepAudio.play();
 	if entity.is_player:

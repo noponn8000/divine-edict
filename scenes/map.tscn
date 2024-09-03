@@ -1,14 +1,15 @@
-[gd_scene load_steps=24 format=4 uid="uid://r6ikanphskxx"]
+[gd_scene load_steps=13 format=4 uid="uid://r6ikanphskxx"]
 
 [ext_resource type="Script" path="res://scripts/map.gd" id="1_wlxyg"]
 [ext_resource type="Texture2D" uid="uid://40swdqke7l11" path="res://assets/chess_spreadsheet.png" id="2_lqhf6"]
 [ext_resource type="PackedScene" uid="uid://ka16v6b4ig1v" path="res://scenes/piece_template.tscn" id="3_1m1p1"]
-[ext_resource type="Script" path="res://scripts/entity.gd" id="3_hft44"]
 [ext_resource type="AudioStream" uid="uid://d0bod73x8r8qw" path="res://assets/step.wav" id="4_8k6vp"]
-[ext_resource type="Script" path="res://scripts/move.gd" id="4_kv12u"]
-[ext_resource type="Script" path="res://scripts/simple_ai.gd" id="4_lxyad"]
+[ext_resource type="PackedScene" uid="uid://bln2rnmgweofn" path="res://scenes/rook.tscn" id="4_h0m8y"]
+[ext_resource type="PackedScene" uid="uid://ceq4lubmf3s4y" path="res://scenes/horse.tscn" id="5_bltam"]
 [ext_resource type="AudioStream" uid="uid://8fmc0pyksrv6" path="res://assets/capture.wav" id="5_mc1rr"]
+[ext_resource type="PackedScene" uid="uid://bdqgf3qkwi2vo" path="res://scenes/pawn.tscn" id="6_gwdc7"]
 [ext_resource type="PackedScene" uid="uid://d08nk4rwxy2aa" path="res://scenes/spike_trap.tscn" id="7_wt3h2"]
+[ext_resource type="PackedScene" uid="uid://6s2jt3deaj62" path="res://scenes/poison_vase.tscn" id="8_87uu0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_an12g"]
 texture = ExtResource("2_lqhf6")
@@ -25,130 +26,6 @@ texture_region_size = Vector2i(8, 8)
 [sub_resource type="TileSet" id="TileSet_sfwxq"]
 tile_size = Vector2i(8, 8)
 sources/0 = SubResource("TileSetAtlasSource_an12g")
-
-[sub_resource type="Shader" id="Shader_fhfet"]
-code = "shader_type canvas_item;
-
-uniform bool fill_background = false;
-uniform vec4 background_fill_color : source_color = vec4(0.071,0.071,0.071,1.0);
-
-uniform bool blinking = false;
-uniform bool blink_smoother = true;
-uniform float blink_speed : hint_range(0.001, 100.0, 0.001) = 1.0;
-
-void fragment() {
-	if (blinking == true){
-		COLOR.a *= float(!blink_smoother)*float(int(floor(TIME*blink_speed)) % 2) + float(blink_smoother)*sin(((TIME*blink_speed)-floor(TIME*blink_speed))*PI);
-	}
-
-	if (fill_background == true){
-		vec4 temp_color = COLOR;
-		temp_color.a = 1.0;
-		COLOR.rgba = (1.0-COLOR.a)*background_fill_color+(COLOR.a)*temp_color;
-	}
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dd0ln"]
-shader = SubResource("Shader_fhfet")
-shader_parameter/fill_background = false
-shader_parameter/background_fill_color = Color(0.071, 0.071, 0.071, 1)
-shader_parameter/blinking = false
-shader_parameter/blink_smoother = true
-shader_parameter/blink_speed = 1.0
-
-[sub_resource type="Resource" id="Resource_mfpsl"]
-script = ExtResource("4_kv12u")
-sliding = true
-offset = Vector2i(0, 0)
-slide_direction = Vector2i(0, -1)
-floating = false
-can_capture = true
-
-[sub_resource type="Resource" id="Resource_mam6c"]
-script = ExtResource("4_kv12u")
-sliding = true
-offset = Vector2i(0, 0)
-slide_direction = Vector2i(0, 1)
-floating = false
-can_capture = true
-
-[sub_resource type="Resource" id="Resource_ilsbu"]
-script = ExtResource("4_kv12u")
-sliding = true
-offset = Vector2i(0, 0)
-slide_direction = Vector2i(-1, 0)
-floating = false
-can_capture = true
-
-[sub_resource type="Resource" id="Resource_kfqdn"]
-script = ExtResource("4_kv12u")
-sliding = true
-offset = Vector2i(0, 0)
-slide_direction = Vector2i(1, 0)
-floating = false
-can_capture = true
-
-[sub_resource type="Shader" id="Shader_0er5p"]
-code = "shader_type canvas_item;
-
-uniform bool fill_background = false;
-uniform vec4 background_fill_color : source_color = vec4(0.071,0.071,0.071,1.0);
-
-uniform bool blinking = false;
-uniform bool blink_smoother = true;
-uniform float blink_speed : hint_range(0.001, 100.0, 0.001) = 1.0;
-
-void fragment() {
-	if (blinking == true){
-		COLOR.a *= float(!blink_smoother)*float(int(floor(TIME*blink_speed)) % 2) + float(blink_smoother)*sin(((TIME*blink_speed)-floor(TIME*blink_speed))*PI);
-	}
-
-	if (fill_background == true){
-		vec4 temp_color = COLOR;
-		temp_color.a = 1.0;
-		COLOR.rgba = (1.0-COLOR.a)*background_fill_color+(COLOR.a)*temp_color;
-	}
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5yauk"]
-shader = SubResource("Shader_0er5p")
-shader_parameter/fill_background = false
-shader_parameter/background_fill_color = Color(0.071, 0.071, 0.071, 1)
-shader_parameter/blinking = false
-shader_parameter/blink_smoother = true
-shader_parameter/blink_speed = 1.0
-
-[sub_resource type="Resource" id="Resource_8mwb6"]
-script = ExtResource("4_kv12u")
-sliding = false
-offset = Vector2i(-2, -1)
-slide_direction = Vector2i(0, 0)
-floating = true
-can_capture = true
-
-[sub_resource type="Resource" id="Resource_6jjws"]
-script = ExtResource("4_kv12u")
-sliding = false
-offset = Vector2i(2, -1)
-slide_direction = Vector2i(0, 0)
-floating = true
-can_capture = true
-
-[sub_resource type="Resource" id="Resource_sjpn3"]
-script = ExtResource("4_kv12u")
-sliding = false
-offset = Vector2i(-2, 1)
-slide_direction = Vector2i(0, 0)
-floating = true
-can_capture = true
-
-[sub_resource type="Resource" id="Resource_uh0st"]
-script = ExtResource("4_kv12u")
-sliding = false
-offset = Vector2i(2, 1)
-slide_direction = Vector2i(0, 0)
-floating = true
-can_capture = true
 
 [node name="Map" type="Node2D" node_paths=PackedStringArray("entity_parent_node", "highlights", "inbetween_highlights", "walls")]
 script = ExtResource("1_wlxyg")
@@ -182,39 +59,16 @@ tile_set = SubResource("TileSet_sfwxq")
 position = Vector2(32, 32)
 map = NodePath("../..")
 
-[node name="Rook" type="Sprite2D" parent="Entities" node_paths=PackedStringArray("map", "ai")]
-material = SubResource("ShaderMaterial_dd0ln")
-position = Vector2(72, 96)
-texture = ExtResource("2_lqhf6")
-centered = false
-hframes = 21
-frame = 3
-script = ExtResource("3_hft44")
-moves = Array[ExtResource("4_kv12u")]([SubResource("Resource_mfpsl"), SubResource("Resource_mam6c"), SubResource("Resource_ilsbu"), SubResource("Resource_kfqdn")])
+[node name="Rook" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("4_h0m8y")]
+position = Vector2(88, 64)
 map = NodePath("../..")
-is_ai_controlled = true
-ai = NodePath("SimpleAI")
 
-[node name="SimpleAI" type="Node" parent="Entities/Rook" node_paths=PackedStringArray("parent")]
-script = ExtResource("4_lxyad")
-parent = NodePath("..")
-
-[node name="Horse" type="Sprite2D" parent="Entities" node_paths=PackedStringArray("map", "ai")]
-material = SubResource("ShaderMaterial_5yauk")
-position = Vector2(40, 88)
-texture = ExtResource("2_lqhf6")
-centered = false
-hframes = 21
-frame = 5
-script = ExtResource("3_hft44")
-moves = Array[ExtResource("4_kv12u")]([SubResource("Resource_8mwb6"), SubResource("Resource_6jjws"), SubResource("Resource_sjpn3"), SubResource("Resource_uh0st")])
+[node name="Horse" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("5_bltam")]
 map = NodePath("../..")
-is_ai_controlled = true
-ai = NodePath("SimpleAI")
 
-[node name="SimpleAI" type="Node" parent="Entities/Horse" node_paths=PackedStringArray("parent")]
-script = ExtResource("4_lxyad")
-parent = NodePath("..")
+[node name="Pawn" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_gwdc7")]
+position = Vector2(80, 32)
+map = NodePath("../..")
 
 [node name="Trap" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_wt3h2")]
 position = Vector2(32, 56)
@@ -246,6 +100,14 @@ map = NodePath("../..")
 
 [node name="Trap8" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_wt3h2")]
 position = Vector2(32, 64)
+map = NodePath("../..")
+
+[node name="PoisonVase" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("8_87uu0")]
+position = Vector2(48, 32)
+map = NodePath("../..")
+
+[node name="PoisonVase2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("8_87uu0")]
+position = Vector2(48, 24)
 map = NodePath("../..")
 
 [node name="Camera2D" type="Camera2D" parent="."]
