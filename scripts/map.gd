@@ -5,6 +5,8 @@ class_name Map extends Node2D
 @export var highlights: TileMapLayer;
 @export var inbetween_highlights: TileMapLayer;
 @export var walls: TileMapLayer;
+@export var target_edge := Edge.TOP;
+@export var next_level: PackedScene;
 
 # Data
 var entities: Array[Entity];
@@ -19,11 +21,19 @@ var king: Entity;
 # Flags
 var move_choice_active := false;
 var posession_choice_active := false;
+var game_over := false;
+
+enum Edge {TOP, BOTTOM, LEFT, RIGHT};
+
+signal edge_reached(Edge);
 
 func _ready() -> void:
+	on_game_start();
 	for child in entity_parent_node.get_children():
 		if child is Entity:
 			add_entity(child);
+
+	edge_reached.connect(on_edge_reached);
 
 func add_entity(entity: Entity) -> void:
 	if entity is EnvironmentEntity:
@@ -44,12 +54,25 @@ func on_entity_moved(entity: Entity) -> void:
 	if entity.is_player:
 		advance_simulation();
 
+	if entity.is_king:
+		if entity.pos.y == 1:
+			edge_reached.emit(Edge.TOP);
+		elif entity.pos.y == 14:
+			edge_reached.emit(Edge.BOTTOM);
+		elif entity.pos.x == 1:
+			edge_reached.emit(Edge.LEFT);
+		elif entity.pos.x == 14:
+			edge_reached.emit(Edge.RIGHT);
+
 	var env_entity := get_entity_at(entity.pos, true);
 	if env_entity:
 		env_entity.on_pass(entity);
 
 func on_entity_captured(entity: Entity) -> void:
 	%CaptureAudio.play();
+
+	if entity.is_king:
+		on_game_over();
 	remove_entity(entity);
 
 func on_entity_possessed(entity: Entity) -> void:
@@ -149,7 +172,8 @@ func _input(event: InputEvent) -> void:
 			clear_highlights();
 
 		clear_highlights();
-		if is_cell_occupied(mouse_pos, true) and get_entity_at(mouse_pos).is_player:
+		var entity := get_entity_at(mouse_pos)
+		if is_cell_occupied(mouse_pos, true) and entity and entity.is_player:
 			move_choice_active = true;
 			selected_entity = get_entity_at(mouse_pos);
 			show_highlights(selected_entity);
@@ -208,3 +232,33 @@ func get_ray_cells(pos: Vector2i, dir: Vector2i) -> Array[Vector2i]:
 			cells.remove_at(cells.size() - 1);
 
 	return cells;
+
+func on_game_over() -> void:
+	var tree := get_tree();
+	await tree.create_timer(0.48).timeout;
+	var tween := tree.create_tween();
+
+	tween.tween_property(
+		self,
+		"modulate:v",
+		0.25,
+		1.0
+	);
+	%AnimationPlayer.play("appear");
+	await %AnimationPlayer.animation_finished;
+
+	tree.reload_current_scene();
+
+func on_game_start() -> void:
+	modulate.v = 0.25;
+	var tween := get_tree().create_tween();
+	tween.tween_property(
+		self,
+		"modulate:v",
+		1.0,
+		0.5
+	);
+
+func on_edge_reached(edge: Edge) -> void:
+	if edge == target_edge:
+		get_tree().change_scene_to_packed(next_level);

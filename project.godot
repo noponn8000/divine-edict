@@ -11,9 +11,10 @@ config_version=5
 [application]
 
 config/name="Shah"
-run/main_scene="res://scenes/map.tscn"
+run/main_scene="res://scenes/levels/level1.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
-config/icon="res://icon.svg"
+boot_splash/use_filter=false
+config/icon="res://assets/icon.png"
 
 [display]
 
