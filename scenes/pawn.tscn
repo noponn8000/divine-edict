@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://40swdqke7l11" path="res://assets/chess_spreadsheet.png" id="1_d2ja7"]
 [ext_resource type="Script" path="res://scripts/entity.gd" id="2_fveel"]
 [ext_resource type="Script" path="res://scripts/move.gd" id="3_y68aj"]
-[ext_resource type="Script" path="res://scripts/simple_ai.gd" id="4_iyuw8"]
+[ext_resource type="Script" path="res://scripts/pathfinding_ai.gd" id="4_c8ewm"]
 
 [sub_resource type="Shader" id="Shader_c6nbx"]
 code = "shader_type canvas_item;
@@ -76,8 +76,8 @@ frame = 20
 script = ExtResource("2_fveel")
 moves = Array[ExtResource("3_y68aj")]([SubResource("Resource_52g3j"), SubResource("Resource_v038j"), SubResource("Resource_tutd5"), SubResource("Resource_qo87n")])
 is_ai_controlled = true
-ai = NodePath("SimpleAI")
+ai = NodePath("PathfindingAI")
 
-[node name="SimpleAI" type="Node" parent="." node_paths=PackedStringArray("parent")]
-script = ExtResource("4_iyuw8")
+[node name="PathfindingAI" type="Node" parent="." node_paths=PackedStringArray("parent")]
+script = ExtResource("4_c8ewm")
 parent = NodePath("..")

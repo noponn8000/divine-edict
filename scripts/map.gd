@@ -8,6 +8,11 @@ class_name Map extends Node2D
 @export var target_edge := Edge.TOP;
 @export var next_level: PackedScene;
 
+@export var bounds_min := Vector2(1, 1);
+@export var bounds_max := Vector2(15, 15);
+
+var astar_index_map := {};
+
 # Data
 var entities: Array[Entity];
 var environment_entities: Array[EnvironmentEntity];
@@ -28,6 +33,12 @@ enum Edge {TOP, BOTTOM, LEFT, RIGHT};
 signal edge_reached(Edge);
 
 func _ready() -> void:
+	var astar_index := 0;
+	for x in range(bounds_min.x, bounds_max.x):
+		for y in range(bounds_min.y, bounds_max.y):
+			astar_index_map[Vector2i(x, y)] = astar_index;
+			astar_index += 1;
+
 	on_game_start();
 	for child in entity_parent_node.get_children():
 		if child is Entity:
@@ -84,7 +95,10 @@ func advance_simulation() -> void:
 		entity.on_tick();
 
 func remove_entity(entity: Entity) -> void:
-	entities.erase(entity);
+	if entity is EnvironmentEntity:
+		environment_entities.erase(entity);
+	else:
+		entities.erase(entity);
 
 func get_entity_at(pos: Vector2i, env_entities_only: bool = false) -> Entity:
 	var entity: Entity = null;
@@ -190,6 +204,8 @@ func _input(event: InputEvent) -> void:
 		move_choice_active = false;
 		posession_choice_active = false;
 		clear_highlights();
+	elif Input.is_action_pressed("restart"):
+		get_tree().reload_current_scene();
 
 func get_inbetween_tiles(posi: Vector2i, posf: Vector2i) -> Array[Vector2i]:
 	var inbetweens: Array[Vector2i] = [];

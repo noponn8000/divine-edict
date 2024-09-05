@@ -29,6 +29,8 @@ signal entity_possessed(Entity);
 signal move_animation_finished();
 
 func _ready() -> void:
+	material = material.duplicate();
+
 	pos = position / map.cell_size;
 	if is_player:
 		map.player = self;
