@@ -13,13 +13,13 @@ func on_interact(entity: Entity) -> void:
 	if not visible: return;
 
 	spawn_poison();
-	entity.on_capture();
 	visible = false;
 
 	if audio:
 		audio.play();
 		await audio.finished;
 
+	map.remove_entity(self);
 	queue_free();
 
 func spawn_poison() -> void:
