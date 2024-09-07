@@ -200,11 +200,11 @@ func _input(event: InputEvent) -> void:
 
 		if event.is_action_pressed("ui_up"):
 			dir = Vector2i.UP;
-		elif event.is_action_pressed("ui_down") and len(legal_moves) > 1:
+		elif event.is_action_pressed("ui_down"):
 			dir = Vector2i.DOWN;
-		elif event.is_action_pressed("ui_right") and len(legal_moves) > 2:
+		elif event.is_action_pressed("ui_right"):
 			dir = Vector2i.RIGHT;
-		elif event.is_action_pressed("ui_left") and len(legal_moves) > 3:
+		elif event.is_action_pressed("ui_left"):
 			dir = Vector2i.LEFT;
 
 		for move in legal_moves:
