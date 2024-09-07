@@ -6,6 +6,6 @@
 [node name="PoisonVase" type="Sprite2D"]
 texture = ExtResource("1_lqhyq")
 centered = false
-hframes = 21
+hframes = 28
 frame = 12
 script = ExtResource("2_5lm6h")

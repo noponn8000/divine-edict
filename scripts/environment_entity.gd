@@ -6,6 +6,7 @@ signal interacted(Entity);
 @export var intercept := true;
 
 func _ready() -> void:
+	hframes = texture.get_width() / 8;
 	pos = position / map.cell_size;
 
 func on_pass(entity: Entity) -> bool:

@@ -57,7 +57,7 @@ _data = {
 z_index = -1
 texture = ExtResource("1_t3d6d")
 centered = false
-hframes = 21
+hframes = 28
 frame = 17
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
