@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://r6ikanphskxx"]
+[gd_scene load_steps=19 format=4 uid="uid://r6ikanphskxx"]
 
 [ext_resource type="Script" path="res://scripts/map.gd" id="1_wlxyg"]
 [ext_resource type="Texture2D" uid="uid://40swdqke7l11" path="res://assets/chess_spreadsheet.png" id="2_lqhf6"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://d08nk4rwxy2aa" path="res://scenes/spike_trap.tscn" id="7_wt3h2"]
 [ext_resource type="PackedScene" uid="uid://6s2jt3deaj62" path="res://scenes/poison_vase.tscn" id="8_87uu0"]
 [ext_resource type="Texture2D" uid="uid://n01336vhaaxt" path="res://assets/vanquished_text.png" id="11_k23a6"]
+[ext_resource type="AudioStream" uid="uid://cq3f7c6ggvv6h" path="res://assets/poison_gas.wav" id="12_qdssv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_an12g"]
 texture = ExtResource("2_lqhf6")
@@ -171,6 +172,11 @@ stream = ExtResource("4_8k6vp")
 [node name="CaptureAudio" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("5_mc1rr")
+
+[node name="PoisonGasAudio" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("12_qdssv")
+volume_db = -30.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
