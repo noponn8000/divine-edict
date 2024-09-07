@@ -1,9 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://ceq4lubmf3s4y"]
+[gd_scene load_steps=15 format=3 uid="uid://ceq4lubmf3s4y"]
 
 [ext_resource type="Texture2D" uid="uid://40swdqke7l11" path="res://assets/chess_spreadsheet.png" id="1_5uuki"]
 [ext_resource type="Script" path="res://scripts/entity.gd" id="2_yixvt"]
 [ext_resource type="Script" path="res://scripts/move.gd" id="3_tms1b"]
-[ext_resource type="Script" path="res://scripts/simple_ai.gd" id="4_shjvo"]
+[ext_resource type="Script" path="res://scripts/pathfinding_ai.gd" id="4_bolfu"]
 
 [sub_resource type="Shader" id="Shader_0er5p"]
 code = "shader_type canvas_item;
@@ -67,7 +67,39 @@ slide_direction = Vector2i(0, 0)
 floating = true
 can_capture = true
 
-[node name="Horse" type="Sprite2D" node_paths=PackedStringArray("map", "ai")]
+[sub_resource type="Resource" id="Resource_3rtnf"]
+script = ExtResource("3_tms1b")
+sliding = false
+offset = Vector2i(1, 2)
+slide_direction = Vector2i(0, 0)
+floating = true
+can_capture = true
+
+[sub_resource type="Resource" id="Resource_quatr"]
+script = ExtResource("3_tms1b")
+sliding = false
+offset = Vector2i(-1, -2)
+slide_direction = Vector2i(0, 0)
+floating = true
+can_capture = true
+
+[sub_resource type="Resource" id="Resource_kdmkp"]
+script = ExtResource("3_tms1b")
+sliding = false
+offset = Vector2i(-1, 2)
+slide_direction = Vector2i(0, 0)
+floating = true
+can_capture = true
+
+[sub_resource type="Resource" id="Resource_ata1o"]
+script = ExtResource("3_tms1b")
+sliding = false
+offset = Vector2i(1, -2)
+slide_direction = Vector2i(0, 0)
+floating = true
+can_capture = true
+
+[node name="Horse" type="Sprite2D" node_paths=PackedStringArray("ai")]
 material = SubResource("ShaderMaterial_5yauk")
 position = Vector2(40, 88)
 texture = ExtResource("1_5uuki")
@@ -75,11 +107,10 @@ centered = false
 hframes = 21
 frame = 5
 script = ExtResource("2_yixvt")
-moves = Array[ExtResource("3_tms1b")]([SubResource("Resource_8mwb6"), SubResource("Resource_6jjws"), SubResource("Resource_sjpn3"), SubResource("Resource_uh0st")])
-map = NodePath("")
+moves = Array[ExtResource("3_tms1b")]([SubResource("Resource_8mwb6"), SubResource("Resource_6jjws"), SubResource("Resource_sjpn3"), SubResource("Resource_uh0st"), SubResource("Resource_3rtnf"), SubResource("Resource_quatr"), SubResource("Resource_kdmkp"), SubResource("Resource_ata1o")])
 is_ai_controlled = true
-ai = NodePath("SimpleAI")
+ai = NodePath("PathfindingAI")
 
-[node name="SimpleAI" type="Node" parent="." node_paths=PackedStringArray("parent")]
-script = ExtResource("4_shjvo")
+[node name="PathfindingAI" type="Node" parent="." node_paths=PackedStringArray("parent")]
+script = ExtResource("4_bolfu")
 parent = NodePath("..")

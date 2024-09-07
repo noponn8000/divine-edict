@@ -9,7 +9,6 @@ func _ready() -> void:
 
 func on_interact(entity: Entity) -> void:
 	spawn_poison();
-	%PoisonGasAudio.play()
 	entity.on_capture();
 	visible = false;
 

@@ -8,6 +8,7 @@ var active := false:
 	set(is_active):
 		active = is_active;
 		if is_active:
+			deactivation_ticks_left = deactivation_time;
 			anim.play("activate");
 		else:
 			anim.play_backwards("activate");

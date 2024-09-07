@@ -29,6 +29,9 @@ signal entity_possessed(Entity);
 signal move_animation_finished();
 
 func _ready() -> void:
+	# Set the number of frames in the spritesheet automatically
+	hframes = texture.get_width() / 8;
+
 	material = material.duplicate();
 
 	pos = position / map.cell_size;
@@ -117,27 +120,27 @@ func get_legal_moves() -> Array[MoveInstance]:
 					MoveInstance.new(pos, cell, map.is_cell_occupied(cell), false, move.floating)
 				);
 		else:
-			# Is the target of the move a wall?
-			if map.is_cell_wall(pos + move.offset):
-				continue;
-
-			if not move.floating:
-				var obstructed := false;
-				for cell in map.get_inbetween_tiles(pos, pos + move.offset):
-					if map.is_cell_occupied(cell, true):
-						obstructed = true;
-						break;
-
-				if not obstructed:
-					move_instances.append(
-						MoveInstance.new(pos, pos + move.offset, map.is_cell_occupied(pos + move.offset), false, move.floating)
-					);
-			else:
+			if is_offset_move_legal(move, pos):
 				move_instances.append(
 					MoveInstance.new(pos, pos + move.offset, map.is_cell_occupied(pos + move.offset), false, move.floating)
 				);
 
 	return move_instances;
+
+func is_offset_move_legal(move: Move, s_pos: Vector2i) -> bool:
+	if map.is_cell_wall(s_pos + move.offset):
+		return false;
+
+	if not move.floating:
+		var obstructed := false;
+		for cell in map.get_inbetween_tiles(s_pos, s_pos + move.offset):
+			if map.is_cell_occupied(cell, true):
+				obstructed = true;
+				break;
+
+		return not obstructed;
+
+	return true;
 
 func get_possessions() -> Array[MoveInstance]:
 	var possessions: Array[MoveInstance] = [];
@@ -184,13 +187,22 @@ func on_tick() -> void:
 		if target_move:
 			move(target_move);
 
-#func _input(event: InputEvent) -> void:
-	#if is_player and is_king:
-		#if event.is_action_pressed("ui_up"):
-			#move(moves[0]);
-		#elif event.is_action_pressed("ui_down"):
-			#move(moves[1]);
-		#elif event.is_action_pressed("ui_left"):
-			#move(moves[2]);
-		#elif event.is_action_pressed("ui_right"):
-			#move(moves[3]);
+func _input(event: InputEvent) -> void:
+	if event is not InputEventKey: return;
+
+	if is_player and is_king:
+		var legal_moves := get_legal_moves();
+		var dir := Vector2i.ZERO;
+
+		if event.is_action_pressed("ui_up"):
+			dir = Vector2i.UP;
+		elif event.is_action_pressed("ui_down") and len(legal_moves) > 1:
+			dir = Vector2i.DOWN;
+		elif event.is_action_pressed("ui_right") and len(legal_moves) > 2:
+			dir = Vector2i.RIGHT;
+		elif event.is_action_pressed("ui_left") and len(legal_moves) > 3:
+			dir = Vector2i.LEFT;
+
+		for move in legal_moves:
+			if move.get_offset() == dir:
+				move(move);

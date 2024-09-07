@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://40swdqke7l11" path="res://assets/chess_spreadsheet.png" id="1_5qnea"]
 [ext_resource type="Script" path="res://scripts/entity.gd" id="2_s3kvs"]
 [ext_resource type="Script" path="res://scripts/move.gd" id="3_kwcli"]
-[ext_resource type="Script" path="res://scripts/simple_ai.gd" id="4_24kmx"]
+[ext_resource type="Script" path="res://scripts/pathfinding_ai.gd" id="4_evsye"]
 
 [sub_resource type="Shader" id="Shader_fhfet"]
 code = "shader_type canvas_item;
@@ -67,7 +67,7 @@ slide_direction = Vector2i(1, 0)
 floating = false
 can_capture = true
 
-[node name="Rook" type="Sprite2D" node_paths=PackedStringArray("map", "ai")]
+[node name="Rook" type="Sprite2D" node_paths=PackedStringArray("ai")]
 material = SubResource("ShaderMaterial_dd0ln")
 position = Vector2(88, 32)
 texture = ExtResource("1_5qnea")
@@ -76,10 +76,9 @@ hframes = 21
 frame = 3
 script = ExtResource("2_s3kvs")
 moves = Array[ExtResource("3_kwcli")]([SubResource("Resource_mfpsl"), SubResource("Resource_mam6c"), SubResource("Resource_ilsbu"), SubResource("Resource_kfqdn")])
-map = NodePath("")
 is_ai_controlled = true
-ai = NodePath("SimpleAI")
+ai = NodePath("PathfindingAI")
 
-[node name="SimpleAI" type="Node" parent="." node_paths=PackedStringArray("parent")]
-script = ExtResource("4_24kmx")
+[node name="PathfindingAI" type="Node" parent="." node_paths=PackedStringArray("parent")]
+script = ExtResource("4_evsye")
 parent = NodePath("..")
