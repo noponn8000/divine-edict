@@ -1,3 +1,4 @@
+@tool
 extends EnvironmentEntity
 
 @export var linger_time := 5;
@@ -9,6 +10,7 @@ func on_interact(entity: Entity) -> void:
 	entity.on_capture();
 
 func _ready() -> void:
+	hframes = texture.get_width() / 8;
 	interacted.connect(on_interact);
 
 func on_tick() -> void:

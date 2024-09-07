@@ -98,26 +98,32 @@ tile_set = SubResource("TileSet_sfwxq")
 
 [node name="King" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("3_1m1p1")]
 position = Vector2(24, 112)
+hframes = 28
 map = NodePath("../..")
 
 [node name="Rook" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("4_h0m8y")]
 position = Vector2(32, 24)
+hframes = 28
 map = NodePath("../..")
 
 [node name="Horse" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("5_bltam")]
 position = Vector2(88, 48)
+hframes = 28
 map = NodePath("../..")
 
 [node name="Horse2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("5_bltam")]
 position = Vector2(104, 64)
+hframes = 28
 map = NodePath("../..")
 
 [node name="Pawn" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_gwdc7")]
 position = Vector2(32, 80)
+hframes = 28
 map = NodePath("../..")
 
 [node name="Pawn2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_gwdc7")]
 position = Vector2(48, 96)
+hframes = 28
 map = NodePath("../..")
 
 [node name="Trap" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_wt3h2")]

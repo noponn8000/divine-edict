@@ -1,16 +1,26 @@
+@tool
 extends EnvironmentEntity
 
 @export var radius := 2;
 @export var poison_scene := preload("res://scenes/poison.tscn");
+@export var audio: AudioStreamPlayer;
 
 func _ready() -> void:
 	super._ready();
 	interacted.connect(on_interact);
 
 func on_interact(entity: Entity) -> void:
+	if not visible: return;
+
 	spawn_poison();
 	entity.on_capture();
 	visible = false;
+
+	if audio:
+		audio.play();
+		await audio.finished;
+
+	queue_free();
 
 func spawn_poison() -> void:
 	for x in range(pos.x - radius, pos.x + radius + 1):

@@ -1,3 +1,4 @@
+@tool
 class_name EnvironmentEntity extends Entity
 
 signal interacted(Entity);

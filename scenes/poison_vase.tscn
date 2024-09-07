@@ -1,11 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://6s2jt3deaj62"]
+[gd_scene load_steps=4 format=3 uid="uid://6s2jt3deaj62"]
 
 [ext_resource type="Texture2D" uid="uid://40swdqke7l11" path="res://assets/chess_spreadsheet.png" id="1_lqhyq"]
 [ext_resource type="Script" path="res://scripts/poison_vase.gd" id="2_5lm6h"]
+[ext_resource type="AudioStream" uid="uid://cq3f7c6ggvv6h" path="res://assets/poison_gas.wav" id="3_2i1id"]
 
-[node name="PoisonVase" type="Sprite2D"]
+[node name="PoisonVase" type="Sprite2D" node_paths=PackedStringArray("audio")]
 texture = ExtResource("1_lqhyq")
 centered = false
 hframes = 28
 frame = 12
 script = ExtResource("2_5lm6h")
+audio = NodePath("AudioStreamPlayer")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_2i1id")
+volume_db = -12.5

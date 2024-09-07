@@ -1,3 +1,4 @@
+@tool
 class_name Entity extends Sprite2D
 
 @export_category("Movement")
@@ -31,6 +32,9 @@ signal move_animation_finished();
 func _ready() -> void:
 	# Set the number of frames in the spritesheet automatically
 	hframes = texture.get_width() / 8;
+
+	if Engine.is_editor_hint():
+		return;
 
 	material = material.duplicate();
 

@@ -1,3 +1,4 @@
+@tool
 class_name SpikeTrap extends EnvironmentEntity
 
 @export var activation_time := 2;
