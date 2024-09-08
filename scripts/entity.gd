@@ -14,6 +14,7 @@ class_name Entity extends Sprite2D
 @export var map: Map = owner;
 
 @export_category("Gameplay")
+@export var capturable := true;
 @export var is_player := false:
 	set(b): is_player = b; set_player_visual();
 @export var is_king := false;
@@ -44,7 +45,6 @@ func _ready() -> void:
 	if is_king:
 		map.king = self;
 
-	set_player_visual();
 
 func move(move: MoveInstance) -> bool:
 	if not move.is_floating:
@@ -171,8 +171,10 @@ func on_capture() -> void:
 	if is_player and not is_king:
 		map.king.on_possess();
 
+	# Disable AI and player control
 	is_ai_controlled = false;
 	is_player = false;
+
 
 	if is_animating:
 		await move_animation_finished;
@@ -194,7 +196,7 @@ func on_tick() -> void:
 func _input(event: InputEvent) -> void:
 	if event is not InputEventKey: return;
 
-	if is_player and is_king:
+	if is_player:
 		var legal_moves := get_legal_moves();
 		var dir := Vector2i.ZERO;
 
@@ -210,3 +212,4 @@ func _input(event: InputEvent) -> void:
 		for move in legal_moves:
 			if move.get_offset() == dir:
 				move(move);
+				map.hide_all_select();

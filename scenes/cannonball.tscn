@@ -1,0 +1,84 @@
+[gd_scene load_steps=11 format=3 uid="uid://bugly0rjij05g"]
+
+[ext_resource type="Texture2D" uid="uid://40swdqke7l11" path="res://assets/chess_spreadsheet.png" id="1_vntp6"]
+[ext_resource type="Script" path="res://scripts/move.gd" id="2_lw6f3"]
+[ext_resource type="Script" path="res://scripts/cannonball.gd" id="2_soeqn"]
+[ext_resource type="Script" path="res://scripts/dumb_enemy_ai.gd" id="3_hdx44"]
+
+[sub_resource type="Shader" id="Shader_0er5p"]
+code = "shader_type canvas_item;
+
+uniform bool fill_background = false;
+uniform vec4 background_fill_color : source_color = vec4(0.071,0.071,0.071,1.0);
+
+uniform bool blinking = false;
+uniform bool blink_smoother = true;
+uniform float blink_speed : hint_range(0.001, 100.0, 0.001) = 1.0;
+
+void fragment() {
+	if (blinking == true){
+		COLOR.a *= float(!blink_smoother)*float(int(floor(TIME*blink_speed)) % 2) + float(blink_smoother)*sin(((TIME*blink_speed)-floor(TIME*blink_speed))*PI);
+	}
+
+	if (fill_background == true){
+		vec4 temp_color = COLOR;
+		temp_color.a = 1.0;
+		COLOR.rgba = (1.0-COLOR.a)*background_fill_color+(COLOR.a)*temp_color;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vvy4t"]
+shader = SubResource("Shader_0er5p")
+shader_parameter/fill_background = false
+shader_parameter/background_fill_color = Color(0.071, 0.071, 0.071, 1)
+shader_parameter/blinking = false
+shader_parameter/blink_smoother = true
+shader_parameter/blink_speed = 1.0
+
+[sub_resource type="Resource" id="Resource_q021o"]
+script = ExtResource("2_lw6f3")
+sliding = false
+offset = Vector2i(1, 0)
+slide_direction = Vector2i(0, 0)
+floating = true
+can_capture = true
+
+[sub_resource type="Resource" id="Resource_6i1u7"]
+script = ExtResource("2_lw6f3")
+sliding = false
+offset = Vector2i(-1, 0)
+slide_direction = Vector2i(0, 0)
+floating = true
+can_capture = true
+
+[sub_resource type="Resource" id="Resource_yfkd6"]
+script = ExtResource("2_lw6f3")
+sliding = false
+offset = Vector2i(0, 1)
+slide_direction = Vector2i(0, 0)
+floating = true
+can_capture = true
+
+[sub_resource type="Resource" id="Resource_yfg5x"]
+script = ExtResource("2_lw6f3")
+sliding = false
+offset = Vector2i(0, -1)
+slide_direction = Vector2i(0, 0)
+floating = true
+can_capture = true
+
+[node name="Cannonball" type="Sprite2D" node_paths=PackedStringArray("ai")]
+material = SubResource("ShaderMaterial_vvy4t")
+texture = ExtResource("1_vntp6")
+centered = false
+hframes = 28
+frame = 27
+script = ExtResource("2_soeqn")
+moves = Array[ExtResource("2_lw6f3")]([SubResource("Resource_q021o"), SubResource("Resource_6i1u7"), SubResource("Resource_yfkd6"), SubResource("Resource_yfg5x")])
+animate = false
+is_ai_controlled = true
+ai = NodePath("DumbEnemyAI")
+
+[node name="DumbEnemyAI" type="Node" parent="." node_paths=PackedStringArray("parent")]
+script = ExtResource("3_hdx44")
+parent = NodePath("..")

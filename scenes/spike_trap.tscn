@@ -1,7 +1,52 @@
-[gd_scene load_steps=6 format=3 uid="uid://d08nk4rwxy2aa"]
+[gd_scene load_steps=8 format=3 uid="uid://d08nk4rwxy2aa"]
 
 [ext_resource type="Texture2D" uid="uid://40swdqke7l11" path="res://assets/chess_spreadsheet.png" id="1_hcbkc"]
 [ext_resource type="Script" path="res://scripts/trap.gd" id="2_r3ddq"]
+
+[sub_resource type="Shader" id="Shader_0er5p"]
+code = "shader_type canvas_item;
+
+uniform bool fill_background = false;
+uniform vec4 background_fill_color : source_color = vec4(0.071,0.071,0.071,1.0);
+
+uniform bool blinking = false;
+uniform bool blink_smoother = true;
+uniform float blink_speed : hint_range(0.001, 100.0, 0.001) = 1.0;
+
+void fragment() {
+	if (blinking == true){
+		COLOR.a *= float(!blink_smoother)*float(int(floor(TIME*blink_speed)) % 2) + float(blink_smoother)*sin(((TIME*blink_speed)-floor(TIME*blink_speed))*PI);
+	}
+
+	if (fill_background == true){
+		vec4 temp_color = COLOR;
+		temp_color.a = 1.0;
+		COLOR.rgba = (1.0-COLOR.a)*background_fill_color+(COLOR.a)*temp_color;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k17g8"]
+shader = SubResource("Shader_0er5p")
+shader_parameter/fill_background = false
+shader_parameter/background_fill_color = Color(0.071, 0.071, 0.071, 1)
+shader_parameter/blinking = false
+shader_parameter/blink_smoother = true
+shader_parameter/blink_speed = 1.0
+
+[sub_resource type="Animation" id="Animation_ao6ay"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
 
 [sub_resource type="Animation" id="Animation_6c3ru"]
 resource_name = "activate"
@@ -19,36 +64,22 @@ tracks/0/keys = {
 "values": [8, 9, 10, 11]
 }
 
-[sub_resource type="Animation" id="Animation_ao6ay"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [8]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3mfgy"]
 _data = {
 "RESET": SubResource("Animation_ao6ay"),
 "activate": SubResource("Animation_6c3ru")
 }
 
-[node name="Trap" type="Sprite2D" node_paths=PackedStringArray("anim", "map")]
+[node name="Trap" type="Sprite2D" node_paths=PackedStringArray("anim")]
+material = SubResource("ShaderMaterial_k17g8")
 position = Vector2(72, 88)
 texture = ExtResource("1_hcbkc")
 centered = false
-hframes = 21
+hframes = 28
 frame = 8
 script = ExtResource("2_r3ddq")
 anim = NodePath("AnimationPlayer")
-map = NodePath("")
+intercept = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

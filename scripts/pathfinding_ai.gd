@@ -47,4 +47,4 @@ func get_move() -> MoveInstance:
 		if Vector2(move.end_position) in path:
 			return move;
 
-	return legal_moves[0];
+	return null;

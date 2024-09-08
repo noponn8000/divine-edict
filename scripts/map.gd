@@ -27,6 +27,7 @@ var king: Entity;
 var move_choice_active := false;
 var posession_choice_active := false;
 var game_over := false;
+var turn_in_progress := false;
 
 enum Edge {TOP, BOTTOM, LEFT, RIGHT};
 
@@ -47,6 +48,9 @@ func _ready() -> void:
 	edge_reached.connect(on_edge_reached);
 
 func add_entity(entity: Entity) -> void:
+	if not entity.get_parent():
+		entity_parent_node.add_child(entity);
+
 	if entity is EnvironmentEntity:
 		environment_entities.append(entity);
 	else:
@@ -54,9 +58,6 @@ func add_entity(entity: Entity) -> void:
 		entity.entity_moved.connect(on_entity_moved);
 		entity.entity_captured.connect(on_entity_captured);
 		entity.entity_possessed.connect(on_entity_possessed);
-
-	if not entity.get_parent():
-		entity_parent_node.add_child(entity);
 
 	entity.map = self;
 
@@ -123,7 +124,8 @@ func is_cell_occupied(pos: Vector2i, include_walls: bool = false, include_env_en
 	return false;
 
 func is_cell_wall(pos: Vector2i) -> bool:
-	return walls.get_cell_source_id(pos) != -1;
+	var entity := get_entity_at(pos);
+	return walls.get_cell_source_id(pos) != -1 or (entity and !entity.capturable);
 
 func show_highlights(entity: Entity) -> void:
 	for e in entities:
@@ -168,11 +170,14 @@ func _input(event: InputEvent) -> void:
 					target_move = move;
 
 			if target_move:
-				selected_entity.move(target_move);
-				move_choice_active = false;
-				selected_entity = null;
+				if selected_entity.move(target_move):
+					show_move_select(selected_entity.pos);
+				else:
+					move_choice_active = false;
+					selected_entity = null;
 
-				clear_highlights();
+					clear_highlights();
+
 				return;
 		elif posession_choice_active:
 			for possession in player.get_possessions():
@@ -185,14 +190,7 @@ func _input(event: InputEvent) -> void:
 			posession_choice_active = false;
 			clear_highlights();
 
-		clear_highlights();
-		var entity := get_entity_at(mouse_pos)
-		if is_cell_occupied(mouse_pos, true) and entity and entity.is_player:
-			move_choice_active = true;
-			selected_entity = get_entity_at(mouse_pos);
-			show_highlights(selected_entity);
-		else:
-			move_choice_active = false;
+		show_move_select(mouse_pos);
 	elif Input.is_action_pressed("possess"):
 		posession_choice_active = true;
 
@@ -201,11 +199,24 @@ func _input(event: InputEvent) -> void:
 
 		show_posession_higlights(player, 3);
 	elif Input.is_action_pressed("ui_cancel"):
-		move_choice_active = false;
-		posession_choice_active = false;
-		clear_highlights();
+		hide_all_select();
 	elif Input.is_action_pressed("restart"):
 		get_tree().reload_current_scene();
+
+func show_move_select(pos: Vector2i) -> void:
+		clear_highlights();
+		var entity := get_entity_at(pos)
+		if is_cell_occupied(pos, true) and entity and entity.is_player:
+			move_choice_active = true;
+			selected_entity = get_entity_at(pos);
+			show_highlights(selected_entity);
+		else:
+			move_choice_active = false;
+
+func hide_all_select() -> void:
+	move_choice_active = false;
+	posession_choice_active = false;
+	clear_highlights();
 
 func get_inbetween_tiles(posi: Vector2i, posf: Vector2i) -> Array[Vector2i]:
 	var inbetweens: Array[Vector2i] = [];

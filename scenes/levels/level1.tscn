@@ -81,80 +81,58 @@ tile_set = ExtResource("3_dtsgn")
 
 [node name="King" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("3_1m1p1")]
 position = Vector2(24, 112)
-hframes = 28
 map = NodePath("../..")
 
 [node name="Rook" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("4_h0m8y")]
 position = Vector2(32, 24)
-hframes = 28
 map = NodePath("../..")
 
 [node name="Horse" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("5_bltam")]
 position = Vector2(88, 48)
-hframes = 28
 map = NodePath("../..")
 
 [node name="Horse2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("5_bltam")]
 position = Vector2(104, 64)
-hframes = 28
 map = NodePath("../..")
 
 [node name="Pawn" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_gwdc7")]
 position = Vector2(32, 80)
-hframes = 28
 map = NodePath("../..")
 
 [node name="Pawn2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_gwdc7")]
 position = Vector2(48, 96)
-hframes = 28
 map = NodePath("../..")
 
 [node name="Trap" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_wt3h2")]
 position = Vector2(32, 56)
-hframes = 28
-intercept = false
 map = NodePath("../..")
 
 [node name="Trap2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_wt3h2")]
 position = Vector2(40, 56)
-hframes = 28
-intercept = false
 map = NodePath("../..")
 
 [node name="Trap3" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_wt3h2")]
 position = Vector2(40, 64)
-hframes = 28
-intercept = false
 map = NodePath("../..")
 
 [node name="Trap4" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_wt3h2")]
 position = Vector2(48, 64)
-hframes = 28
-intercept = false
 map = NodePath("../..")
 
 [node name="Trap5" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_wt3h2")]
 position = Vector2(16, 56)
-hframes = 28
-intercept = false
 map = NodePath("../..")
 
 [node name="Trap6" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_wt3h2")]
 position = Vector2(24, 56)
-hframes = 28
-intercept = false
 map = NodePath("../..")
 
 [node name="Trap7" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_wt3h2")]
 position = Vector2(24, 64)
-hframes = 28
-intercept = false
 map = NodePath("../..")
 
 [node name="Trap8" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_wt3h2")]
 position = Vector2(32, 64)
-hframes = 28
-intercept = false
 map = NodePath("../..")
 
 [node name="PoisonVase" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("8_87uu0")]

@@ -7,6 +7,7 @@ signal interacted(Entity);
 @export var intercept := true;
 
 func _ready() -> void:
+	set_player_visual();
 	hframes = texture.get_width() / 8;
 	pos = position / map.cell_size;
 

@@ -90,80 +90,60 @@ tile_set = ExtResource("2_weq3e")
 [node name="King" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("3_j4t5c")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(80, 112)
-hframes = 28
 map = NodePath("../..")
 
 [node name="Pawn" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_262qu")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(24, 16)
-hframes = 28
 map = NodePath("../..")
 
 [node name="Pawn2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_262qu")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(80, 16)
-hframes = 28
 map = NodePath("../..")
 
 [node name="Rook" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_aciuf")]
 position = Vector2(40, 8)
-hframes = 28
 map = NodePath("../..")
 
 [node name="Trap" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_u6htf")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(8, 104)
-hframes = 28
-intercept = false
 map = NodePath("../..")
 
 [node name="Trap2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_u6htf")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(8, 112)
-hframes = 28
-intercept = false
 map = NodePath("../..")
 
 [node name="Trap3" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_u6htf")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(40, 112)
-hframes = 28
-intercept = false
 map = NodePath("../..")
 
 [node name="Trap4" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_u6htf")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(48, 112)
-hframes = 28
-intercept = false
 map = NodePath("../..")
 
 [node name="Trap5" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_u6htf")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(88, 48)
-hframes = 28
-intercept = false
 map = NodePath("../..")
 
 [node name="Trap6" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_u6htf")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(96, 48)
-hframes = 28
-intercept = false
 map = NodePath("../..")
 
 [node name="Trap7" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_u6htf")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(104, 88)
-hframes = 28
-intercept = false
 map = NodePath("../..")
 
 [node name="Trap8" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_u6htf")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(104, 96)
-hframes = 28
-intercept = false
 map = NodePath("../..")
 
 [node name="PoisonVase" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("8_gqsy5")]

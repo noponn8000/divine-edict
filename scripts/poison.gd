@@ -4,6 +4,7 @@ extends EnvironmentEntity
 @export var linger_time := 5;
 
 var lifespan := 0;
+var initialised := false;
 
 func on_interact(entity: Entity) -> void:
 	entity.pos = pos;
@@ -14,6 +15,9 @@ func _ready() -> void:
 	interacted.connect(on_interact);
 
 func on_tick() -> void:
+	if not initialised:
+		return;
+
 	lifespan += 1;
 	if lifespan >= linger_time:
 		map.remove_entity(self);
