@@ -8,7 +8,8 @@ signal interacted(Entity);
 
 func _ready() -> void:
 	set_player_visual();
-	hframes = texture.get_width() / 8;
+	if texture:
+		hframes = texture.get_width() / 8;
 	pos = position / map.cell_size;
 
 func on_pass(entity: Entity) -> bool:

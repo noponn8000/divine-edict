@@ -31,7 +31,7 @@ void fragment() {
 shader = SubResource("Shader_c6nbx")
 shader_parameter/fill_background = false
 shader_parameter/background_fill_color = Color(0.071, 0.071, 0.071, 1)
-shader_parameter/blinking = true
+shader_parameter/blinking = false
 shader_parameter/blink_smoother = true
 shader_parameter/blink_speed = 0.75
 

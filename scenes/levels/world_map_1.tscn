@@ -1,0 +1,149 @@
+[gd_scene load_steps=14 format=4 uid="uid://dtp66xb3205nv"]
+
+[ext_resource type="Script" path="res://scripts/map.gd" id="1_k0hl5"]
+[ext_resource type="PackedScene" uid="uid://citdmayhjkah8" path="res://scenes/levels/level2.tscn" id="2_tft8o"]
+[ext_resource type="TileSet" uid="uid://jsbqeboy88yk" path="res://resources/tileset.tres" id="3_5pr1b"]
+[ext_resource type="PackedScene" uid="uid://ka16v6b4ig1v" path="res://scenes/piece_template.tscn" id="4_od2j2"]
+[ext_resource type="Script" path="res://scripts/level_loader.gd" id="6_fqoj7"]
+[ext_resource type="Texture2D" uid="uid://cfwbw3px7e2vh" path="res://assets/world_map_1.png" id="6_rktsl"]
+[ext_resource type="PackedScene" uid="uid://r6ikanphskxx" path="res://scenes/levels/level1.tscn" id="7_lwk88"]
+[ext_resource type="AudioStream" uid="uid://d0bod73x8r8qw" path="res://assets/step.wav" id="10_kts8r"]
+[ext_resource type="AudioStream" uid="uid://8fmc0pyksrv6" path="res://assets/capture.wav" id="11_ey4q8"]
+[ext_resource type="Texture2D" uid="uid://n01336vhaaxt" path="res://assets/vanquished_text.png" id="12_2svcb"]
+
+[sub_resource type="Animation" id="Animation_qkapi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_eku7t"]
+resource_name = "appear"
+length = 3.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 3),
+"transitions": PackedFloat32Array(1.68179, 2.92817, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ebjql"]
+_data = {
+"RESET": SubResource("Animation_qkapi"),
+"appear": SubResource("Animation_eku7t")
+}
+
+[node name="Map" type="Node2D" node_paths=PackedStringArray("entity_parent_node", "highlights", "inbetween_highlights", "walls")]
+script = ExtResource("1_k0hl5")
+entity_parent_node = NodePath("Entities")
+highlights = NodePath("Highlights")
+inbetween_highlights = NodePath("InbetweenHighlights")
+walls = NodePath("Walls")
+next_level = ExtResource("2_tft8o")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("6_rktsl")
+centered = false
+offset = Vector2(-4, -4)
+
+[node name="Ground" type="TileMapLayer" parent="."]
+modulate = Color(0.473976, 0.473976, 0.473976, 1)
+use_parent_material = true
+tile_set = ExtResource("3_5pr1b")
+
+[node name="Walls" type="TileMapLayer" parent="."]
+modulate = Color(1, 1, 1, 0)
+use_parent_material = true
+tile_map_data = PackedByteArray("AAACAAwAAAAHAAAAAAABAAwAAAAHAAAAAAAAAAwAAAAHAAAAAAD//wwAAAAHAAAAAAD//wsAAAAHAAAAAAAAAAsAAAAHAAAAAAD//woAAAAHAAAAAAAAAAoAAAAHAAAAAAABAAoAAAAHAAAAAAABAAsAAAAHAAAAAAACAAsAAAAHAAAAAAACAAoAAAAHAAAAAAACAAkAAAAHAAAAAAACAAgAAAAHAAAAAAADAAgAAAAHAAAAAAAEAAgAAAAHAAAAAAAFAAgAAAAHAAAAAAAFAAcAAAAHAAAAAAAFAAYAAAAHAAAAAAAEAAYAAAAHAAAAAAADAAYAAAAHAAAAAAACAAYAAAAHAAAAAAACAAUAAAAHAAAAAAABAAUAAAAHAAAAAAABAAQAAAAHAAAAAAAAAAQAAAAHAAAAAAD//wQAAAAHAAAAAAD//wUAAAAHAAAAAAD//wYAAAAHAAAAAAD//wcAAAAHAAAAAAD//wgAAAAHAAAAAAD//wkAAAAHAAAAAAAAAAkAAAAHAAAAAAAAAAgAAAAHAAAAAAAAAAcAAAAHAAAAAAAAAAYAAAAHAAAAAAAAAAUAAAAHAAAAAAABAAYAAAAHAAAAAAABAAcAAAAHAAAAAAABAAgAAAAHAAAAAAABAAkAAAAHAAAAAAACAAcAAAAHAAAAAAADAAcAAAAHAAAAAAAEAAcAAAAHAAAAAAAIAAcAAAAHAAAAAAAIAAgAAAAHAAAAAAAIAAkAAAAHAAAAAAAJAAkAAAAHAAAAAAAKAAkAAAAHAAAAAAALAAkAAAAHAAAAAAALAAgAAAAHAAAAAAAKAAgAAAAHAAAAAAAJAAgAAAAHAAAAAAAJAAcAAAAHAAAAAAAKAAcAAAAHAAAAAAALAAUAAAAHAAAAAAAMAAUAAAAHAAAAAAAMAAYAAAAHAAAAAAAMAAQAAAAHAAAAAAANAAQAAAAHAAAAAAANAAUAAAAHAAAAAAAOAAUAAAAHAAAAAAAOAAQAAAAHAAAAAAAOAAYAAAAHAAAAAAANAAYAAAAHAAAAAAAPAAUAAAAHAAAAAAAPAAQAAAAHAAAAAAAPAAYAAAAHAAAAAAAPAAcAAAAHAAAAAAAOAAcAAAAHAAAAAAANAA0AAAAHAAAAAAAOAA0AAAAHAAAAAAAOAA4AAAAHAAAAAAAPAA4AAAAHAAAAAAAPAA0AAAAHAAAAAAAPAA8AAAAHAAAAAAANAA4AAAAHAAAAAAANAA8AAAAHAAAAAAAMAA8AAAAHAAAAAAAOAA8AAAAHAAAAAAAMAA4AAAAHAAAAAAALAA8AAAAHAAAAAAALAAcAAAAHAAAAAAD//wMAAAAHAAAAAAAAAAMAAAAHAAAAAAANAAMAAAAHAAAAAAAOAAMAAAAHAAAAAAAPAAMAAAAHAAAAAAAPAAgAAAAHAAAAAAAPAAkAAAAHAAAAAAAPAAoAAAAHAAAAAAAPAAsAAAAHAAAAAAAPAAwAAAAHAAAAAAAKAA8AAAAHAAAAAAAJAA8AAAAHAAAAAAAIAA8AAAAHAAAAAAAHAA8AAAAHAAAAAAAGAA8AAAAHAAAAAAAFAA8AAAAHAAAAAAAEAA8AAAAHAAAAAAADAA8AAAAHAAAAAAACAA8AAAAHAAAAAAABAA8AAAAHAAAAAAAAAA8AAAAHAAAAAAD//w8AAAAHAAAAAAD//w4AAAAHAAAAAAD//w0AAAAHAAAAAAAAAA4AAAAHAAAAAAAAAA0AAAAHAAAAAAABAA4AAAAHAAAAAAABAA0AAAAHAAAAAAACAA0AAAAHAAAAAAACAA4AAAAHAAAAAAADAAkAAAAHAAAAAAALAA4AAAAHAAAAAAAMAA0AAAAHAAAAAAAMAAwAAAAHAAAAAAAMAAsAAAAHAAAAAAAMAAoAAAAHAAAAAAALAAsAAAAHAAAAAAALAAoAAAAHAAAAAAAKAAoAAAAHAAAAAAAJAAoAAAAHAAAAAAAIAAoAAAAHAAAAAAAIAAsAAAAHAAAAAAAHAAsAAAAHAAAAAAAGAAwAAAAHAAAAAAAGAA0AAAAHAAAAAAAHAAwAAAAHAAAAAAAIAAwAAAAHAAAAAAAIAA0AAAAHAAAAAAAJAA0AAAAHAAAAAAAHAA0AAAAHAAAAAAAJAAwAAAAHAAAAAAAJAAsAAAAHAAAAAAAKAAwAAAAHAAAAAAAKAA0AAAAHAAAAAAAKAA4AAAAHAAAAAAALAA0AAAAHAAAAAAALAAwAAAAHAAAAAAAMAAcAAAAHAAAAAAAMAAgAAAAHAAAAAAAMAAkAAAAHAAAAAAANAAgAAAAHAAAAAAANAAcAAAAHAAAAAAANAAkAAAAHAAAAAAANAAoAAAAHAAAAAAANAAsAAAAHAAAAAAANAAwAAAAHAAAAAAAOAAwAAAAHAAAAAAAOAAsAAAAHAAAAAAAOAAoAAAAHAAAAAAAOAAkAAAAHAAAAAAAOAAgAAAAHAAAAAAALAAYAAAAHAAAAAAAKAAYAAAAHAAAAAAARABEAAAAHAAAAAAA=")
+tile_set = ExtResource("3_5pr1b")
+
+[node name="Highlights" type="TileMapLayer" parent="."]
+use_parent_material = true
+tile_set = ExtResource("3_5pr1b")
+
+[node name="InbetweenHighlights" type="TileMapLayer" parent="."]
+use_parent_material = true
+tile_set = ExtResource("3_5pr1b")
+
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="King" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("4_od2j2")]
+material = null
+position = Vector2(24, 112)
+hframes = 29
+map = NodePath("../..")
+
+[node name="LevelLoader" type="Sprite2D" parent="Entities" node_paths=PackedStringArray("map")]
+position = Vector2(24, 112)
+script = ExtResource("6_fqoj7")
+level = ExtResource("7_lwk88")
+map = NodePath("../..")
+
+[node name="LevelLoader2" type="Sprite2D" parent="Entities" node_paths=PackedStringArray("map")]
+position = Vector2(24, 88)
+script = ExtResource("6_fqoj7")
+level = ExtResource("2_tft8o")
+map = NodePath("../..")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(64, 64)
+offset = Vector2(-4, -4)
+zoom = Vector2(4, 4)
+
+[node name="StepAudio" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("10_kts8r")
+
+[node name="CaptureAudio" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("11_ey4q8")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Vanquished" type="TextureRect" parent="CanvasLayer/Control"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -224.0
+offset_top = -56.0
+offset_right = 224.0
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_2svcb")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Vanquished"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_ebjql")
+}
+speed_scale = 1.5

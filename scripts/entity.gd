@@ -37,14 +37,14 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return;
 
-	material = material.duplicate();
+	if is_instance_valid(material):
+		material = material.duplicate();
 
 	pos = position / map.cell_size;
 	if is_player:
 		map.player = self;
 	if is_king:
 		map.king = self;
-
 
 func move(move: MoveInstance) -> bool:
 	if not move.is_floating:
@@ -94,7 +94,8 @@ func capture(target_pos: Vector2i) -> bool:
 	return true;
 
 func set_player_visual() -> void:
-	material.set_shader_parameter("blinking", is_player);
+	if is_instance_valid(material):
+		material.set_shader_parameter("blinking", is_player);
 
 func possess(target_pos: Vector2i) -> bool:
 	# If there's nothing to possess, get outta here with this target position!
