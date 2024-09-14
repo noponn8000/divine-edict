@@ -102,16 +102,16 @@ func possess(target_pos: Vector2i) -> bool:
 	if not map.is_cell_occupied(target_pos):
 		return false;
 
-	# Get the target of the possession.
-	var target := map.get_entity_at(target_pos);
-	target.on_possess();
-
 	# The player is now a different entity.
 	is_player = false;
 
 	# If the current entity is not a king and has an AI, then we restore AI control to it.
 	if not is_king and ai:
 		is_ai_controlled = true;
+
+	# Get the target of the possession.
+	var target := map.get_entity_at(target_pos);
+	target.on_possess();
 
 	return true;
 

@@ -1,6 +1,57 @@
-[gd_scene load_steps=2 format=3 uid="uid://b2thqldgf8ykt"]
+[gd_scene load_steps=6 format=3 uid="uid://b2thqldgf8ykt"]
 
 [ext_resource type="Script" path="res://scripts/level_loader.gd" id="1_01vle"]
+[ext_resource type="Texture2D" uid="uid://bn2ay12ter12u" path="res://assets/level_anim.png" id="1_qumej"]
 
-[node name="LevelLoader" type="Sprite2D"]
+[sub_resource type="Animation" id="Animation_4aloh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_qrj5q"]
+resource_name = "activate"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wm25e"]
+_data = {
+"RESET": SubResource("Animation_4aloh"),
+"activate": SubResource("Animation_qrj5q")
+}
+
+[node name="LevelLoader" type="Sprite2D" node_paths=PackedStringArray("animation_player")]
+modulate = Color(1, 1, 1, 0.831373)
+z_index = -1
+texture = ExtResource("1_qumej")
+centered = false
+offset = Vector2(-2, -2)
+hframes = 5
 script = ExtResource("1_01vle")
+animation_player = NodePath("AnimationPlayer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_wm25e")
+}

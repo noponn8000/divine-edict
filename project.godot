@@ -11,16 +11,24 @@ config_version=5
 [application]
 
 config/name="Shah"
-run/main_scene="res://scenes/levels/level1.tscn"
+run/main_scene="res://scenes/levels/world_map_1.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 boot_splash/use_filter=false
 config/icon="res://assets/icon.png"
+
+[autoload]
+
+SaveFile="*res://scripts/save_file.gd"
 
 [display]
 
 window/size/viewport_width=512
 window/size/viewport_height=512
+window/size/resizable=false
+window/size/borderless=true
 window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+window/stretch/scale=4.0
 window/stretch/scale_mode="integer"
 
 [input]

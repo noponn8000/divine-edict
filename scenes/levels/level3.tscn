@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://dcpm2u4lxprf0"]
+[gd_scene load_steps=13 format=4 uid="uid://dcpm2u4lxprf0"]
 
 [ext_resource type="Script" path="res://scripts/map.gd" id="1_t5q4q"]
 [ext_resource type="TileSet" uid="uid://jsbqeboy88yk" path="res://resources/tileset.tres" id="2_weq3e"]
@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://6s2jt3deaj62" path="res://scenes/poison_vase.tscn" id="8_gqsy5"]
 [ext_resource type="AudioStream" uid="uid://d0bod73x8r8qw" path="res://assets/step.wav" id="9_bo2ea"]
 [ext_resource type="AudioStream" uid="uid://8fmc0pyksrv6" path="res://assets/capture.wav" id="10_dpsw0"]
-[ext_resource type="Texture2D" uid="uid://n01336vhaaxt" path="res://assets/vanquished_text.png" id="11_tunm1"]
+[ext_resource type="PackedScene" uid="uid://dyd54buu512qn" path="res://scenes/hud.tscn" id="11_nf3fa"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ddoc3"]
 shader = ExtResource("4_d58lw")
@@ -21,47 +21,10 @@ shader_parameter/blink_smoother = true
 shader_parameter/blink_speed = 1.0
 shader_parameter/minimum_visibility = 0.5
 
-[sub_resource type="Animation" id="Animation_qkapi"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_eku7t"]
-resource_name = "appear"
-length = 3.0
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1, 3),
-"transitions": PackedFloat32Array(1.68179, 2.92817, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ebjql"]
-_data = {
-"RESET": SubResource("Animation_qkapi"),
-"appear": SubResource("Animation_eku7t")
-}
-
-[node name="Map" type="Node2D" node_paths=PackedStringArray("entity_parent_node", "highlights", "inbetween_highlights", "walls")]
+[node name="Map" type="Node2D" node_paths=PackedStringArray("entity_parent_node", "hud", "highlights", "inbetween_highlights", "walls")]
 script = ExtResource("1_t5q4q")
 entity_parent_node = NodePath("Entities")
+hud = NodePath("CanvasLayer")
 highlights = NodePath("Highlights")
 inbetween_highlights = NodePath("InbetweenHighlights")
 walls = NodePath("Walls")
@@ -89,24 +52,20 @@ tile_set = ExtResource("2_weq3e")
 [node name="King" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("3_j4t5c")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(80, 112)
-hframes = 29
 map = NodePath("../..")
 
 [node name="Pawn" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_262qu")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(24, 16)
-hframes = 29
 map = NodePath("../..")
 
 [node name="Pawn2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_262qu")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(80, 16)
-hframes = 29
 map = NodePath("../..")
 
 [node name="Rook" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_aciuf")]
 position = Vector2(40, 8)
-hframes = 29
 map = NodePath("../..")
 
 [node name="Trap" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_u6htf")]
@@ -152,18 +111,15 @@ map = NodePath("../..")
 [node name="PoisonVase" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("8_gqsy5")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(40, 72)
-hframes = 29
 map = NodePath("../..")
 
 [node name="PoisonVase2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("8_gqsy5")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(72, 40)
-hframes = 29
 map = NodePath("../..")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(64, 64)
-zoom = Vector2(4, 4)
 
 [node name="StepAudio" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
@@ -173,36 +129,4 @@ stream = ExtResource("9_bo2ea")
 unique_name_in_owner = true
 stream = ExtResource("10_dpsw0")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Control" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Vanquished" type="TextureRect" parent="CanvasLayer/Control"]
-modulate = Color(1, 1, 1, 0)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -224.0
-offset_top = -56.0
-offset_right = 224.0
-offset_bottom = 56.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("11_tunm1")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Vanquished"]
-unique_name_in_owner = true
-libraries = {
-"": SubResource("AnimationLibrary_ebjql")
-}
-speed_scale = 1.5
+[node name="CanvasLayer" parent="." instance=ExtResource("11_nf3fa")]

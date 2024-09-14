@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://c7g0nxpaw2den"]
+[gd_scene load_steps=12 format=4 uid="uid://c7g0nxpaw2den"]
 
 [ext_resource type="Script" path="res://scripts/map.gd" id="1_y4b7p"]
 [ext_resource type="TileSet" uid="uid://jsbqeboy88yk" path="res://resources/tileset.tres" id="2_y408j"]
@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://d08nk4rwxy2aa" path="res://scenes/spike_trap.tscn" id="7_r7eef"]
 [ext_resource type="AudioStream" uid="uid://d0bod73x8r8qw" path="res://assets/step.wav" id="9_kht2v"]
 [ext_resource type="AudioStream" uid="uid://8fmc0pyksrv6" path="res://assets/capture.wav" id="10_1gpty"]
-[ext_resource type="Texture2D" uid="uid://n01336vhaaxt" path="res://assets/vanquished_text.png" id="11_07oym"]
+[ext_resource type="PackedScene" uid="uid://dyd54buu512qn" path="res://scenes/hud.tscn" id="10_xhipu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ddoc3"]
 shader = ExtResource("4_ncgm1")
@@ -20,47 +20,10 @@ shader_parameter/blink_smoother = true
 shader_parameter/blink_speed = 1.0
 shader_parameter/minimum_visibility = 0.5
 
-[sub_resource type="Animation" id="Animation_qkapi"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_eku7t"]
-resource_name = "appear"
-length = 3.0
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1, 3),
-"transitions": PackedFloat32Array(1.68179, 2.92817, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ebjql"]
-_data = {
-"RESET": SubResource("Animation_qkapi"),
-"appear": SubResource("Animation_eku7t")
-}
-
-[node name="Map" type="Node2D" node_paths=PackedStringArray("entity_parent_node", "highlights", "inbetween_highlights", "walls")]
+[node name="Map" type="Node2D" node_paths=PackedStringArray("entity_parent_node", "hud", "highlights", "inbetween_highlights", "walls")]
 script = ExtResource("1_y4b7p")
 entity_parent_node = NodePath("Entities")
+hud = NodePath("CanvasLayer")
 highlights = NodePath("Highlights")
 inbetween_highlights = NodePath("InbetweenHighlights")
 walls = NodePath("Walls")
@@ -88,31 +51,26 @@ tile_set = ExtResource("2_y408j")
 [node name="King" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("3_c2qbn")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(80, 112)
-hframes = 29
 map = NodePath("../..")
 
 [node name="Pawn" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("5_gt17x")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(56, 16)
-hframes = 29
 map = NodePath("../..")
 
 [node name="Pawn2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("5_gt17x")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(64, 16)
-hframes = 29
 map = NodePath("../..")
 
 [node name="Pawn5" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("5_gt17x")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(16, 24)
-hframes = 29
 map = NodePath("../..")
 
 [node name="Pawn6" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("5_gt17x")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(104, 24)
-hframes = 29
 map = NodePath("../..")
 
 [node name="Trap" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_r7eef")]
@@ -167,30 +125,25 @@ is_king = true
 position = Vector2(48, 40)
 rotation = -3.14159
 offset = Vector2(-4, -4)
-hframes = 29
 fire_direction = Vector2i(1, 0)
 map = NodePath("../..")
 
 [node name="Cannon2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_7y24x")]
 position = Vector2(72, 80)
-hframes = 29
 map = NodePath("../..")
 
 [node name="Cannon3" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_7y24x")]
 position = Vector2(112, 88)
-hframes = 29
 map = NodePath("../..")
 
 [node name="Cannon4" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_7y24x")]
 position = Vector2(112, 40)
-hframes = 29
 map = NodePath("../..")
 
 [node name="Cannon5" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_7y24x")]
 position = Vector2(8, 40)
 rotation = -3.14159
 offset = Vector2(-4, -4)
-hframes = 29
 fire_direction = Vector2i(1, 0)
 map = NodePath("../..")
 
@@ -198,13 +151,11 @@ map = NodePath("../..")
 position = Vector2(8, 88)
 rotation = -3.14159
 offset = Vector2(-4, -4)
-hframes = 29
 fire_direction = Vector2i(1, 0)
 map = NodePath("../..")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(64, 64)
-zoom = Vector2(4, 4)
 
 [node name="StepAudio" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
@@ -214,36 +165,4 @@ stream = ExtResource("9_kht2v")
 unique_name_in_owner = true
 stream = ExtResource("10_1gpty")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Control" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Vanquished" type="TextureRect" parent="CanvasLayer/Control"]
-modulate = Color(1, 1, 1, 0)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -224.0
-offset_top = -56.0
-offset_right = 224.0
-offset_bottom = 56.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("11_07oym")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/Vanquished"]
-unique_name_in_owner = true
-libraries = {
-"": SubResource("AnimationLibrary_ebjql")
-}
-speed_scale = 1.5
+[node name="CanvasLayer" parent="." instance=ExtResource("10_xhipu")]

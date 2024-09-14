@@ -68,7 +68,7 @@ _data = {
 [node name="Poison" type="Sprite2D"]
 texture = ExtResource("1_74pve")
 centered = false
-hframes = 28
+hframes = 29
 frame = 13
 script = ExtResource("2_5q6s0")
 possession_range = 0

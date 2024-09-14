@@ -1,12 +1,16 @@
 class_name Map extends Node2D
 
 @export var entity_parent_node: Node2D;
+@export var hud: CanvasLayer;
 @export var cell_size = 8;
 @export var highlights: TileMapLayer;
 @export var inbetween_highlights: TileMapLayer;
 @export var walls: TileMapLayer;
 @export var target_edge := Edge.TOP;
-@export var next_level: PackedScene;
+@export var world_id := 1;
+@export var level_id := 1;
+@export var next_level_id := 2;
+@export var world_map_scene := preload("res://scenes/levels/world_map_1.tscn");
 
 @export var bounds_min := Vector2(1, 1);
 @export var bounds_max := Vector2(15, 15);
@@ -271,8 +275,8 @@ func on_game_over() -> void:
 		0.25,
 		1.0
 	);
-	%AnimationPlayer.play("appear");
-	await %AnimationPlayer.animation_finished;
+	hud.game_over_anim.play("appear");
+	await hud.game_over_anim.animation_finished;
 
 	tree.reload_current_scene();
 
@@ -288,4 +292,6 @@ func on_game_start() -> void:
 
 func on_edge_reached(edge: Edge) -> void:
 	if edge == target_edge:
-		get_tree().change_scene_to_packed(next_level);
+		if next_level_id != -1:
+			SaveFile.set_level_unlocked(world_id, next_level_id, true);
+		get_tree().change_scene_to_packed(world_map_scene);
