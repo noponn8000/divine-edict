@@ -7,6 +7,7 @@ class_name Map extends Node2D
 @export var inbetween_highlights: TileMapLayer;
 @export var walls: TileMapLayer;
 @export var target_edge := Edge.TOP;
+@export var is_world_map := false;
 @export var world_id := 1;
 @export var level_id := 1;
 @export var next_level_id := 2;
@@ -67,7 +68,8 @@ func add_entity(entity: Entity) -> void:
 
 func on_entity_moved(entity: Entity) -> void:
 	%StepAudio.play();
-	if entity.is_player:
+	if entity == player:
+		print("yes sir")
 		advance_simulation();
 
 	if entity.is_king:
@@ -89,11 +91,13 @@ func on_entity_captured(entity: Entity) -> void:
 
 	if entity.is_king:
 		on_game_over();
+
 	remove_entity(entity);
 
-func on_entity_possessed(entity: Entity) -> void:
+func on_entity_possessed(entity: Entity, no_turn_trigger) -> void:
 	%CaptureAudio.play();
-	advance_simulation();
+	if not no_turn_trigger:
+		advance_simulation();
 
 func advance_simulation() -> void:
 	for entity in entities + environment_entities:
@@ -196,12 +200,13 @@ func _input(event: InputEvent) -> void:
 
 		show_move_select(mouse_pos);
 	elif Input.is_action_pressed("possess"):
-		posession_choice_active = true;
+		if not is_world_map:
+			posession_choice_active = true;
 
-		move_choice_active = false;
-		selected_entity = null;
+			move_choice_active = false;
+			selected_entity = null;
 
-		show_posession_higlights(player, 3);
+			show_posession_higlights(player, 3);
 	elif Input.is_action_pressed("ui_cancel"):
 		hide_all_select();
 	elif Input.is_action_pressed("restart"):

@@ -27,7 +27,7 @@ var is_animating := false;
 
 signal entity_moved(Entity);
 signal entity_captured(Entity);
-signal entity_possessed(Entity);
+signal entity_possessed(Entity, bool);
 signal move_animation_finished();
 
 func _ready() -> void:
@@ -164,29 +164,31 @@ func get_possessions() -> Array[MoveInstance]:
 	return possessions;
 
 func on_capture() -> void:
-	entity_captured.emit(self);
-	var anim := capture_anim_scene.instantiate();
-	anim.position = pos * map.cell_size;
-	get_tree().root.add_child(anim);
-
-	if is_player and not is_king:
-		map.king.on_possess();
+	var king_reposess := is_player and not is_king;
 
 	# Disable AI and player control
 	is_ai_controlled = false;
 	is_player = false;
 
+	entity_captured.emit(self);
+
+	var anim := capture_anim_scene.instantiate();
+	anim.position = pos * map.cell_size;
+	get_tree().root.add_child(anim);
+
+	if king_reposess:
+		map.king.on_possess(true);
 
 	if is_animating:
 		await move_animation_finished;
 	queue_free();
 
-func on_possess() -> void:
+func on_possess(no_turn_trigger: bool = false) -> void:
 	map.player = self;
 	is_player = true;
 	is_ai_controlled = false;
 
-	entity_possessed.emit(self);
+	entity_possessed.emit(self, no_turn_trigger);
 
 func on_tick() -> void:
 	if is_ai_controlled:

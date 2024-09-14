@@ -17,6 +17,9 @@ entity_parent_node = NodePath("Entities")
 highlights = NodePath("Highlights")
 inbetween_highlights = NodePath("InbetweenHighlights")
 walls = NodePath("Walls")
+is_world_map = true
+level_id = -1
+next_level_id = -1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -2
