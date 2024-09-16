@@ -1,12 +1,12 @@
 [gd_scene load_steps=11 format=4 uid="uid://dtp66xb3205nv"]
 
 [ext_resource type="Script" path="res://scripts/map.gd" id="1_k0hl5"]
-[ext_resource type="PackedScene" uid="uid://citdmayhjkah8" path="res://scenes/levels/level2.tscn" id="2_tft8o"]
 [ext_resource type="TileSet" uid="uid://jsbqeboy88yk" path="res://resources/tileset.tres" id="3_5pr1b"]
 [ext_resource type="PackedScene" uid="uid://ka16v6b4ig1v" path="res://scenes/piece_template.tscn" id="4_od2j2"]
 [ext_resource type="Texture2D" uid="uid://cfwbw3px7e2vh" path="res://assets/world_map_1.png" id="6_rktsl"]
 [ext_resource type="PackedScene" uid="uid://b2thqldgf8ykt" path="res://scenes/level_loader.tscn" id="6_xuyau"]
 [ext_resource type="PackedScene" uid="uid://r6ikanphskxx" path="res://scenes/levels/level1.tscn" id="7_lwk88"]
+[ext_resource type="PackedScene" uid="uid://siertlsma7vx" path="res://scenes/levels/level_0.tscn" id="7_nfutk"]
 [ext_resource type="AudioStream" uid="uid://d0bod73x8r8qw" path="res://assets/step.wav" id="10_kts8r"]
 [ext_resource type="PackedScene" uid="uid://dyd54buu512qn" path="res://scenes/hud.tscn" id="10_wvicp"]
 [ext_resource type="AudioStream" uid="uid://8fmc0pyksrv6" path="res://assets/capture.wav" id="11_ey4q8"]
@@ -51,17 +51,18 @@ tile_set = ExtResource("3_5pr1b")
 [node name="King" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("4_od2j2")]
 material = null
 position = Vector2(40, 112)
+hframes = 37
 map = NodePath("../..")
 
 [node name="LevelLoader2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_xuyau")]
 position = Vector2(24, 88)
-level_id = 2
-level = ExtResource("2_tft8o")
+level = ExtResource("7_lwk88")
 map = NodePath("../..")
 
 [node name="LevelLoader1" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_xuyau")]
 position = Vector2(24, 112)
-level = ExtResource("7_lwk88")
+level_id = 0
+level = ExtResource("7_nfutk")
 unlocked = true
 map = NodePath("../..")
 

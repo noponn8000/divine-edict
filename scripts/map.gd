@@ -52,6 +52,16 @@ func _ready() -> void:
 
 	edge_reached.connect(on_edge_reached);
 
+func get_chebyshev_distance(posi: Vector2i, posf: Vector2i) -> int:
+	return abs(posi.x - posf.x) + abs(posi.y - posf.y);
+
+func is_sightline_clear(posi: Vector2i, posf: Vector2i) -> bool:
+	for tile in get_inbetween_tiles(posi, posf):
+		if is_cell_wall(tile):
+			return false;
+
+	return true;
+
 func add_entity(entity: Entity) -> void:
 	if not entity.get_parent():
 		entity_parent_node.add_child(entity);
@@ -69,7 +79,6 @@ func add_entity(entity: Entity) -> void:
 func on_entity_moved(entity: Entity) -> void:
 	%StepAudio.play();
 	if entity == player:
-		print("yes sir")
 		advance_simulation();
 
 	if entity.is_king:

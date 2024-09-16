@@ -1,8 +1,11 @@
 class_name PathfindingAI extends EnemyAI
 
 var astar := AStar2D.new();
+var target: Entity;
 
 @onready var map: Map = owner.map;
+
+@export var sight_range := 5;
 
 func _ready() -> void:
 	await map.ready;
@@ -40,11 +43,24 @@ func connect_neighbours(point: Vector2i) -> void:
 				astar.connect_points(id,  map.astar_index_map[cell]);
 
 func get_move() -> MoveInstance:
-	var path := astar.get_point_path(map.astar_index_map.get(owner.pos), map.astar_index_map.get(map.player.pos), true);
-	var legal_moves: Array[MoveInstance] = owner.get_legal_moves();
+	update_sightlines();
+	if target:
+		var path := astar.get_point_path(map.astar_index_map.get(owner.pos), map.astar_index_map.get(target.pos), true);
+		var legal_moves: Array[MoveInstance] = owner.get_legal_moves();
 
-	for move in legal_moves:
-		if Vector2(move.end_position) in path:
-			return move;
+		for move in legal_moves:
+			if Vector2(move.end_position) in path:
+				return move;
 
 	return null;
+
+func update_sightlines() -> void:
+	var player_in_sight := map.get_chebyshev_distance(owner.pos, map.player.pos) <= sight_range and map.is_sightline_clear(owner.pos, map.player.pos);
+	var king_in_sight := map.get_chebyshev_distance(owner.pos, map.king.pos) <= sight_range and map.is_sightline_clear(owner.pos, map.king.pos);
+
+	if king_in_sight:
+		target = map.king;
+	elif player_in_sight:
+		target = map.player;
+	else:
+		target = null;
