@@ -1,0 +1,83 @@
+[gd_scene load_steps=11 format=3 uid="uid://c13pdkkajpyc4"]
+
+[ext_resource type="Texture2D" uid="uid://40swdqke7l11" path="res://assets/chess_spreadsheet.png" id="1_g2dpo"]
+[ext_resource type="Script" path="res://scripts/entity.gd" id="2_rgt4q"]
+[ext_resource type="Script" path="res://scripts/move.gd" id="3_wydlc"]
+[ext_resource type="Script" path="res://scripts/pathfinding_ai.gd" id="4_7jdr0"]
+
+[sub_resource type="Shader" id="Shader_c6nbx"]
+code = "shader_type canvas_item;
+
+uniform bool fill_background = false;
+uniform vec4 background_fill_color : source_color = vec4(0.071,0.071,0.071,1.0);
+
+uniform bool blinking = false;
+uniform bool blink_smoother = true;
+uniform float blink_speed : hint_range(0.001, 100.0, 0.001) = 1.0;
+
+void fragment() {
+	if (blinking == true){
+		COLOR.a *= float(!blink_smoother)*float(int(floor(TIME*blink_speed))) + float(blink_smoother)*(sin(((TIME*blink_speed)-floor(TIME*blink_speed))*PI) + 0.2);
+	}
+
+	if (fill_background == true){
+		vec4 temp_color = COLOR;
+		temp_color.a = 1.0;
+		COLOR.rgba = (1.0-COLOR.a)*background_fill_color+(COLOR.a)*temp_color;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fuxtn"]
+shader = SubResource("Shader_c6nbx")
+shader_parameter/fill_background = false
+shader_parameter/background_fill_color = Color(0.071, 0.071, 0.071, 1)
+shader_parameter/blinking = false
+shader_parameter/blink_smoother = true
+shader_parameter/blink_speed = 0.75
+
+[sub_resource type="Resource" id="Resource_52g3j"]
+script = ExtResource("3_wydlc")
+sliding = false
+offset = Vector2i(-1, -1)
+slide_direction = Vector2i(0, 0)
+floating = true
+can_capture = true
+
+[sub_resource type="Resource" id="Resource_v038j"]
+script = ExtResource("3_wydlc")
+sliding = false
+offset = Vector2i(0, -1)
+slide_direction = Vector2i(0, 0)
+floating = true
+can_capture = true
+
+[sub_resource type="Resource" id="Resource_tutd5"]
+script = ExtResource("3_wydlc")
+sliding = false
+offset = Vector2i(1, -1)
+slide_direction = Vector2i(0, 0)
+floating = true
+can_capture = true
+
+[sub_resource type="Resource" id="Resource_qo87n"]
+script = ExtResource("3_wydlc")
+sliding = false
+offset = Vector2i(0, 1)
+slide_direction = Vector2i(0, 0)
+floating = true
+can_capture = true
+
+[node name="Goat" type="Sprite2D" node_paths=PackedStringArray("ai")]
+material = SubResource("ShaderMaterial_fuxtn")
+texture = ExtResource("1_g2dpo")
+centered = false
+hframes = 37
+frame = 35
+script = ExtResource("2_rgt4q")
+moves = Array[ExtResource("3_wydlc")]([SubResource("Resource_52g3j"), SubResource("Resource_v038j"), SubResource("Resource_tutd5"), SubResource("Resource_qo87n")])
+is_ai_controlled = true
+ai = NodePath("PathfindingAI")
+
+[node name="PathfindingAI" type="Node" parent="." node_paths=PackedStringArray("parent")]
+script = ExtResource("4_7jdr0")
+parent = NodePath("..")

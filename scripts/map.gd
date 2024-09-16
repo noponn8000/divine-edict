@@ -56,6 +56,12 @@ func get_chebyshev_distance(posi: Vector2i, posf: Vector2i) -> int:
 	return abs(posi.x - posf.x) + abs(posi.y - posf.y);
 
 func is_sightline_clear(posi: Vector2i, posf: Vector2i) -> bool:
+	if posi.x > posf.x and posi.y < posf.y:
+		var temp = posi;
+		posi = posf;
+		posf = temp;
+
+	print("posi, posf: " + str(posi) + str(posf));
 	for tile in get_inbetween_tiles(posi, posf):
 		if is_cell_wall(tile):
 			return false;
@@ -239,27 +245,42 @@ func hide_all_select() -> void:
 func get_inbetween_tiles(posi: Vector2i, posf: Vector2i) -> Array[Vector2i]:
 	var inbetweens: Array[Vector2i] = [];
 
-	if posf.x > posi.x:
-		var gradient: float = (float) (posf.y - posi.y) / (posf.x - posi.x);
-		var intercept := posi.y - gradient * posi.x;
-		var y = posi.y;
-		for x in range(posi.x + 1, posf.x):
-			y = roundi(x * gradient + intercept);
-			inbetweens.append(Vector2i(x, y));
-	elif posf.x < posi.x:
-		var gradient: float = (float) (posf.y - posi.y) / (posf.x - posi.x);
-		var intercept := posi.y - gradient * posi.x;
-		var y = posi.y;
-		for x in range(posf.x + 1, posi.x):
-			y = roundi(x * gradient + intercept);
-			inbetweens.append(Vector2i(x, y));
+	if abs(posi.x - posf.x) >= abs(posi.y - posf.y):
+		if posf.x > posi.x:
+			var gradient: float = (float) (posf.y - posi.y) / (posf.x - posi.x);
+			var intercept := posi.y - gradient * posi.x;
+			var y = posi.y;
+			for x in range(posi.x + 1, posf.x):
+				y = roundi(x * gradient + intercept);
+				inbetweens.append(Vector2i(x, y));
+		elif posf.x < posi.x:
+			var gradient: float = (float) (posf.y - posi.y) / (posf.x - posi.x);
+			var intercept := posi.y - gradient * posi.x;
+			var y = posi.y;
+			for x in range(posf.x + 1, posi.x):
+				y = roundi(x * gradient + intercept);
+				inbetweens.append(Vector2i(x, y));
 	else:
 		if posf.y > posi.y:
+			var gradient: float = (float) (posf.x - posi.x) / (posf.y - posi.y);
+			var intercept := posi.x - gradient * posi.y;
+			var x = posi.x;
 			for y in range(posi.y + 1, posf.y):
-				inbetweens.append(Vector2i(posi.x, y));
+				x = roundi(y * gradient + intercept);
+				inbetweens.append(Vector2i(x, y));
 		elif posf.y < posi.y:
+			var gradient: float = (float) (posf.x - posi.x) / (posf.y - posi.y);
+			var intercept := posi.x - gradient * posi.y;
+			var x = posi.x;
 			for y in range(posf.y + 1, posi.y):
-				inbetweens.append(Vector2i(posi.x, y));
+				x = roundi(y * gradient + intercept);
+				inbetweens.append(Vector2i(x, y));
+		#if posf.y > posi.y:
+			#for y in range(posi.y + 1, posf.y):
+				#inbetweens.append(Vector2i(posi.x, y));
+		#elif posf.y < posi.y:
+			#for y in range(posf.y + 1, posi.y):
+				#inbetweens.append(Vector2i(posi.x, y));
 
 	return inbetweens;
 
