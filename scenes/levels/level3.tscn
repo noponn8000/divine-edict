@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=4 uid="uid://dcpm2u4lxprf0"]
+[gd_scene load_steps=11 format=4 uid="uid://dcpm2u4lxprf0"]
 
 [ext_resource type="Script" path="res://scripts/map.gd" id="1_t5q4q"]
 [ext_resource type="TileSet" uid="uid://jsbqeboy88yk" path="res://resources/tileset.tres" id="2_weq3e"]
 [ext_resource type="PackedScene" uid="uid://ka16v6b4ig1v" path="res://scenes/piece_template.tscn" id="3_j4t5c"]
 [ext_resource type="Shader" path="res://scripts/shaders/multipurpose_highlighter.gdshader" id="4_d58lw"]
+[ext_resource type="PackedScene" uid="uid://bfffpv5vlnht5" path="res://scenes/villager.tscn" id="6_qtr2l"]
+[ext_resource type="PackedScene" uid="uid://6s2jt3deaj62" path="res://scenes/poison_vase.tscn" id="8_gqsy5"]
 [ext_resource type="AudioStream" uid="uid://d0bod73x8r8qw" path="res://assets/step.wav" id="9_bo2ea"]
 [ext_resource type="AudioStream" uid="uid://8fmc0pyksrv6" path="res://assets/capture.wav" id="10_dpsw0"]
 [ext_resource type="PackedScene" uid="uid://dyd54buu512qn" path="res://scenes/hud.tscn" id="11_nf3fa"]
@@ -48,6 +50,66 @@ tile_set = ExtResource("2_weq3e")
 [node name="King" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("3_j4t5c")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(80, 112)
+hframes = 45
+map = NodePath("../..")
+
+[node name="PoisonVase" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("8_gqsy5")]
+position = Vector2(56, 48)
+hframes = 45
+map = NodePath("../..")
+
+[node name="PoisonVase2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("8_gqsy5")]
+position = Vector2(64, 48)
+hframes = 45
+map = NodePath("../..")
+
+[node name="PoisonVase3" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("8_gqsy5")]
+position = Vector2(72, 48)
+hframes = 45
+map = NodePath("../..")
+
+[node name="PoisonVase4" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("8_gqsy5")]
+position = Vector2(80, 16)
+hframes = 45
+map = NodePath("../..")
+
+[node name="PoisonVase5" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("8_gqsy5")]
+position = Vector2(88, 16)
+hframes = 45
+map = NodePath("../..")
+
+[node name="PoisonVase6" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("8_gqsy5")]
+position = Vector2(96, 16)
+hframes = 45
+map = NodePath("../..")
+
+[node name="Pawn" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_qtr2l")]
+position = Vector2(64, 72)
+hframes = 45
+map = NodePath("../..")
+
+[node name="Pawn2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_qtr2l")]
+position = Vector2(80, 72)
+hframes = 45
+map = NodePath("../..")
+
+[node name="Pawn3" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_qtr2l")]
+position = Vector2(88, 24)
+hframes = 45
+map = NodePath("../..")
+
+[node name="Pawn4" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_qtr2l")]
+position = Vector2(104, 32)
+hframes = 45
+map = NodePath("../..")
+
+[node name="Pawn5" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_qtr2l")]
+position = Vector2(80, 96)
+hframes = 45
+map = NodePath("../..")
+
+[node name="Pawn6" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_qtr2l")]
+position = Vector2(64, 96)
 hframes = 45
 map = NodePath("../..")
 
