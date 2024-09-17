@@ -7,7 +7,7 @@
 [node name="PoisonVase" type="Sprite2D" node_paths=PackedStringArray("audio")]
 texture = ExtResource("1_lqhyq")
 centered = false
-hframes = 29
+hframes = 37
 frame = 12
 script = ExtResource("2_5lm6h")
 audio = NodePath("AudioStreamPlayer")

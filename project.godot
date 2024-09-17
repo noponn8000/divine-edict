@@ -19,6 +19,7 @@ config/icon="res://assets/icon.png"
 [autoload]
 
 SaveFile="*res://scripts/save_file.gd"
+LevelLibrary="*res://scripts/level_library.gd"
 
 [display]
 

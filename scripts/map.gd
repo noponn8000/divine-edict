@@ -11,7 +11,6 @@ class_name Map extends Node2D
 @export var world_id := 1;
 @export var level_id := 1;
 @export var next_level_id := 2;
-@export var world_map_scene := preload("res://scenes/levels/world_map_1.tscn");
 
 @export var bounds_min := Vector2(1, 1);
 @export var bounds_max := Vector2(15, 15);
@@ -61,7 +60,6 @@ func is_sightline_clear(posi: Vector2i, posf: Vector2i) -> bool:
 		posi = posf;
 		posf = temp;
 
-	print("posi, posf: " + str(posi) + str(posf));
 	for tile in get_inbetween_tiles(posi, posf):
 		if is_cell_wall(tile):
 			return false;
@@ -329,4 +327,4 @@ func on_edge_reached(edge: Edge) -> void:
 	if edge == target_edge:
 		if next_level_id != -1:
 			SaveFile.set_level_unlocked(world_id, next_level_id, true);
-		get_tree().change_scene_to_packed(world_map_scene);
+		get_tree().change_scene_to_packed(LevelLibrary.get_world_map(world_id));

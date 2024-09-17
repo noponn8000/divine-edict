@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cbcpiuuvguj0u"]
+[gd_scene load_steps=6 format=3 uid="uid://cbcpiuuvguj0u"]
 
 [ext_resource type="Texture2D" uid="uid://40swdqke7l11" path="res://assets/chess_spreadsheet.png" id="1_t3d6d"]
+[ext_resource type="Script" path="res://scripts/capture_animation.gd" id="2_2h21w"]
 
 [sub_resource type="Animation" id="Animation_fviif"]
 length = 0.001
@@ -59,6 +60,7 @@ texture = ExtResource("1_t3d6d")
 centered = false
 hframes = 28
 frame = 17
+script = ExtResource("2_2h21w")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

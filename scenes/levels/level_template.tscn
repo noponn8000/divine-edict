@@ -37,6 +37,7 @@ tile_set = ExtResource("3_advds")
 
 [node name="King" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("4_ppcys")]
 position = Vector2(24, 112)
+hframes = 37
 map = NodePath("../..")
 
 [node name="Camera2D" type="Camera2D" parent="."]

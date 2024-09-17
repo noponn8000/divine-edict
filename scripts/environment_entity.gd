@@ -7,6 +7,8 @@ signal interacted(Entity);
 @export var intercept := true;
 
 func _ready() -> void:
+	if not map: await get_tree().create_timer(0.2).timeout;
+
 	set_player_visual();
 	if texture:
 		hframes = texture.get_width() / 8;

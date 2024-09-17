@@ -2,7 +2,6 @@ class_name LevelLoader extends EnvironmentEntity;
 
 @export var world_id := 1;
 @export var level_id := 1;
-@export var level: PackedScene;
 @export var animation_player: AnimationPlayer;
 @export var unlocked := false :
 	set(is_unlocked):
@@ -14,12 +13,15 @@ class_name LevelLoader extends EnvironmentEntity;
 var activated := false;
 
 func _ready() -> void:
+	if not map: await get_tree().create_timer(0.2).timeout;
+
 	unlocked = SaveFile.is_level_unlocked(world_id, level_id);
+
 	pos = position / map.cell_size;
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("possess") and activated:
-		get_tree().change_scene_to_packed(level);
+		get_tree().change_scene_to_packed(LevelLibrary.get_level(world_id, level_id));
 
 func on_tick() -> void:
 	if not unlocked: return;

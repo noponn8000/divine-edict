@@ -40,6 +40,8 @@ func _ready() -> void:
 	if is_instance_valid(material):
 		material = material.duplicate();
 
+	if not map: await get_tree().create_timer(0.2).timeout;
+
 	pos = position / map.cell_size;
 	if is_player:
 		map.player = self;

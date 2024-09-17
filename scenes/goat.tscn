@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c13pdkkajpyc4"]
+[gd_scene load_steps=12 format=3 uid="uid://c13pdkkajpyc4"]
 
 [ext_resource type="Texture2D" uid="uid://40swdqke7l11" path="res://assets/chess_spreadsheet.png" id="1_g2dpo"]
 [ext_resource type="Script" path="res://scripts/entity.gd" id="2_rgt4q"]
@@ -62,10 +62,18 @@ can_capture = true
 [sub_resource type="Resource" id="Resource_qo87n"]
 script = ExtResource("3_wydlc")
 sliding = false
-offset = Vector2i(0, 1)
+offset = Vector2i(-1, 1)
 slide_direction = Vector2i(0, 0)
 floating = true
 can_capture = true
+
+[sub_resource type="Resource" id="Resource_k7nii"]
+script = ExtResource("3_wydlc")
+sliding = false
+offset = Vector2i(1, 1)
+slide_direction = Vector2i(0, 0)
+floating = false
+can_capture = false
 
 [node name="Goat" type="Sprite2D" node_paths=PackedStringArray("ai")]
 material = SubResource("ShaderMaterial_fuxtn")
@@ -74,7 +82,7 @@ centered = false
 hframes = 37
 frame = 35
 script = ExtResource("2_rgt4q")
-moves = Array[ExtResource("3_wydlc")]([SubResource("Resource_52g3j"), SubResource("Resource_v038j"), SubResource("Resource_tutd5"), SubResource("Resource_qo87n")])
+moves = Array[ExtResource("3_wydlc")]([SubResource("Resource_52g3j"), SubResource("Resource_v038j"), SubResource("Resource_tutd5"), SubResource("Resource_qo87n"), SubResource("Resource_k7nii")])
 is_ai_controlled = true
 ai = NodePath("PathfindingAI")
 

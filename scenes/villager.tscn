@@ -80,4 +80,5 @@ ai = NodePath("PathfindingAI")
 
 [node name="PathfindingAI" type="Node" parent="." node_paths=PackedStringArray("parent")]
 script = ExtResource("4_y2aah")
+sight_range = 6
 parent = NodePath("..")
