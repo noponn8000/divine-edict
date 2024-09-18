@@ -26,7 +26,6 @@ LevelLibrary="*res://scripts/level_library.gd"
 window/size/viewport_width=512
 window/size/viewport_height=512
 window/size/resizable=false
-window/size/borderless=true
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 window/stretch/scale=4.0

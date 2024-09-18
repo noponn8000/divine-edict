@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=3 uid="uid://d1tpcp3tk75mx"]
+
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1_srdju"]
+[ext_resource type="Texture2D" uid="uid://bl7uqtxs6fnhh" path="res://assets/pause_menu_bg.png" id="1_w8rir"]
+[ext_resource type="Texture2D" uid="uid://ddbmv5v6xpujo" path="res://assets/buttons/pause_button2.png" id="2_7gbf0"]
+[ext_resource type="Texture2D" uid="uid://db80douu7sd43" path="res://assets/buttons/pause_button3.png" id="3_4f6xy"]
+[ext_resource type="Texture2D" uid="uid://dlg1crvqywuj7" path="res://assets/buttons/pointer_knife.png" id="3_q0w80"]
+[ext_resource type="Texture2D" uid="uid://bynk4ee1erghx" path="res://assets/buttons/pause_button1.png" id="4_u2op0"]
+[ext_resource type="Texture2D" uid="uid://bu4g31gfw4i0x" path="res://assets/buttons/pause_button5.png" id="5_7wtta"]
+
+[node name="PauseMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_srdju")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_w8rir")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 8.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ReturnButton" type="TextureButton" parent="VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("2_7gbf0")
+stretch_mode = 3
+
+[node name="RestartButton" type="TextureButton" parent="VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_4f6xy")
+stretch_mode = 3
+
+[node name="WorldMapButton" type="TextureButton" parent="VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("4_u2op0")
+stretch_mode = 3
+
+[node name="QuitButton" type="TextureButton" parent="VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("5_7wtta")
+stretch_mode = 3
+
+[node name="PointerKnife" type="Sprite2D" parent="VBoxContainer"]
+position = Vector2(56, 8)
+texture = ExtResource("3_q0w80")
+flip_h = true

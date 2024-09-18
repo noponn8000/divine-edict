@@ -12,6 +12,8 @@ func load_game() -> void:
 		print_debug("Save file does not exist. Loading default save.")
 		file.load("res://resources/default_save.cfg");
 
+	set_level_unlocked(1, 0, true);
+
 func save_game() -> void:
 	print_debug("Saving...")
 	file.save("user://save.cfg");
