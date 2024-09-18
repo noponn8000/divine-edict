@@ -52,42 +52,34 @@ tile_set = ExtResource("3_35o7r")
 [node name="King" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("3_f5ub4")]
 material = SubResource("ShaderMaterial_ddoc3")
 position = Vector2(80, 112)
-hframes = 45
 map = NodePath("../..")
 
 [node name="Goat" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("5_g1l3n")]
 position = Vector2(88, 88)
-hframes = 45
 map = NodePath("../..")
 
 [node name="Goat2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("5_g1l3n")]
 position = Vector2(88, 72)
-hframes = 45
 map = NodePath("../..")
 
 [node name="Goat4" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("5_g1l3n")]
 position = Vector2(40, 40)
-hframes = 45
 map = NodePath("../..")
 
 [node name="Pawn" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_afd1e")]
 position = Vector2(40, 96)
-hframes = 45
 map = NodePath("../..")
 
 [node name="Pawn2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_afd1e")]
 position = Vector2(48, 80)
-hframes = 45
 map = NodePath("../..")
 
 [node name="Pawn3" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_afd1e")]
 position = Vector2(72, 56)
-hframes = 45
 map = NodePath("../..")
 
 [node name="Pawn4" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_afd1e")]
 position = Vector2(64, 48)
-hframes = 45
 map = NodePath("../..")
 
 [node name="Camera2D" type="Camera2D" parent="."]

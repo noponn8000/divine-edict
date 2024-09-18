@@ -49,7 +49,6 @@ tile_set = ExtResource("3_5pr1b")
 [node name="King" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("4_od2j2")]
 material = null
 position = Vector2(0, 112)
-hframes = 45
 map = NodePath("../..")
 
 [node name="LevelLoader1" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_xuyau")]

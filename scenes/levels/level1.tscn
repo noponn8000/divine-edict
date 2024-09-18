@@ -38,22 +38,18 @@ tile_set = ExtResource("3_dtsgn")
 
 [node name="King" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("3_1m1p1")]
 position = Vector2(24, 112)
-hframes = 45
 map = NodePath("../..")
 
 [node name="Horse" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("4_v3d1i")]
 position = Vector2(48, 40)
-hframes = 45
 map = NodePath("../..")
 
 [node name="Horse2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("4_v3d1i")]
 position = Vector2(64, 64)
-hframes = 45
 map = NodePath("../..")
 
 [node name="Horse3" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("4_v3d1i")]
 position = Vector2(96, 112)
-hframes = 45
 map = NodePath("../..")
 
 [node name="Camera2D" type="Camera2D" parent="."]
