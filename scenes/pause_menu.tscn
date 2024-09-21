@@ -41,12 +41,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -22.0
-offset_top = 25.0
-offset_right = -22.0
-offset_bottom = 25.0
+offset_left = -25.0
+offset_top = 20.0
+offset_right = -25.0
+offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 2
 
 [node name="ReturnButtonContainer" type="PanelContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -89,6 +90,5 @@ texture_normal = ExtResource("5_7wtta")
 stretch_mode = 3
 
 [node name="PointerKnife" type="Sprite2D" parent="VBoxContainer"]
-position = Vector2(100, 8)
+position = Vector2(110, 8)
 texture = ExtResource("3_q0w80")
-flip_h = true
