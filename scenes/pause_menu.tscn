@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://d1tpcp3tk75mx"]
+[gd_scene load_steps=10 format=3 uid="uid://d1tpcp3tk75mx"]
 
 [ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1_srdju"]
 [ext_resource type="Texture2D" uid="uid://bl7uqtxs6fnhh" path="res://assets/pause_menu_bg.png" id="1_w8rir"]
@@ -6,7 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://db80douu7sd43" path="res://assets/buttons/pause_button3.png" id="3_4f6xy"]
 [ext_resource type="Texture2D" uid="uid://dlg1crvqywuj7" path="res://assets/buttons/pointer_knife.png" id="3_q0w80"]
 [ext_resource type="Texture2D" uid="uid://bynk4ee1erghx" path="res://assets/buttons/pause_button1.png" id="4_u2op0"]
+[ext_resource type="Texture2D" uid="uid://bgnixaywwee3t" path="res://assets/buttons/button_background.png" id="4_vs2pb"]
 [ext_resource type="Texture2D" uid="uid://bu4g31gfw4i0x" path="res://assets/buttons/pause_button5.png" id="5_7wtta"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_00xuh"]
+texture = ExtResource("4_vs2pb")
 
 [node name="PauseMenu" type="Control"]
 layout_mode = 3
@@ -44,22 +48,42 @@ offset_bottom = 25.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ReturnButton" type="TextureButton" parent="VBoxContainer"]
+[node name="ReturnButtonContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxTexture_00xuh")
+
+[node name="ReturnButton" type="TextureButton" parent="VBoxContainer/ReturnButtonContainer"]
 layout_mode = 2
 texture_normal = ExtResource("2_7gbf0")
 stretch_mode = 3
 
-[node name="RestartButton" type="TextureButton" parent="VBoxContainer"]
+[node name="RestartButtonContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxTexture_00xuh")
+
+[node name="RestartButton" type="TextureButton" parent="VBoxContainer/RestartButtonContainer"]
 layout_mode = 2
 texture_normal = ExtResource("3_4f6xy")
 stretch_mode = 3
 
-[node name="WorldMapButton" type="TextureButton" parent="VBoxContainer"]
+[node name="WorldMapButtonContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxTexture_00xuh")
+
+[node name="WorldMapButton" type="TextureButton" parent="VBoxContainer/WorldMapButtonContainer"]
 layout_mode = 2
 texture_normal = ExtResource("4_u2op0")
 stretch_mode = 3
 
-[node name="QuitButton" type="TextureButton" parent="VBoxContainer"]
+[node name="QuitButtonContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxTexture_00xuh")
+
+[node name="QuitButton" type="TextureButton" parent="VBoxContainer/QuitButtonContainer"]
 layout_mode = 2
 texture_normal = ExtResource("5_7wtta")
 stretch_mode = 3
