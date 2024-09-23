@@ -4,10 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://bl7uqtxs6fnhh" path="res://assets/pause_menu_bg.png" id="1_w8rir"]
 [ext_resource type="Texture2D" uid="uid://ddbmv5v6xpujo" path="res://assets/buttons/pause_button2.png" id="2_7gbf0"]
 [ext_resource type="Texture2D" uid="uid://db80douu7sd43" path="res://assets/buttons/pause_button3.png" id="3_4f6xy"]
-[ext_resource type="Texture2D" uid="uid://dlg1crvqywuj7" path="res://assets/buttons/pointer_knife.png" id="3_q0w80"]
 [ext_resource type="Texture2D" uid="uid://bynk4ee1erghx" path="res://assets/buttons/pause_button1.png" id="4_u2op0"]
 [ext_resource type="Texture2D" uid="uid://bgnixaywwee3t" path="res://assets/buttons/button_background.png" id="4_vs2pb"]
 [ext_resource type="Texture2D" uid="uid://bu4g31gfw4i0x" path="res://assets/buttons/pause_button5.png" id="5_7wtta"]
+[ext_resource type="Texture2D" uid="uid://d0bb6bshu0dr5" path="res://assets/buttons/pointer_knife-sheet.png" id="8_llqq1"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_00xuh"]
 texture = ExtResource("4_vs2pb")
@@ -89,6 +89,7 @@ layout_mode = 2
 texture_normal = ExtResource("5_7wtta")
 stretch_mode = 3
 
-[node name="PointerKnife" type="Sprite2D" parent="VBoxContainer"]
-position = Vector2(110, 8)
-texture = ExtResource("3_q0w80")
+[node name="Sprite2D" type="Sprite2D" parent="VBoxContainer"]
+position = Vector2(79.9, 7.955)
+texture = ExtResource("8_llqq1")
+hframes = 4
