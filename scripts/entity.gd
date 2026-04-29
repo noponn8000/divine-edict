@@ -16,14 +16,22 @@ class_name Entity extends Sprite2D
 @export_category("Gameplay")
 @export var capturable := true;
 @export var is_player := false:
-	set(b): is_player = b; set_player_visual();
+	set(b): is_player = b;
 @export var is_king := false;
 @export var is_ai_controlled := false;
 @export var ai: EnemyAI;
 
+@export_category("Visuals")
+## Blinking speed in cycles per second
+@export var blinking_speed := 0.5;
+## Minimum alpha value when oscillating
+@export var alpha_min := 0.3;
+
 var pos: Vector2i:
 	set(new_pos):  set_pos(new_pos); pos = new_pos;
 var is_animating := false;
+var blinking := false;
+var blink_accumulator := 0.0;
 
 signal entity_moved(Entity);
 signal entity_captured(Entity);
@@ -36,9 +44,6 @@ func _ready() -> void:
 
 	if Engine.is_editor_hint():
 		return;
-
-	if is_instance_valid(material):
-		material = material.duplicate();
 
 	if not map: await get_tree().create_timer(0.2).timeout;
 
@@ -94,10 +99,6 @@ func capture(target_pos: Vector2i) -> bool:
 	pos = target_pos;
 	entity_moved.emit(self);
 	return true;
-
-func set_player_visual() -> void:
-	if is_instance_valid(material):
-		material.set_shader_parameter("blinking", is_player);
 
 func possess(target_pos: Vector2i) -> bool:
 	# If there's nothing to possess, get outta here with this target position!
@@ -198,23 +199,9 @@ func on_tick() -> void:
 		if target_move:
 			move(target_move);
 
-func _input(event: InputEvent) -> void:
-	if event is not InputEventKey: return;
-
-	if is_player:
-		var legal_moves := get_legal_moves();
-		var dir := Vector2i.ZERO;
-
-		if event.is_action_pressed("ui_up"):
-			dir = Vector2i.UP;
-		elif event.is_action_pressed("ui_down"):
-			dir = Vector2i.DOWN;
-		elif event.is_action_pressed("ui_right"):
-			dir = Vector2i.RIGHT;
-		elif event.is_action_pressed("ui_left"):
-			dir = Vector2i.LEFT;
-
-		for move in legal_moves:
-			if move.get_offset() == dir:
-				move(move);
-				map.hide_all_select();
+func _process(delta: float) -> void:
+	if (is_player):
+		blink_accumulator = wrapf(blink_accumulator + delta, 0, blinking_speed);
+		modulate.a = alpha_min + (1 - alpha_min) * 0.5 * (1 + sin(blink_accumulator * TAU / blinking_speed));
+	else:
+		modulate.a = 1.0;

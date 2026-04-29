@@ -31,3 +31,12 @@ func set_level_unlocked(world_id: int, level_id: int, is_unlocked: bool) -> void
 	file.set_value("world_" + str(world_id), "level_" + str(level_id) + "_unlocked", is_unlocked);
 	if auto_save:
 		save_game();
+
+func get_player_worldmap_pos(world_id: int) -> Vector2i:
+	if file.has_section_key("player", "world_" + str(world_id) + "_pos"):
+		return file.get_value("player", "world_" + str(world_id) + "_pos");
+	return Vector2i(4, 4);
+	
+func set_player_worldmap_pos(world_id: int, pos: Vector2i) -> void:
+	file.set_value("player", "world_" + str(world_id) + "_pos", pos);
+	

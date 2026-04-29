@@ -1,40 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://do887kf5juusi"]
+[gd_scene format=3 uid="uid://do887kf5juusi"]
 
 [ext_resource type="Texture2D" uid="uid://40swdqke7l11" path="res://assets/chess_spreadsheet.png" id="1_8w2ae"]
-[ext_resource type="Script" path="res://scripts/cannon.gd" id="2_ck4fy"]
+[ext_resource type="Script" uid="uid://d24lovw287vha" path="res://scripts/cannon.gd" id="2_ck4fy"]
 
-[sub_resource type="Shader" id="Shader_0er5p"]
-code = "shader_type canvas_item;
-
-uniform bool fill_background = false;
-uniform vec4 background_fill_color : source_color = vec4(0.071,0.071,0.071,1.0);
-
-uniform bool blinking = false;
-uniform bool blink_smoother = true;
-uniform float blink_speed : hint_range(0.001, 100.0, 0.001) = 1.0;
-
-void fragment() {
-	if (blinking == true){
-		COLOR.a *= float(!blink_smoother)*float(int(floor(TIME*blink_speed)) % 2) + float(blink_smoother)*sin(((TIME*blink_speed)-floor(TIME*blink_speed))*PI);
-	}
-
-	if (fill_background == true){
-		vec4 temp_color = COLOR;
-		temp_color.a = 1.0;
-		COLOR.rgba = (1.0-COLOR.a)*background_fill_color+(COLOR.a)*temp_color;
-	}
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7jslm"]
-shader = SubResource("Shader_0er5p")
-shader_parameter/fill_background = false
-shader_parameter/background_fill_color = Color(0.071, 0.071, 0.071, 1)
-shader_parameter/blinking = false
-shader_parameter/blink_smoother = true
-shader_parameter/blink_speed = 1.0
-
-[node name="Cannon" type="Sprite2D"]
-material = SubResource("ShaderMaterial_7jslm")
+[node name="Cannon" type="Sprite2D" unique_id=1236452700]
 texture = ExtResource("1_8w2ae")
 offset = Vector2(4, 4)
 hframes = 45

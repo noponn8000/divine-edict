@@ -1,9 +1,8 @@
-[gd_scene load_steps=12 format=4 uid="uid://c7g0nxpaw2den"]
+[gd_scene format=4 uid="uid://c7g0nxpaw2den"]
 
-[ext_resource type="Script" path="res://scripts/map.gd" id="1_y4b7p"]
+[ext_resource type="Script" uid="uid://d16n1tckwmc77" path="res://scripts/map.gd" id="1_y4b7p"]
 [ext_resource type="TileSet" uid="uid://jsbqeboy88yk" path="res://resources/tileset.tres" id="2_y408j"]
 [ext_resource type="PackedScene" uid="uid://ka16v6b4ig1v" path="res://scenes/piece_template.tscn" id="3_c2qbn"]
-[ext_resource type="Shader" path="res://scripts/shaders/multipurpose_highlighter.gdshader" id="4_ncgm1"]
 [ext_resource type="PackedScene" uid="uid://bdqgf3qkwi2vo" path="res://scenes/pawn.tscn" id="5_gt17x"]
 [ext_resource type="PackedScene" uid="uid://do887kf5juusi" path="res://scenes/cannon.tscn" id="7_7y24x"]
 [ext_resource type="PackedScene" uid="uid://d08nk4rwxy2aa" path="res://scenes/spike_trap.tscn" id="7_r7eef"]
@@ -11,16 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://8fmc0pyksrv6" path="res://assets/capture.wav" id="10_1gpty"]
 [ext_resource type="PackedScene" uid="uid://dyd54buu512qn" path="res://scenes/hud.tscn" id="10_xhipu"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ddoc3"]
-shader = ExtResource("4_ncgm1")
-shader_parameter/fill_background = false
-shader_parameter/background_fill_color = Color(0.071, 0.071, 0.071, 1)
-shader_parameter/blinking = false
-shader_parameter/blink_smoother = true
-shader_parameter/blink_speed = 1.0
-shader_parameter/minimum_visibility = 0.5
-
-[node name="Map" type="Node2D" node_paths=PackedStringArray("entity_parent_node", "hud", "highlights", "inbetween_highlights", "walls")]
+[node name="Map" type="Node2D" unique_id=1607020244 node_paths=PackedStringArray("entity_parent_node", "hud", "highlights", "inbetween_highlights", "walls")]
 script = ExtResource("1_y4b7p")
 entity_parent_node = NodePath("Entities")
 hud = NodePath("CanvasLayer")
@@ -28,152 +18,137 @@ highlights = NodePath("Highlights")
 inbetween_highlights = NodePath("InbetweenHighlights")
 walls = NodePath("Walls")
 
-[node name="Ground" type="TileMapLayer" parent="."]
+[node name="Ground" type="TileMapLayer" parent="." unique_id=531112376]
 use_parent_material = true
 tile_map_data = PackedByteArray("AAABAAEAAAAZAAAAAAABAAIAAAACAAAAAAABAAMAAAACAAAAAAABAAQAAAACAAAAAAABAAUAAAACAAAAAAABAAYAAAACAAAAAAABAAcAAAACAAAAAAABAAgAAAACAAAAAAABAAkAAAACAAAAAAABAAoAAAACAAAAAAABAAsAAAACAAAAAAABAAwAAAACAAAAAAABAA0AAAACAAAAAAABAA4AAAACAAAAAAACAAEAAAAZAAAAAAACAAIAAAACAAAAAAACAAMAAAACAAAAAAACAAQAAAACAAAAAAACAAUAAAACAAAAAAACAAYAAAACAAAAAAACAAcAAAACAAAAAAACAAgAAAACAAAAAAACAAkAAAACAAAAAAACAAoAAAACAAAAAAACAAsAAAACAAAAAAACAAwAAAACAAAAAAACAA0AAAACAAAAAAACAA4AAAACAAAAAAADAAEAAAAZAAAAAAADAAIAAAACAAAAAAADAAMAAAACAAAAAAADAAQAAAACAAAAAAADAAUAAAACAAAAAAADAAYAAAACAAAAAAADAAcAAAACAAAAAAADAAgAAAACAAAAAAADAAkAAAACAAAAAAADAAoAAAACAAAAAAADAAsAAAACAAAAAAADAAwAAAACAAAAAAADAA0AAAACAAAAAAADAA4AAAACAAAAAAAEAAEAAAAZAAAAAAAEAAIAAAACAAAAAAAEAAMAAAACAAAAAAAEAAQAAAACAAAAAAAEAAUAAAACAAAAAAAEAAYAAAACAAAAAAAEAAcAAAACAAAAAAAEAAgAAAACAAAAAAAEAAkAAAACAAAAAAAEAAoAAAACAAAAAAAEAAsAAAACAAAAAAAEAAwAAAACAAAAAAAEAA0AAAACAAAAAAAEAA4AAAACAAAAAAAFAAEAAAAZAAAAAAAFAAMAAAACAAAAAAAFAAQAAAACAAAAAAAFAAUAAAACAAAAAAAFAAYAAAACAAAAAAAFAAcAAAACAAAAAAAFAAgAAAACAAAAAAAFAAkAAAACAAAAAAAFAAoAAAACAAAAAAAFAAsAAAACAAAAAAAFAAwAAAACAAAAAAAFAA0AAAACAAAAAAAFAA4AAAACAAAAAAAGAAEAAAAZAAAAAAAGAAMAAAACAAAAAAAGAAQAAAACAAAAAAAGAAUAAAACAAAAAAAGAAYAAAACAAAAAAAGAAcAAAACAAAAAAAGAAgAAAACAAAAAAAGAAkAAAACAAAAAAAGAAoAAAACAAAAAAAGAAsAAAACAAAAAAAGAAwAAAACAAAAAAAGAA0AAAACAAAAAAAGAA4AAAACAAAAAAAHAAEAAAAZAAAAAAAHAAIAAAACAAAAAAAHAAMAAAACAAAAAAAHAAQAAAACAAAAAAAHAAUAAAACAAAAAAAHAAYAAAACAAAAAAAHAAcAAAACAAAAAAAHAAgAAAACAAAAAAAHAAkAAAACAAAAAAAHAAoAAAACAAAAAAAHAAsAAAACAAAAAAAHAAwAAAACAAAAAAAHAA0AAAACAAAAAAAHAA4AAAACAAAAAAAIAAEAAAAZAAAAAAAIAAIAAAACAAAAAAAIAAMAAAACAAAAAAAIAAQAAAACAAAAAAAIAAUAAAACAAAAAAAIAAYAAAACAAAAAAAIAAcAAAACAAAAAAAIAAgAAAACAAAAAAAIAAkAAAACAAAAAAAIAAoAAAACAAAAAAAIAAsAAAACAAAAAAAIAAwAAAACAAAAAAAIAA0AAAACAAAAAAAIAA4AAAACAAAAAAAJAAEAAAAZAAAAAAAJAAIAAAACAAAAAAAJAAMAAAACAAAAAAAJAAQAAAACAAAAAAAJAAUAAAACAAAAAAAJAAYAAAACAAAAAAAJAAcAAAACAAAAAAAJAAgAAAACAAAAAAAJAAkAAAACAAAAAAAJAAoAAAACAAAAAAAJAAsAAAACAAAAAAAJAAwAAAACAAAAAAAJAA0AAAACAAAAAAAJAA4AAAACAAAAAAAKAAEAAAAZAAAAAAAKAAIAAAACAAAAAAAKAAMAAAACAAAAAAAKAAQAAAACAAAAAAAKAAUAAAACAAAAAAAKAAYAAAACAAAAAAAKAAcAAAACAAAAAAAKAAgAAAACAAAAAAAKAAkAAAACAAAAAAAKAAoAAAACAAAAAAAKAAsAAAACAAAAAAAKAAwAAAACAAAAAAAKAA0AAAACAAAAAAAKAA4AAAACAAAAAAALAAEAAAAZAAAAAAALAAIAAAACAAAAAAALAAMAAAACAAAAAAALAAQAAAACAAAAAAALAAUAAAACAAAAAAALAAYAAAACAAAAAAALAAcAAAACAAAAAAALAAgAAAACAAAAAAALAAkAAAACAAAAAAALAAoAAAACAAAAAAALAAsAAAACAAAAAAALAAwAAAACAAAAAAALAA0AAAACAAAAAAALAA4AAAACAAAAAAAMAAEAAAAZAAAAAAAMAAIAAAACAAAAAAAMAAMAAAACAAAAAAAMAAQAAAACAAAAAAAMAAUAAAACAAAAAAAMAAYAAAACAAAAAAAMAAcAAAACAAAAAAAMAAgAAAACAAAAAAAMAAkAAAACAAAAAAAMAAoAAAACAAAAAAAMAAsAAAACAAAAAAAMAAwAAAACAAAAAAAMAA0AAAACAAAAAAAMAA4AAAACAAAAAAANAAEAAAAZAAAAAAANAAIAAAACAAAAAAANAAMAAAACAAAAAAANAAQAAAACAAAAAAANAAUAAAACAAAAAAANAAYAAAACAAAAAAANAAcAAAACAAAAAAANAAgAAAACAAAAAAANAAkAAAACAAAAAAANAAoAAAACAAAAAAANAAsAAAACAAAAAAANAAwAAAACAAAAAAANAA0AAAACAAAAAAANAA4AAAACAAAAAAAOAAEAAAAZAAAAAAAOAAIAAAACAAAAAAAOAAMAAAACAAAAAAAOAAQAAAACAAAAAAAOAAUAAAACAAAAAAAOAAYAAAACAAAAAAAOAAcAAAACAAAAAAAOAAgAAAACAAAAAAAOAAkAAAACAAAAAAAOAAoAAAACAAAAAAAOAAsAAAACAAAAAAAOAAwAAAACAAAAAAAOAA0AAAACAAAAAAAOAA4AAAACAAAAAAAFAAIAAAACAAAAAAAGAAIAAAACAAAAAAA=")
 tile_set = ExtResource("2_y408j")
 
-[node name="Walls" type="TileMapLayer" parent="."]
+[node name="Walls" type="TileMapLayer" parent="." unique_id=622347588]
 use_parent_material = true
 tile_map_data = PackedByteArray("AAAAAAAAAAABAAAAAAABAAAAAAABAAAAAAACAAAAAAABAAAAAAADAAAAAAABAAAAAAAEAAAAAAABAAAAAAAFAAAAAAABAAAAAAAGAAAAAAABAAAAAAAHAAAAAAABAAAAAAAIAAAAAAABAAAAAAAJAAAAAAABAAAAAAAKAAAAAAABAAAAAAALAAAAAAABAAAAAAAAAAEAAAABAAAAAAAAAAIAAAABAAAAAAAAAAMAAAABAAAAAAAAAAQAAAABAAAAAAAAAAUAAAABAAAAAAAAAAYAAAABAAAAAAAAAAcAAAABAAAAAAAAAAgAAAABAAAAAAAAAAkAAAABAAAAAAAAAAoAAAABAAAAAAAAAAsAAAABAAAAAAAAAAwAAAABAAAAAAAAAA0AAAABAAAAAAAAAA4AAAABAAAAAAAAAA8AAAABAAAAAAABAA8AAAABAAAAAAACAA8AAAABAAAAAAADAA8AAAABAAAAAAAEAA8AAAABAAAAAAAFAA8AAAABAAAAAAAGAA8AAAABAAAAAAAHAA8AAAABAAAAAAAIAA8AAAABAAAAAAAJAA8AAAABAAAAAAAKAA8AAAABAAAAAAALAA8AAAABAAAAAAAMAAAAAAABAAAAAAAMAA8AAAABAAAAAAANAAAAAAABAAAAAAANAA8AAAABAAAAAAAOAAAAAAABAAAAAAAOAA8AAAABAAAAAAAPAAAAAAABAAAAAAAPAAEAAAABAAAAAAAPAAIAAAABAAAAAAAPAAMAAAABAAAAAAAPAAQAAAABAAAAAAAPAAUAAAABAAAAAAAPAAYAAAABAAAAAAAPAAcAAAABAAAAAAAPAAgAAAABAAAAAAAPAAkAAAABAAAAAAAPAAoAAAABAAAAAAAPAAsAAAABAAAAAAAPAAwAAAABAAAAAAAPAA0AAAABAAAAAAAPAA4AAAABAAAAAAAPAA8AAAABAAAAAAAAABAAAAABAAAAAAABABAAAAABAAAAAAACABAAAAABAAAAAAADABAAAAABAAAAAAAEABAAAAABAAAAAAAFABAAAAABAAAAAAAGABAAAAABAAAAAAAHABAAAAABAAAAAAAIABAAAAABAAAAAAAJABAAAAABAAAAAAAKABAAAAABAAAAAAALABAAAAABAAAAAAAMABAAAAABAAAAAAANABAAAAABAAAAAAAOABAAAAABAAAAAAAPABAAAAABAAAAAAAQABAAAAABAAAAAAAQAA8AAAABAAAAAAAQAA4AAAABAAAAAAAQAA0AAAABAAAAAAAQAAwAAAABAAAAAAAQAAsAAAABAAAAAAAQAAoAAAABAAAAAAAQAAkAAAABAAAAAAAQAAgAAAABAAAAAAAQAAcAAAABAAAAAAAQAAYAAAABAAAAAAAQAAUAAAABAAAAAAAQAAQAAAABAAAAAAAQAAMAAAABAAAAAAAQAAIAAAABAAAAAAAQAAEAAAABAAAAAAAQAAAAAAABAAAAAAAPAP//AAABAAAAAAAQAP//AAABAAAAAAAOAP//AAABAAAAAAANAP//AAABAAAAAAAMAP//AAABAAAAAAALAP//AAABAAAAAAAKAP//AAABAAAAAAAJAP//AAABAAAAAAAIAP//AAABAAAAAAAHAP//AAABAAAAAAAGAP//AAABAAAAAAAFAP//AAABAAAAAAAEAP//AAABAAAAAAADAP//AAABAAAAAAACAP//AAABAAAAAAABAP//AAABAAAAAAAAAP//AAABAAAAAAD/////AAABAAAAAAD//wAAAAABAAAAAAD//wEAAAABAAAAAAD//wIAAAABAAAAAAD//wMAAAABAAAAAAD//wQAAAABAAAAAAD//wUAAAABAAAAAAD//wYAAAABAAAAAAD//wcAAAABAAAAAAD//wgAAAABAAAAAAD//wkAAAABAAAAAAD//woAAAABAAAAAAD//wsAAAABAAAAAAD//wwAAAABAAAAAAD//w0AAAABAAAAAAD//w4AAAABAAAAAAD//w8AAAABAAAAAAD//xAAAAABAAAAAAD+/xEAAAABAAAAAAD+/xAAAAABAAAAAAD+/w8AAAABAAAAAAD+/w4AAAABAAAAAAD+/w0AAAABAAAAAAD+/wwAAAABAAAAAAD+/wsAAAABAAAAAAD+/woAAAABAAAAAAD+/wkAAAABAAAAAAD+/wgAAAABAAAAAAD+/wcAAAABAAAAAAD+/wYAAAABAAAAAAD+/wUAAAABAAAAAAD+/wQAAAABAAAAAAD+/wMAAAABAAAAAAD+/wIAAAABAAAAAAD+/wEAAAABAAAAAAD+/wAAAAABAAAAAAD+////AAABAAAAAAD+//7/AAABAAAAAAD///7/AAABAAAAAAAAAP7/AAABAAAAAAABAP7/AAABAAAAAAACAP7/AAABAAAAAAADAP7/AAABAAAAAAAEAP7/AAABAAAAAAAFAP7/AAABAAAAAAAGAP7/AAABAAAAAAAHAP7/AAABAAAAAAAIAP7/AAABAAAAAAAJAP7/AAABAAAAAAAKAP7/AAABAAAAAAALAP7/AAABAAAAAAAMAP7/AAABAAAAAAANAP7/AAABAAAAAAAOAP7/AAABAAAAAAAPAP7/AAABAAAAAAAQAP7/AAABAAAAAAARAP7/AAABAAAAAAARAP//AAABAAAAAAARAAAAAAABAAAAAAARAAEAAAABAAAAAAARAAIAAAABAAAAAAARAAMAAAABAAAAAAARAAQAAAABAAAAAAARAAUAAAABAAAAAAARAAYAAAABAAAAAAARAAcAAAABAAAAAAARAAgAAAABAAAAAAARAAkAAAABAAAAAAARAAoAAAABAAAAAAARAAsAAAABAAAAAAARAAwAAAABAAAAAAARAA0AAAABAAAAAAARAA4AAAABAAAAAAARAA8AAAABAAAAAAARABAAAAABAAAAAAARABEAAAABAAAAAAAQABEAAAABAAAAAAAPABEAAAABAAAAAAAOABEAAAABAAAAAAANABEAAAABAAAAAAAMABEAAAABAAAAAAALABEAAAABAAAAAAAKABEAAAABAAAAAAAJABEAAAABAAAAAAAIABEAAAABAAAAAAAHABEAAAABAAAAAAAGABEAAAABAAAAAAAFABEAAAABAAAAAAAEABEAAAABAAAAAAADABEAAAABAAAAAAACABEAAAABAAAAAAABABEAAAABAAAAAAAAABEAAAABAAAAAAD//xEAAAABAAAAAAALAAsAAAAHAAAAAAAEAAwAAAAHAAAAAAAEAAsAAAAHAAAAAAAEAAoAAAAHAAAAAAAEAAkAAAAHAAAAAAAEAAgAAAAHAAAAAAAEAAcAAAAHAAAAAAAEAAYAAAAHAAAAAAAEAAUAAAAHAAAAAAAEAAQAAAAHAAAAAAAEAAMAAAAHAAAAAAAFAAMAAAAHAAAAAAAFAAQAAAAHAAAAAAAFAAUAAAAHAAAAAAAFAAYAAAAHAAAAAAAFAAcAAAAHAAAAAAAFAAgAAAAHAAAAAAAFAAkAAAAHAAAAAAAFAAoAAAAHAAAAAAAFAAsAAAAHAAAAAAAFAAwAAAAHAAAAAAAKAAwAAAAHAAAAAAAKAAsAAAAHAAAAAAAKAAoAAAAHAAAAAAAKAAkAAAAHAAAAAAAKAAgAAAAHAAAAAAAKAAcAAAAHAAAAAAAKAAYAAAAHAAAAAAAKAAUAAAAHAAAAAAAKAAQAAAAHAAAAAAAKAAMAAAAHAAAAAAALAAMAAAAHAAAAAAALAAQAAAAHAAAAAAALAAUAAAAHAAAAAAALAAYAAAAHAAAAAAALAAwAAAAHAAAAAAALAAcAAAAHAAAAAAALAAgAAAAHAAAAAAALAAkAAAAHAAAAAAALAAoAAAAHAAAAAAA=")
 tile_set = ExtResource("2_y408j")
 
-[node name="Highlights" type="TileMapLayer" parent="."]
+[node name="Highlights" type="TileMapLayer" parent="." unique_id=868448386]
 use_parent_material = true
 tile_set = ExtResource("2_y408j")
 
-[node name="InbetweenHighlights" type="TileMapLayer" parent="."]
+[node name="InbetweenHighlights" type="TileMapLayer" parent="." unique_id=724345739]
 use_parent_material = true
 tile_set = ExtResource("2_y408j")
 
-[node name="Entities" type="Node2D" parent="."]
+[node name="Entities" type="Node2D" parent="." unique_id=740498170]
 
-[node name="King" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("3_c2qbn")]
-material = SubResource("ShaderMaterial_ddoc3")
+[node name="King" parent="Entities" unique_id=160607961 node_paths=PackedStringArray("map") instance=ExtResource("3_c2qbn")]
+modulate = Color(1, 1, 1, 0.30450934)
 position = Vector2(80, 112)
-hframes = 45
 map = NodePath("../..")
 
-[node name="Pawn" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("5_gt17x")]
-material = SubResource("ShaderMaterial_ddoc3")
+[node name="Pawn" parent="Entities" unique_id=767600154 node_paths=PackedStringArray("map") instance=ExtResource("5_gt17x")]
 position = Vector2(56, 16)
-hframes = 45
 map = NodePath("../..")
 
-[node name="Pawn2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("5_gt17x")]
-material = SubResource("ShaderMaterial_ddoc3")
+[node name="Pawn2" parent="Entities" unique_id=1855115094 node_paths=PackedStringArray("map") instance=ExtResource("5_gt17x")]
 position = Vector2(64, 16)
-hframes = 45
 map = NodePath("../..")
 
-[node name="Pawn5" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("5_gt17x")]
-material = SubResource("ShaderMaterial_ddoc3")
+[node name="Pawn5" parent="Entities" unique_id=115953535 node_paths=PackedStringArray("map") instance=ExtResource("5_gt17x")]
 position = Vector2(16, 24)
-hframes = 45
 map = NodePath("../..")
 
-[node name="Pawn6" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("5_gt17x")]
-material = SubResource("ShaderMaterial_ddoc3")
+[node name="Pawn6" parent="Entities" unique_id=691006426 node_paths=PackedStringArray("map") instance=ExtResource("5_gt17x")]
 position = Vector2(104, 24)
-hframes = 45
 map = NodePath("../..")
 
-[node name="Trap" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_r7eef")]
-material = SubResource("ShaderMaterial_ddoc3")
+[node name="Trap" parent="Entities" unique_id=1860739801 node_paths=PackedStringArray("map") instance=ExtResource("7_r7eef")]
+material = null
 position = Vector2(16, 64)
 map = NodePath("../..")
 is_king = true
 
-[node name="Trap2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_r7eef")]
-material = SubResource("ShaderMaterial_ddoc3")
+[node name="Trap2" parent="Entities" unique_id=2033492759 node_paths=PackedStringArray("map") instance=ExtResource("7_r7eef")]
+material = null
 position = Vector2(16, 56)
 map = NodePath("../..")
 is_king = true
 
-[node name="Trap3" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_r7eef")]
-material = SubResource("ShaderMaterial_ddoc3")
+[node name="Trap3" parent="Entities" unique_id=1766917050 node_paths=PackedStringArray("map") instance=ExtResource("7_r7eef")]
+material = null
 position = Vector2(56, 56)
 map = NodePath("../..")
 is_king = true
 
-[node name="Trap4" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_r7eef")]
-material = SubResource("ShaderMaterial_ddoc3")
+[node name="Trap4" parent="Entities" unique_id=258886062 node_paths=PackedStringArray("map") instance=ExtResource("7_r7eef")]
+material = null
 position = Vector2(56, 64)
 map = NodePath("../..")
 is_king = true
 
-[node name="Trap5" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_r7eef")]
-material = SubResource("ShaderMaterial_ddoc3")
+[node name="Trap5" parent="Entities" unique_id=852092026 node_paths=PackedStringArray("map") instance=ExtResource("7_r7eef")]
+material = null
 position = Vector2(64, 56)
 map = NodePath("../..")
 is_king = true
 
-[node name="Trap6" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_r7eef")]
-material = SubResource("ShaderMaterial_ddoc3")
+[node name="Trap6" parent="Entities" unique_id=1783503046 node_paths=PackedStringArray("map") instance=ExtResource("7_r7eef")]
+material = null
 position = Vector2(64, 64)
 map = NodePath("../..")
 is_king = true
 
-[node name="Trap7" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_r7eef")]
-material = SubResource("ShaderMaterial_ddoc3")
+[node name="Trap7" parent="Entities" unique_id=2030882467 node_paths=PackedStringArray("map") instance=ExtResource("7_r7eef")]
+material = null
 position = Vector2(104, 56)
 map = NodePath("../..")
 is_king = true
 
-[node name="Trap8" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_r7eef")]
-material = SubResource("ShaderMaterial_ddoc3")
+[node name="Trap8" parent="Entities" unique_id=121059565 node_paths=PackedStringArray("map") instance=ExtResource("7_r7eef")]
+material = null
 position = Vector2(104, 64)
 map = NodePath("../..")
 is_king = true
 
-[node name="Cannon" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_7y24x")]
+[node name="Cannon" parent="Entities" unique_id=1853747905 node_paths=PackedStringArray("map") instance=ExtResource("7_7y24x")]
 position = Vector2(48, 40)
-rotation = -3.14159
-offset = Vector2(-4, -4)
-hframes = 45
+rotation = -3.1415927
+offset = Vector2(-4.0000005, -3.9999998)
 fire_direction = Vector2i(1, 0)
 map = NodePath("../..")
 
-[node name="Cannon2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_7y24x")]
+[node name="Cannon2" parent="Entities" unique_id=23297547 node_paths=PackedStringArray("map") instance=ExtResource("7_7y24x")]
 position = Vector2(72, 80)
-hframes = 45
 map = NodePath("../..")
 
-[node name="Cannon3" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_7y24x")]
+[node name="Cannon3" parent="Entities" unique_id=2093481378 node_paths=PackedStringArray("map") instance=ExtResource("7_7y24x")]
 position = Vector2(112, 88)
-hframes = 45
 map = NodePath("../..")
 
-[node name="Cannon4" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_7y24x")]
+[node name="Cannon4" parent="Entities" unique_id=1594739022 node_paths=PackedStringArray("map") instance=ExtResource("7_7y24x")]
 position = Vector2(112, 40)
-hframes = 45
 map = NodePath("../..")
 
-[node name="Cannon5" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_7y24x")]
+[node name="Cannon5" parent="Entities" unique_id=2069746861 node_paths=PackedStringArray("map") instance=ExtResource("7_7y24x")]
 position = Vector2(8, 40)
-rotation = -3.14159
-offset = Vector2(-4, -4)
-hframes = 45
+rotation = -3.1415927
+offset = Vector2(-4.0000005, -3.9999998)
 fire_direction = Vector2i(1, 0)
 map = NodePath("../..")
 
-[node name="Cannon6" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("7_7y24x")]
+[node name="Cannon6" parent="Entities" unique_id=1766419804 node_paths=PackedStringArray("map") instance=ExtResource("7_7y24x")]
 position = Vector2(8, 88)
-rotation = -3.14159
-offset = Vector2(-4, -4)
-hframes = 45
+rotation = -3.1415927
+offset = Vector2(-4.0000005, -3.9999998)
 fire_direction = Vector2i(1, 0)
 map = NodePath("../..")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2050606873]
 position = Vector2(64, 64)
 
-[node name="StepAudio" type="AudioStreamPlayer" parent="."]
+[node name="StepAudio" type="AudioStreamPlayer" parent="." unique_id=74072658]
 unique_name_in_owner = true
 stream = ExtResource("9_kht2v")
 
-[node name="CaptureAudio" type="AudioStreamPlayer" parent="."]
+[node name="CaptureAudio" type="AudioStreamPlayer" parent="." unique_id=1463408838]
 unique_name_in_owner = true
 stream = ExtResource("10_1gpty")
 
-[node name="CanvasLayer" parent="." instance=ExtResource("10_xhipu")]
+[node name="CanvasLayer" parent="." unique_id=1884166408 instance=ExtResource("10_xhipu")]

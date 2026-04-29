@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://b2thqldgf8ykt"]
+[gd_scene format=3 uid="uid://b2thqldgf8ykt"]
 
-[ext_resource type="Script" path="res://scripts/level_loader.gd" id="1_01vle"]
+[ext_resource type="Script" uid="uid://cr151sfn5h4sm" path="res://scripts/level_loader.gd" id="1_01vle"]
 [ext_resource type="Texture2D" uid="uid://bn2ay12ter12u" path="res://assets/level_anim.png" id="1_qumej"]
 
 [sub_resource type="Animation" id="Animation_4aloh"]
@@ -37,11 +37,11 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wm25e"]
 _data = {
-"RESET": SubResource("Animation_4aloh"),
-"activate": SubResource("Animation_qrj5q")
+&"RESET": SubResource("Animation_4aloh"),
+&"activate": SubResource("Animation_qrj5q")
 }
 
-[node name="LevelLoader" type="Sprite2D" node_paths=PackedStringArray("animation_player")]
+[node name="LevelLoader" type="Sprite2D" unique_id=1093111764 node_paths=PackedStringArray("animation_player")]
 modulate = Color(1, 1, 1, 0.831373)
 z_index = -1
 texture = ExtResource("1_qumej")
@@ -51,7 +51,5 @@ hframes = 5
 script = ExtResource("1_01vle")
 animation_player = NodePath("AnimationPlayer")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_wm25e")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1164774152]
+libraries/ = SubResource("AnimationLibrary_wm25e")

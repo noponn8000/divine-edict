@@ -1,106 +1,59 @@
-[gd_scene load_steps=15 format=3 uid="uid://ceq4lubmf3s4y"]
+[gd_scene format=3 uid="uid://ceq4lubmf3s4y"]
 
 [ext_resource type="Texture2D" uid="uid://40swdqke7l11" path="res://assets/chess_spreadsheet.png" id="1_5uuki"]
-[ext_resource type="Script" path="res://scripts/entity.gd" id="2_yixvt"]
-[ext_resource type="Script" path="res://scripts/move.gd" id="3_tms1b"]
-[ext_resource type="Script" path="res://scripts/pathfinding_ai.gd" id="4_bolfu"]
-
-[sub_resource type="Shader" id="Shader_0er5p"]
-code = "shader_type canvas_item;
-
-uniform bool fill_background = false;
-uniform vec4 background_fill_color : source_color = vec4(0.071,0.071,0.071,1.0);
-
-uniform bool blinking = false;
-uniform bool blink_smoother = true;
-uniform float blink_speed : hint_range(0.001, 100.0, 0.001) = 1.0;
-
-void fragment() {
-	if (blinking == true){
-		COLOR.a *= float(!blink_smoother)*float(int(floor(TIME*blink_speed)) % 2) + float(blink_smoother)*sin(((TIME*blink_speed)-floor(TIME*blink_speed))*PI);
-	}
-
-	if (fill_background == true){
-		vec4 temp_color = COLOR;
-		temp_color.a = 1.0;
-		COLOR.rgba = (1.0-COLOR.a)*background_fill_color+(COLOR.a)*temp_color;
-	}
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5yauk"]
-shader = SubResource("Shader_0er5p")
-shader_parameter/fill_background = false
-shader_parameter/background_fill_color = Color(0.071, 0.071, 0.071, 1)
-shader_parameter/blinking = false
-shader_parameter/blink_smoother = true
-shader_parameter/blink_speed = 1.0
+[ext_resource type="Script" uid="uid://bp0s3a2c6uh11" path="res://scripts/entity.gd" id="2_yixvt"]
+[ext_resource type="Script" uid="uid://dx7py3lvkmerk" path="res://scripts/move.gd" id="3_tms1b"]
+[ext_resource type="Script" uid="uid://2s6gt5kypq34" path="res://scripts/pathfinding_ai.gd" id="4_bolfu"]
 
 [sub_resource type="Resource" id="Resource_8mwb6"]
 script = ExtResource("3_tms1b")
-sliding = false
 offset = Vector2i(-2, -1)
-slide_direction = Vector2i(0, 0)
 floating = true
 can_capture = true
 
 [sub_resource type="Resource" id="Resource_6jjws"]
 script = ExtResource("3_tms1b")
-sliding = false
 offset = Vector2i(2, -1)
-slide_direction = Vector2i(0, 0)
 floating = true
 can_capture = true
 
 [sub_resource type="Resource" id="Resource_sjpn3"]
 script = ExtResource("3_tms1b")
-sliding = false
 offset = Vector2i(-2, 1)
-slide_direction = Vector2i(0, 0)
 floating = true
 can_capture = true
 
 [sub_resource type="Resource" id="Resource_uh0st"]
 script = ExtResource("3_tms1b")
-sliding = false
 offset = Vector2i(2, 1)
-slide_direction = Vector2i(0, 0)
 floating = true
 can_capture = true
 
 [sub_resource type="Resource" id="Resource_3rtnf"]
 script = ExtResource("3_tms1b")
-sliding = false
 offset = Vector2i(1, 2)
-slide_direction = Vector2i(0, 0)
 floating = true
 can_capture = true
 
 [sub_resource type="Resource" id="Resource_quatr"]
 script = ExtResource("3_tms1b")
-sliding = false
 offset = Vector2i(-1, -2)
-slide_direction = Vector2i(0, 0)
 floating = true
 can_capture = true
 
 [sub_resource type="Resource" id="Resource_kdmkp"]
 script = ExtResource("3_tms1b")
-sliding = false
 offset = Vector2i(-1, 2)
-slide_direction = Vector2i(0, 0)
 floating = true
 can_capture = true
 
 [sub_resource type="Resource" id="Resource_ata1o"]
 script = ExtResource("3_tms1b")
-sliding = false
 offset = Vector2i(1, -2)
-slide_direction = Vector2i(0, 0)
 floating = true
 can_capture = true
 
-[node name="Horse" type="Sprite2D" node_paths=PackedStringArray("ai")]
-material = SubResource("ShaderMaterial_5yauk")
+[node name="Horse" type="Sprite2D" unique_id=1422330287 node_paths=PackedStringArray("ai")]
 position = Vector2(40, 88)
 texture = ExtResource("1_5uuki")
 centered = false
@@ -111,6 +64,6 @@ moves = Array[ExtResource("3_tms1b")]([SubResource("Resource_8mwb6"), SubResourc
 is_ai_controlled = true
 ai = NodePath("PathfindingAI")
 
-[node name="PathfindingAI" type="Node" parent="." node_paths=PackedStringArray("parent")]
+[node name="PathfindingAI" type="Node" parent="." unique_id=1181619529 node_paths=PackedStringArray("parent")]
 script = ExtResource("4_bolfu")
 parent = NodePath("..")

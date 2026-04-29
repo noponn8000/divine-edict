@@ -1,27 +1,101 @@
-[gd_scene load_steps=10 format=3 uid="uid://d1tpcp3tk75mx"]
+[gd_scene format=3 uid="uid://d1tpcp3tk75mx"]
 
-[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1_srdju"]
-[ext_resource type="Texture2D" uid="uid://bl7uqtxs6fnhh" path="res://assets/pause_menu_bg.png" id="1_w8rir"]
+[ext_resource type="Script" uid="uid://b6w7g02q08c60" path="res://scripts/pause_menu.gd" id="1_srdju"]
 [ext_resource type="Texture2D" uid="uid://ddbmv5v6xpujo" path="res://assets/buttons/pause_button2.png" id="2_7gbf0"]
+[ext_resource type="Texture2D" uid="uid://obbqoef63j2e" path="res://assets/menu-background.png" id="2_71k7c"]
+[ext_resource type="Texture2D" uid="uid://dkallwc0iii6o" path="res://assets/controls-overlay.png" id="2_88e76"]
 [ext_resource type="Texture2D" uid="uid://db80douu7sd43" path="res://assets/buttons/pause_button3.png" id="3_4f6xy"]
+[ext_resource type="StyleBox" uid="uid://cga8afj8cbcxj" path="res://resources/button_box.tres" id="3_88e76"]
 [ext_resource type="Texture2D" uid="uid://bynk4ee1erghx" path="res://assets/buttons/pause_button1.png" id="4_u2op0"]
-[ext_resource type="Texture2D" uid="uid://bgnixaywwee3t" path="res://assets/buttons/button_background.png" id="4_vs2pb"]
 [ext_resource type="Texture2D" uid="uid://bu4g31gfw4i0x" path="res://assets/buttons/pause_button5.png" id="5_7wtta"]
 [ext_resource type="Texture2D" uid="uid://d0bb6bshu0dr5" path="res://assets/buttons/pointer_knife-sheet.png" id="8_llqq1"]
+[ext_resource type="Script" uid="uid://duigm4ul0kgqh" path="res://scripts/dagger.gd" id="9_knqa7"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_00xuh"]
-texture = ExtResource("4_vs2pb")
+[sub_resource type="Animation" id="Animation_88e76"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [76.0]
+}
 
-[node name="PauseMenu" type="Control"]
+[sub_resource type="Animation" id="Animation_knqa7"]
+resource_name = "stab"
+length = 0.33334002
+step = 0.06666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 0.2, 0.26666668),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.13333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [76.0, 96.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_71k7c"]
+_data = {
+&"RESET": SubResource("Animation_88e76"),
+&"stab": SubResource("Animation_knqa7")
+}
+
+[node name="PauseMenu" type="Control" unique_id=1395459638]
+process_mode = 2
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_srdju")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="BackgroundToBackground" type="ColorRect" parent="." unique_id=1902188062]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.07058824, 0.07058824, 0.07058824, 1)
+
+[node name="Background" type="TextureRect" parent="." unique_id=1674700680]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -34,62 +108,103 @@ offset_right = 64.0
 offset_bottom = 64.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_w8rir")
+mouse_filter = 2
+texture = ExtResource("2_71k7c")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Overlay" type="TextureRect" parent="." unique_id=1018023001]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_88e76")
+
+[node name="ButtonsContainer" type="MarginContainer" parent="." unique_id=128606715]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -25.0
-offset_top = 20.0
-offset_right = -25.0
-offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 2
+theme_override_constants/margin_top = 90
+theme_override_constants/margin_right = 0
 
-[node name="ReturnButtonContainer" type="PanelContainer" parent="VBoxContainer"]
+[node name="VBoxContainer" type="HBoxContainer" parent="ButtonsContainer" unique_id=1489737575]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_styles/panel = SubResource("StyleBoxTexture_00xuh")
+size_flags_vertical = 4
+theme_override_constants/separation = -5
 
-[node name="ReturnButton" type="TextureButton" parent="VBoxContainer/ReturnButtonContainer"]
+[node name="ReturnButtonContainer" type="PanelContainer" parent="ButtonsContainer/VBoxContainer" unique_id=87049716]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 1
+theme_override_styles/panel = ExtResource("3_88e76")
+
+[node name="ReturnButton" type="TextureButton" parent="ButtonsContainer/VBoxContainer/ReturnButtonContainer" unique_id=1339131188]
+unique_name_in_owner = true
 layout_mode = 2
 texture_normal = ExtResource("2_7gbf0")
 stretch_mode = 3
 
-[node name="RestartButtonContainer" type="PanelContainer" parent="VBoxContainer"]
+[node name="RestartButtonContainer" type="PanelContainer" parent="ButtonsContainer/VBoxContainer" unique_id=1296096947]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_styles/panel = SubResource("StyleBoxTexture_00xuh")
+theme_override_styles/panel = ExtResource("3_88e76")
 
-[node name="RestartButton" type="TextureButton" parent="VBoxContainer/RestartButtonContainer"]
+[node name="RestartButton" type="TextureButton" parent="ButtonsContainer/VBoxContainer/RestartButtonContainer" unique_id=1290741657]
+unique_name_in_owner = true
 layout_mode = 2
 texture_normal = ExtResource("3_4f6xy")
 stretch_mode = 3
 
-[node name="WorldMapButtonContainer" type="PanelContainer" parent="VBoxContainer"]
+[node name="WorldMapButtonContainer" type="PanelContainer" parent="ButtonsContainer/VBoxContainer" unique_id=595509915]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_styles/panel = SubResource("StyleBoxTexture_00xuh")
+theme_override_styles/panel = ExtResource("3_88e76")
 
-[node name="WorldMapButton" type="TextureButton" parent="VBoxContainer/WorldMapButtonContainer"]
+[node name="WorldMapButton" type="TextureButton" parent="ButtonsContainer/VBoxContainer/WorldMapButtonContainer" unique_id=577568838]
+unique_name_in_owner = true
 layout_mode = 2
 texture_normal = ExtResource("4_u2op0")
 stretch_mode = 3
 
-[node name="QuitButtonContainer" type="PanelContainer" parent="VBoxContainer"]
+[node name="QuitButtonContainer" type="PanelContainer" parent="ButtonsContainer/VBoxContainer" unique_id=163233220]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_styles/panel = SubResource("StyleBoxTexture_00xuh")
+theme_override_styles/panel = ExtResource("3_88e76")
 
-[node name="QuitButton" type="TextureButton" parent="VBoxContainer/QuitButtonContainer"]
+[node name="QuitButton" type="TextureButton" parent="ButtonsContainer/VBoxContainer/QuitButtonContainer" unique_id=212509379]
+unique_name_in_owner = true
 layout_mode = 2
 texture_normal = ExtResource("5_7wtta")
 stretch_mode = 3
 
-[node name="Sprite2D" type="Sprite2D" parent="VBoxContainer"]
-position = Vector2(79.9, 7.955)
+[node name="Dagger" type="Sprite2D" parent="." unique_id=813094284]
+unique_name_in_owner = true
+position = Vector2(23, 76)
+rotation = -1.5707964
 texture = ExtResource("8_llqq1")
 hframes = 4
+script = ExtResource("9_knqa7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Dagger" unique_id=484039964]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_71k7c")
+
+[connection signal="button_down" from="ButtonsContainer/VBoxContainer/ReturnButtonContainer/ReturnButton" to="." method="_on_return_button_button_down"]
+[connection signal="mouse_entered" from="ButtonsContainer/VBoxContainer/ReturnButtonContainer/ReturnButton" to="." method="_on_return_button_mouse_entered"]
+[connection signal="button_down" from="ButtonsContainer/VBoxContainer/RestartButtonContainer/RestartButton" to="." method="_on_restart_button_button_down"]
+[connection signal="mouse_entered" from="ButtonsContainer/VBoxContainer/RestartButtonContainer/RestartButton" to="." method="_on_restart_button_mouse_entered"]
+[connection signal="button_down" from="ButtonsContainer/VBoxContainer/WorldMapButtonContainer/WorldMapButton" to="." method="_on_world_map_button_button_down"]
+[connection signal="mouse_entered" from="ButtonsContainer/VBoxContainer/WorldMapButtonContainer/WorldMapButton" to="." method="_on_world_map_button_mouse_entered"]
+[connection signal="button_down" from="ButtonsContainer/VBoxContainer/QuitButtonContainer/QuitButton" to="." method="_on_quit_button_button_down"]
+[connection signal="mouse_entered" from="ButtonsContainer/VBoxContainer/QuitButtonContainer/QuitButton" to="." method="_on_quit_button_mouse_entered"]

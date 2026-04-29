@@ -1,6 +1,6 @@
-[gd_scene load_steps=9 format=4 uid="uid://dtp66xb3205nv"]
+[gd_scene format=4 uid="uid://dtp66xb3205nv"]
 
-[ext_resource type="Script" path="res://scripts/map.gd" id="1_k0hl5"]
+[ext_resource type="Script" uid="uid://d16n1tckwmc77" path="res://scripts/map.gd" id="1_k0hl5"]
 [ext_resource type="TileSet" uid="uid://jsbqeboy88yk" path="res://resources/tileset.tres" id="3_5pr1b"]
 [ext_resource type="PackedScene" uid="uid://ka16v6b4ig1v" path="res://scenes/piece_template.tscn" id="4_od2j2"]
 [ext_resource type="Texture2D" uid="uid://cfwbw3px7e2vh" path="res://assets/world_map_1.png" id="6_rktsl"]
@@ -9,9 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://dyd54buu512qn" path="res://scenes/hud.tscn" id="10_wvicp"]
 [ext_resource type="AudioStream" uid="uid://8fmc0pyksrv6" path="res://assets/capture.wav" id="11_ey4q8"]
 
-[node name="Map" type="Node2D" node_paths=PackedStringArray("entity_parent_node", "highlights", "inbetween_highlights", "walls")]
+[node name="Map" type="Node2D" unique_id=1533926474 node_paths=PackedStringArray("entity_parent_node", "hud", "highlights", "inbetween_highlights", "walls")]
 script = ExtResource("1_k0hl5")
 entity_parent_node = NodePath("Entities")
+hud = NodePath("CanvasLayer")
 highlights = NodePath("Highlights")
 inbetween_highlights = NodePath("InbetweenHighlights")
 walls = NodePath("Walls")
@@ -19,68 +20,69 @@ is_world_map = true
 level_id = -1
 next_level_id = -1
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=517927062]
 z_index = -2
 texture = ExtResource("6_rktsl")
 centered = false
 offset = Vector2(-4, -4)
 
-[node name="Ground" type="TileMapLayer" parent="."]
+[node name="Ground" type="TileMapLayer" parent="." unique_id=209029703]
 modulate = Color(0.473976, 0.473976, 0.473976, 1)
 use_parent_material = true
 tile_set = ExtResource("3_5pr1b")
 
-[node name="Walls" type="TileMapLayer" parent="."]
+[node name="Walls" type="TileMapLayer" parent="." unique_id=50421084]
 modulate = Color(1, 1, 1, 0)
 use_parent_material = true
 tile_map_data = PackedByteArray("AAACAAwAAAAHAAAAAAABAAwAAAAHAAAAAAAAAAwAAAAHAAAAAAD//wwAAAAHAAAAAAD//wsAAAAHAAAAAAAAAAsAAAAHAAAAAAD//woAAAAHAAAAAAABAAsAAAAHAAAAAAACAAsAAAAHAAAAAAACAAkAAAAHAAAAAAACAAgAAAAHAAAAAAADAAgAAAAHAAAAAAAEAAgAAAAHAAAAAAAFAAgAAAAHAAAAAAAFAAcAAAAHAAAAAAAFAAYAAAAHAAAAAAAEAAYAAAAHAAAAAAADAAYAAAAHAAAAAAACAAYAAAAHAAAAAAACAAUAAAAHAAAAAAABAAUAAAAHAAAAAAABAAQAAAAHAAAAAAAAAAQAAAAHAAAAAAD//wQAAAAHAAAAAAD//wUAAAAHAAAAAAD//wYAAAAHAAAAAAD//wcAAAAHAAAAAAD//wgAAAAHAAAAAAD//wkAAAAHAAAAAAAAAAgAAAAHAAAAAAAAAAcAAAAHAAAAAAAAAAYAAAAHAAAAAAAAAAUAAAAHAAAAAAABAAYAAAAHAAAAAAABAAcAAAAHAAAAAAABAAgAAAAHAAAAAAACAAcAAAAHAAAAAAADAAcAAAAHAAAAAAAEAAcAAAAHAAAAAAAIAAcAAAAHAAAAAAAIAAgAAAAHAAAAAAAIAAkAAAAHAAAAAAAJAAkAAAAHAAAAAAAKAAkAAAAHAAAAAAALAAkAAAAHAAAAAAALAAgAAAAHAAAAAAAKAAgAAAAHAAAAAAAJAAgAAAAHAAAAAAAJAAcAAAAHAAAAAAAKAAcAAAAHAAAAAAALAAUAAAAHAAAAAAAMAAUAAAAHAAAAAAAMAAYAAAAHAAAAAAAMAAQAAAAHAAAAAAANAAQAAAAHAAAAAAANAAUAAAAHAAAAAAAOAAUAAAAHAAAAAAAOAAQAAAAHAAAAAAAOAAYAAAAHAAAAAAANAAYAAAAHAAAAAAAPAAUAAAAHAAAAAAAPAAQAAAAHAAAAAAAPAAYAAAAHAAAAAAAPAAcAAAAHAAAAAAAOAAcAAAAHAAAAAAANAA0AAAAHAAAAAAAOAA0AAAAHAAAAAAAOAA4AAAAHAAAAAAAPAA4AAAAHAAAAAAAPAA0AAAAHAAAAAAAPAA8AAAAHAAAAAAANAA4AAAAHAAAAAAANAA8AAAAHAAAAAAAMAA8AAAAHAAAAAAAOAA8AAAAHAAAAAAAMAA4AAAAHAAAAAAALAA8AAAAHAAAAAAALAAcAAAAHAAAAAAD//wMAAAAHAAAAAAAAAAMAAAAHAAAAAAANAAMAAAAHAAAAAAAOAAMAAAAHAAAAAAAPAAMAAAAHAAAAAAAPAAgAAAAHAAAAAAAPAAkAAAAHAAAAAAAPAAoAAAAHAAAAAAAPAAsAAAAHAAAAAAAPAAwAAAAHAAAAAAAKAA8AAAAHAAAAAAAJAA8AAAAHAAAAAAAIAA8AAAAHAAAAAAAHAA8AAAAHAAAAAAAGAA8AAAAHAAAAAAAFAA8AAAAHAAAAAAAEAA8AAAAHAAAAAAADAA8AAAAHAAAAAAACAA8AAAAHAAAAAAABAA8AAAAHAAAAAAAAAA8AAAAHAAAAAAD//w8AAAAHAAAAAAD//w4AAAAHAAAAAAD//w0AAAAHAAAAAAAAAA0AAAAHAAAAAAABAA0AAAAHAAAAAAACAA0AAAAHAAAAAAADAAkAAAAHAAAAAAALAA4AAAAHAAAAAAAMAA0AAAAHAAAAAAAMAAwAAAAHAAAAAAAMAAsAAAAHAAAAAAAMAAoAAAAHAAAAAAALAAsAAAAHAAAAAAALAAoAAAAHAAAAAAAKAAoAAAAHAAAAAAAJAAoAAAAHAAAAAAAIAAoAAAAHAAAAAAAIAAsAAAAHAAAAAAAHAAsAAAAHAAAAAAAGAAwAAAAHAAAAAAAGAA0AAAAHAAAAAAAHAAwAAAAHAAAAAAAIAAwAAAAHAAAAAAAIAA0AAAAHAAAAAAAJAA0AAAAHAAAAAAAHAA0AAAAHAAAAAAAJAAwAAAAHAAAAAAAJAAsAAAAHAAAAAAAKAAwAAAAHAAAAAAAKAA0AAAAHAAAAAAAKAA4AAAAHAAAAAAALAA0AAAAHAAAAAAALAAwAAAAHAAAAAAAMAAcAAAAHAAAAAAAMAAgAAAAHAAAAAAAMAAkAAAAHAAAAAAANAAgAAAAHAAAAAAANAAcAAAAHAAAAAAANAAkAAAAHAAAAAAANAAoAAAAHAAAAAAANAAsAAAAHAAAAAAANAAwAAAAHAAAAAAAOAAwAAAAHAAAAAAAOAAsAAAAHAAAAAAAOAAoAAAAHAAAAAAAOAAkAAAAHAAAAAAAOAAgAAAAHAAAAAAALAAYAAAAHAAAAAAAKAAYAAAAHAAAAAAARABEAAAAHAAAAAAAEAA4AAAAHAAAAAAAFAA4AAAAHAAAAAAAGAA4AAAAHAAAAAAAHAA4AAAAHAAAAAAAIAA4AAAAHAAAAAAAJAA4AAAAHAAAAAAAKAAsAAAAHAAAAAAAGAAsAAAAHAAAAAAAFAAsAAAAHAAAAAAAEAAsAAAAHAAAAAAAEAAwAAAAHAAAAAAAFAAwAAAAHAAAAAAAFAA0AAAAHAAAAAAAEAA0AAAAHAAAAAAABAAkAAAAHAAAAAAAGAAgAAAAHAAAAAAAGAAcAAAAHAAAAAAAGAAYAAAAHAAAAAAAIAAYAAAAHAAAAAAAJAAYAAAAHAAAAAAAAAAkAAAAHAAAAAAA=")
 tile_set = ExtResource("3_5pr1b")
 
-[node name="Highlights" type="TileMapLayer" parent="."]
+[node name="Highlights" type="TileMapLayer" parent="." unique_id=121533705]
 use_parent_material = true
 tile_set = ExtResource("3_5pr1b")
 
-[node name="InbetweenHighlights" type="TileMapLayer" parent="."]
+[node name="InbetweenHighlights" type="TileMapLayer" parent="." unique_id=304288473]
 use_parent_material = true
 tile_set = ExtResource("3_5pr1b")
 
-[node name="Entities" type="Node2D" parent="."]
+[node name="Entities" type="Node2D" parent="." unique_id=780403784]
 
-[node name="King" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("4_od2j2")]
-material = null
+[node name="King" parent="Entities" unique_id=399381751 node_paths=PackedStringArray("map") instance=ExtResource("4_od2j2")]
+modulate = Color(1, 1, 1, 0.9821775)
 position = Vector2(0, 112)
 map = NodePath("../..")
 
-[node name="LevelLoader1" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_xuyau")]
-position = Vector2(0, 112)
+[node name="LevelLoader1" parent="Entities" unique_id=651259248 node_paths=PackedStringArray("map") instance=ExtResource("6_xuyau")]
+position = Vector2(8, 112)
 level_id = 0
 unlocked = true
 map = NodePath("../..")
 
-[node name="LevelLoader2" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_xuyau")]
+[node name="LevelLoader2" parent="Entities" unique_id=631886750 node_paths=PackedStringArray("map") instance=ExtResource("6_xuyau")]
 position = Vector2(24, 112)
 map = NodePath("../..")
 
-[node name="LevelLoader3" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_xuyau")]
+[node name="LevelLoader3" parent="Entities" unique_id=906753050 node_paths=PackedStringArray("map") instance=ExtResource("6_xuyau")]
 position = Vector2(24, 96)
 level_id = 2
 map = NodePath("../..")
 
-[node name="LevelLoader4" parent="Entities" node_paths=PackedStringArray("map") instance=ExtResource("6_xuyau")]
+[node name="LevelLoader4" parent="Entities" unique_id=1623221678 node_paths=PackedStringArray("map") instance=ExtResource("6_xuyau")]
 position = Vector2(32, 80)
 level_id = 3
+unlocked = true
 map = NodePath("../..")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=35125804]
 position = Vector2(64, 64)
 offset = Vector2(-4, -4)
 
-[node name="StepAudio" type="AudioStreamPlayer" parent="."]
+[node name="StepAudio" type="AudioStreamPlayer" parent="." unique_id=65681500]
 unique_name_in_owner = true
 stream = ExtResource("10_kts8r")
 
-[node name="CaptureAudio" type="AudioStreamPlayer" parent="."]
+[node name="CaptureAudio" type="AudioStreamPlayer" parent="." unique_id=1792140386]
 unique_name_in_owner = true
 stream = ExtResource("11_ey4q8")
 
-[node name="CanvasLayer" parent="." instance=ExtResource("10_wvicp")]
+[node name="CanvasLayer" parent="." unique_id=936832579 instance=ExtResource("10_wvicp")]

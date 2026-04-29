@@ -48,8 +48,13 @@ func _ready() -> void:
 	for child in entity_parent_node.get_children():
 		if child is Entity:
 			add_entity(child);
-
+			
+	if is_world_map:
+		king.pos = SaveFile.get_player_worldmap_pos(world_id);
+		
 	edge_reached.connect(on_edge_reached);
+	
+	clear_highlights();
 
 func get_chebyshev_distance(posi: Vector2i, posf: Vector2i) -> int:
 	return abs(posi.x - posf.x) + abs(posi.y - posf.y);
@@ -84,6 +89,7 @@ func on_entity_moved(entity: Entity) -> void:
 	%StepAudio.play();
 	if entity == player:
 		advance_simulation();
+		show_move_select(entity.pos);
 
 	if entity.is_king:
 		if entity.pos.y == 1:
@@ -94,6 +100,9 @@ func on_entity_moved(entity: Entity) -> void:
 			edge_reached.emit(Edge.LEFT);
 		elif entity.pos.x == 14:
 			edge_reached.emit(Edge.RIGHT);
+		
+		if is_world_map:
+			SaveFile.set_player_worldmap_pos(world_id, entity.pos);
 
 	var env_entity := get_entity_at(entity.pos, true);
 	if env_entity:
@@ -185,6 +194,11 @@ func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("select"):
 		var mouse_pos: Vector2i = get_local_mouse_position() / cell_size;
 		if move_choice_active:
+			# If player is clicked again, deactivate move highlights.
+			if mouse_pos == selected_entity.pos and not selected_entity.is_animating:
+				hide_all_select();
+				return;
+				
 			var target_move: MoveInstance;
 			for move in selected_entity.get_legal_moves():
 				if move.end_position == mouse_pos:
@@ -212,23 +226,27 @@ func _input(event: InputEvent) -> void:
 			clear_highlights();
 
 		show_move_select(mouse_pos);
-	elif Input.is_action_pressed("possess"):
-		if not is_world_map:
+	elif Input.is_action_just_pressed("possess"):
+		if posession_choice_active:
+			posession_choice_active = false;
+			clear_highlights();
+		elif not is_world_map:
 			posession_choice_active = true;
 
 			move_choice_active = false;
 			selected_entity = null;
 
 			show_posession_higlights(player, 3);
-	elif Input.is_action_pressed("ui_cancel"):
-		hide_all_select();
-	elif Input.is_action_pressed("restart"):
+	elif Input.is_action_just_pressed("restart"):
 		get_tree().reload_current_scene();
+	elif Input.is_action_just_pressed("menu"):
+		hud.toggle_pause_menu();
 
 func show_move_select(pos: Vector2i) -> void:
 		clear_highlights();
+	
 		var entity := get_entity_at(pos)
-		if is_cell_occupied(pos, true) and entity and entity.is_player:
+		if is_cell_occupied(pos, true) and entity and entity.is_player:		
 			move_choice_active = true;
 			selected_entity = get_entity_at(pos);
 			show_highlights(selected_entity);

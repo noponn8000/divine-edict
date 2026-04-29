@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://jsbqeboy88yk"]
+[gd_resource type="TileSet" format=3 uid="uid://jsbqeboy88yk"]
 
 [ext_resource type="Texture2D" uid="uid://40swdqke7l11" path="res://assets/chess_spreadsheet.png" id="1_0b0gm"]
 [ext_resource type="Texture2D" uid="uid://cf0lqrmnalrif" path="res://assets/large_object_spreadsheet.png" id="2_lpryt"]
