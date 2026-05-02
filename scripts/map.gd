@@ -77,13 +77,13 @@ func add_entity(entity: Entity) -> void:
 	if not entity.get_parent():
 		entity_parent_node.add_child(entity);
 
+	entity.entity_possessed.connect(on_entity_possessed);
 	if entity is EnvironmentEntity:
 		environment_entities.append(entity);
 	else:
 		entities.append(entity);
 		entity.entity_moved.connect(on_entity_moved);
 		entity.entity_captured.connect(on_entity_captured);
-		entity.entity_possessed.connect(on_entity_possessed);
 
 	entity.map = self;
 
@@ -133,12 +133,15 @@ func remove_entity(entity: Entity) -> void:
 	else:
 		entities.erase(entity);
 
-func get_entity_at(pos: Vector2i, env_entities_only: bool = false) -> Entity:
+func get_entity_at(pos: Vector2i, env_entities_only: bool = false, all_entities: bool = false) -> Entity:
 	var entity: Entity = null;
 	if env_entities_only:
 		for e in environment_entities:
 			if e.pos == pos:
 				entity = e;
+	elif all_entities:
+		for e in entities + environment_entities:
+			if e.pos == pos: return e;
 	else:
 		for e in entities:
 			if e.pos == pos:
@@ -174,10 +177,10 @@ func show_highlights(entity: Entity) -> void:
 			for inb in get_inbetween_tiles(move.start_position, move.end_position):
 				inbetween_highlights.set_cell(inb, 0, Vector2i(6, 0));
 
-func show_posession_higlights(entity: Entity, range: int) -> void:
+func show_posession_higlights(entity: Entity) -> void:
 	for offset in entity.possessions:
 		var c_pos = entity.pos + offset;
-		if is_cell_occupied(c_pos):
+		if is_cell_occupied(c_pos, false, true):
 			highlights.set_cell(c_pos, 0, Vector2i(7, 0));
 		else:
 			highlights.set_cell(c_pos, 0, Vector2i(6, 0));
@@ -235,7 +238,7 @@ func _input(event: InputEvent) -> void:
 			move_choice_active = false;
 			selected_entity = null;
 
-			show_posession_higlights(player, 3);
+			show_posession_higlights(player);
 	elif Input.is_action_just_pressed("restart"):
 		get_tree().reload_current_scene();
 	elif Input.is_action_just_pressed("menu"):
@@ -245,7 +248,7 @@ func show_move_select(pos: Vector2i) -> void:
 		clear_highlights();
 	
 		var entity := get_entity_at(pos)
-		if is_cell_occupied(pos, true) and entity and entity.is_player:		
+		if is_cell_occupied(pos, true) and entity and entity.is_player:
 			move_choice_active = true;
 			selected_entity = get_entity_at(pos);
 			show_highlights(selected_entity);
@@ -315,6 +318,7 @@ func get_ray_cells(pos: Vector2i, dir: Vector2i) -> Array[Vector2i]:
 	return cells;
 
 func on_game_over() -> void:
+	hud.pause_menu_disabled = true;
 	var tree := get_tree();
 	await tree.create_timer(0.48).timeout;
 	var tween := tree.create_tween();

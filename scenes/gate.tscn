@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://btqi54u5pw3iv"]
+
+[ext_resource type="Texture2D" uid="uid://bf2s7k1ika3ql" path="res://assets/steinsgate.png" id="1_re1d3"]
+[ext_resource type="Script" uid="uid://coxo0mmi8tedi" path="res://scripts/gate.gd" id="2_xf2l6"]
+[ext_resource type="AudioStream" uid="uid://ccjtn010ys42t" path="res://assets/gate.wav" id="3_rfnou"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3pwql"]
+atlas = ExtResource("1_re1d3")
+region = Rect2(0, 0, 16, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wd4fh"]
+atlas = ExtResource("1_re1d3")
+region = Rect2(16, 0, 16, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kk4lp"]
+atlas = ExtResource("1_re1d3")
+region = Rect2(32, 0, 16, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1baj1"]
+atlas = ExtResource("1_re1d3")
+region = Rect2(48, 0, 16, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c7j1q"]
+atlas = ExtResource("1_re1d3")
+region = Rect2(64, 0, 16, 33)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g0b8n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3pwql")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wd4fh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kk4lp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1baj1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c7j1q")
+}],
+"loop": false,
+"name": &"open",
+"speed": 3.0
+}]
+
+[node name="Gate" type="AnimatedSprite2D" unique_id=1985471365]
+sprite_frames = SubResource("SpriteFrames_g0b8n")
+animation = &"open"
+frame = 4
+frame_progress = 1.0
+script = ExtResource("2_xf2l6")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=505791858]
+unique_name_in_owner = true
+stream = ExtResource("3_rfnou")

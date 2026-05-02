@@ -63,7 +63,7 @@ func move(move: MoveInstance) -> bool:
 
 	if move.is_capture:
 		return capture(move.end_position);
-	elif move.is_posession:
+	if move.is_posession:
 		return possess(move.end_position);
 	else:
 		pos = move.end_position;
@@ -105,7 +105,9 @@ func capture(target_pos: Vector2i) -> bool:
 
 func possess(target_pos: Vector2i) -> bool:
 	# If there's nothing to possess, get outta here with this target position!
-	if not map.is_cell_occupied(target_pos):
+	# NOTE: to revert to not being able to possess env. entities,
+	# change the below line to: ...(target_pos);
+	if not map.is_cell_occupied(target_pos, false, true):
 		return false;
 
 	# The player is now a different entity.
@@ -116,7 +118,7 @@ func possess(target_pos: Vector2i) -> bool:
 		is_ai_controlled = true;
 
 	# Get the target of the possession.
-	var target := map.get_entity_at(target_pos);
+	var target := map.get_entity_at(target_pos, false, true);
 	target.on_possess();
 
 	return true;
@@ -157,11 +159,12 @@ func get_possessions() -> Array[MoveInstance]:
 	var possession_instances: Array[MoveInstance] = [];
 	if not is_player: return possession_instances;
 
-	for entity in map.entities:
+	for entity in map.entities + map.environment_entities:
 		if entity == self:
 			continue;
 
 		if (entity.pos - self.pos) in possessions:
+			print(entity.name);
 			possession_instances.append(
 				MoveInstance.new(pos, entity.pos, false, true, true)
 			);

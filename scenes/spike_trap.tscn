@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://d08nk4rwxy2aa"]
+[gd_scene format=3 uid="uid://d08nk4rwxy2aa"]
 
 [ext_resource type="Texture2D" uid="uid://40swdqke7l11" path="res://assets/chess_spreadsheet.png" id="1_hcbkc"]
-[ext_resource type="Script" path="res://scripts/trap.gd" id="2_r3ddq"]
+[ext_resource type="Script" uid="uid://7i0gd3c2j1yk" path="res://scripts/trap.gd" id="2_r3ddq"]
 
 [sub_resource type="Shader" id="Shader_0er5p"]
 code = "shader_type canvas_item;
@@ -66,22 +66,20 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3mfgy"]
 _data = {
-"RESET": SubResource("Animation_ao6ay"),
-"activate": SubResource("Animation_6c3ru")
+&"RESET": SubResource("Animation_ao6ay"),
+&"activate": SubResource("Animation_6c3ru")
 }
 
-[node name="Trap" type="Sprite2D" node_paths=PackedStringArray("anim")]
+[node name="Trap" type="Sprite2D" unique_id=291495696 node_paths=PackedStringArray("anim")]
 material = SubResource("ShaderMaterial_k17g8")
 position = Vector2(72, 88)
 texture = ExtResource("1_hcbkc")
 centered = false
-hframes = 28
+hframes = 90
 frame = 8
 script = ExtResource("2_r3ddq")
 anim = NodePath("AnimationPlayer")
 intercept = false
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_3mfgy")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1168773701]
+libraries/ = SubResource("AnimationLibrary_3mfgy")

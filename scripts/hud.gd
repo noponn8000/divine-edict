@@ -2,6 +2,8 @@ extends CanvasLayer
 
 @export var game_over_anim: AnimationPlayer;
 
+var pause_menu_disabled := false;
+
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN;
 	
@@ -10,6 +12,8 @@ func _ready() -> void:
 		get_tree().create_timer(10.0).timeout.connect(func(): %TutorialOverlay.visible = false);
 
 func toggle_pause_menu() -> void:
+	if pause_menu_disabled: return;
+	
 	%PauseMenu.reset_menu();
 	%PauseMenu.visible = not %PauseMenu.visible;
 

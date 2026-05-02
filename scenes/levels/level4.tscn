@@ -39,24 +39,28 @@ tile_set = ExtResource("2_y408j")
 [node name="Entities" type="Node2D" parent="." unique_id=740498170]
 
 [node name="King" parent="Entities" unique_id=160607961 node_paths=PackedStringArray("map") instance=ExtResource("3_c2qbn")]
-modulate = Color(1, 1, 1, 0.30450934)
+modulate = Color(1, 1, 1, 0.45448753)
 position = Vector2(80, 112)
 map = NodePath("../..")
 
 [node name="Pawn" parent="Entities" unique_id=767600154 node_paths=PackedStringArray("map") instance=ExtResource("5_gt17x")]
 position = Vector2(56, 16)
+hframes = 90
 map = NodePath("../..")
 
 [node name="Pawn2" parent="Entities" unique_id=1855115094 node_paths=PackedStringArray("map") instance=ExtResource("5_gt17x")]
 position = Vector2(64, 16)
+hframes = 90
 map = NodePath("../..")
 
 [node name="Pawn5" parent="Entities" unique_id=115953535 node_paths=PackedStringArray("map") instance=ExtResource("5_gt17x")]
 position = Vector2(16, 24)
+hframes = 90
 map = NodePath("../..")
 
 [node name="Pawn6" parent="Entities" unique_id=691006426 node_paths=PackedStringArray("map") instance=ExtResource("5_gt17x")]
 position = Vector2(104, 24)
+hframes = 90
 map = NodePath("../..")
 
 [node name="Trap" parent="Entities" unique_id=1860739801 node_paths=PackedStringArray("map") instance=ExtResource("7_r7eef")]
@@ -111,25 +115,30 @@ is_king = true
 position = Vector2(48, 40)
 rotation = -3.1415927
 offset = Vector2(-4.0000005, -3.9999998)
+hframes = 90
 fire_direction = Vector2i(1, 0)
 map = NodePath("../..")
 
 [node name="Cannon2" parent="Entities" unique_id=23297547 node_paths=PackedStringArray("map") instance=ExtResource("7_7y24x")]
 position = Vector2(72, 80)
+hframes = 90
 map = NodePath("../..")
 
 [node name="Cannon3" parent="Entities" unique_id=2093481378 node_paths=PackedStringArray("map") instance=ExtResource("7_7y24x")]
 position = Vector2(112, 88)
+hframes = 90
 map = NodePath("../..")
 
 [node name="Cannon4" parent="Entities" unique_id=1594739022 node_paths=PackedStringArray("map") instance=ExtResource("7_7y24x")]
 position = Vector2(112, 40)
+hframes = 90
 map = NodePath("../..")
 
 [node name="Cannon5" parent="Entities" unique_id=2069746861 node_paths=PackedStringArray("map") instance=ExtResource("7_7y24x")]
 position = Vector2(8, 40)
 rotation = -3.1415927
 offset = Vector2(-4.0000005, -3.9999998)
+hframes = 90
 fire_direction = Vector2i(1, 0)
 map = NodePath("../..")
 
@@ -137,6 +146,7 @@ map = NodePath("../..")
 position = Vector2(8, 88)
 rotation = -3.1415927
 offset = Vector2(-4.0000005, -3.9999998)
+hframes = 90
 fire_direction = Vector2i(1, 0)
 map = NodePath("../..")
 

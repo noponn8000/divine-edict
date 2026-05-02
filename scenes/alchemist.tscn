@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://cffnx888wc35f"]
+
+[ext_resource type="Texture2D" uid="uid://40swdqke7l11" path="res://assets/chess_spreadsheet.png" id="1_aa2yc"]
+[ext_resource type="Script" uid="uid://bp0s3a2c6uh11" path="res://scripts/entity.gd" id="2_wabsh"]
+[ext_resource type="Script" uid="uid://dx7py3lvkmerk" path="res://scripts/move.gd" id="3_wgu80"]
+[ext_resource type="Script" uid="uid://dk3k2gdsciom1" path="res://scripts/roamer_enemy_ai.gd" id="4_wabsh"]
+
+[sub_resource type="Resource" id="Resource_52g3j"]
+script = ExtResource("3_wgu80")
+offset = Vector2i(0, -1)
+can_capture = true
+
+[sub_resource type="Resource" id="Resource_v038j"]
+script = ExtResource("3_wgu80")
+offset = Vector2i(0, 1)
+can_capture = true
+
+[sub_resource type="Resource" id="Resource_tutd5"]
+script = ExtResource("3_wgu80")
+offset = Vector2i(-1, 0)
+can_capture = true
+
+[sub_resource type="Resource" id="Resource_qo87n"]
+script = ExtResource("3_wgu80")
+offset = Vector2i(1, 0)
+can_capture = true
+
+[sub_resource type="Animation" id="Animation_aa2yc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [45]
+}
+
+[sub_resource type="Animation" id="Animation_wabsh"]
+resource_name = "wave"
+length = 0.71430004
+loop_mode = 1
+step = 0.14285715
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.14285715, 0.2857143, 0.42857143, 0.5714286),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [45, 46, 47, 47, 46]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wgu80"]
+_data = {
+&"RESET": SubResource("Animation_aa2yc"),
+&"wave": SubResource("Animation_wabsh")
+}
+
+[node name="Alchemist" type="Sprite2D" unique_id=740556762 node_paths=PackedStringArray("ai")]
+texture = ExtResource("1_aa2yc")
+centered = false
+hframes = 90
+frame = 45
+script = ExtResource("2_wabsh")
+moves = Array[ExtResource("3_wgu80")]([SubResource("Resource_52g3j"), SubResource("Resource_v038j"), SubResource("Resource_tutd5"), SubResource("Resource_qo87n")])
+possessions = Array[Vector2i]([Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(1, 1), Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(1, -1)])
+ai = NodePath("RoamerEnemyAI")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1386312530]
+libraries/ = SubResource("AnimationLibrary_wgu80")
+autoplay = &"wave"
+speed_scale = 0.5
+
+[node name="RoamerEnemyAI" type="Node" parent="." unique_id=544047745 node_paths=PackedStringArray("parent")]
+script = ExtResource("4_wabsh")
+parent = NodePath("..")
+metadata/_custom_type_script = "uid://dk3k2gdsciom1"

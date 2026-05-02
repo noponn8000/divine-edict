@@ -36,6 +36,8 @@ func on_interact(entity: Entity) -> void:
 			entity.on_capture();
 
 func on_tick() -> void:
+	if is_player: return;
+	
 	if activation_period_started:
 		activation_ticks_left -= 1;
 		if activation_ticks_left <= 0:

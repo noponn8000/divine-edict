@@ -25,11 +25,12 @@ offset = Vector2i(1, 0)
 can_capture = true
 
 [node name="King" type="Sprite2D" unique_id=740556762]
-modulate = Color(1, 1, 1, 0.99606764)
+modulate = Color(1, 1, 1, 0.8251646)
 texture = ExtResource("1_dhhoa")
 centered = false
-hframes = 45
+hframes = 90
 script = ExtResource("2_vg6go")
 moves = Array[ExtResource("3_le0wa")]([SubResource("Resource_52g3j"), SubResource("Resource_v038j"), SubResource("Resource_tutd5"), SubResource("Resource_qo87n")])
+possessions = Array[Vector2i]([Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(2, 0), Vector2i(0, 2), Vector2i(-2, 0), Vector2i(0, -2)])
 is_player = true
 is_king = true

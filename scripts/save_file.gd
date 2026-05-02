@@ -42,8 +42,6 @@ func set_player_worldmap_pos(world_id: int, pos: Vector2i) -> void:
 	file.set_value("player", "world_" + str(world_id) + "_pos", pos);
 	
 func is_first_run() -> bool:
-	# Testing only!
-	file.set_value("meta", "first_run", true);
 	if file.has_section_key("meta", "first_run"):
 		return file.get_value("meta", "first_run");
 	else:

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d16n1tckwmc77" path="res://scripts/map.gd" id="1_k0hl5"]
 [ext_resource type="TileSet" uid="uid://jsbqeboy88yk" path="res://resources/tileset.tres" id="3_5pr1b"]
-[ext_resource type="Texture2D" uid="uid://bf2s7k1ika3ql" path="res://assets/steinsgate.png" id="3_vt3dk"]
+[ext_resource type="PackedScene" uid="uid://btqi54u5pw3iv" path="res://scenes/gate.tscn" id="3_vt3dk"]
 [ext_resource type="PackedScene" uid="uid://ka16v6b4ig1v" path="res://scenes/piece_template.tscn" id="4_od2j2"]
 [ext_resource type="Texture2D" uid="uid://cfwbw3px7e2vh" path="res://assets/world_map_1.png" id="6_rktsl"]
 [ext_resource type="PackedScene" uid="uid://b2thqldgf8ykt" path="res://scenes/level_loader.tscn" id="6_xuyau"]
@@ -10,49 +10,6 @@
 [ext_resource type="AudioStream" uid="uid://d0bod73x8r8qw" path="res://assets/step.wav" id="10_kts8r"]
 [ext_resource type="PackedScene" uid="uid://dyd54buu512qn" path="res://scenes/hud.tscn" id="10_wvicp"]
 [ext_resource type="AudioStream" uid="uid://8fmc0pyksrv6" path="res://assets/capture.wav" id="11_ey4q8"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3pwql"]
-atlas = ExtResource("3_vt3dk")
-region = Rect2(0, 0, 16, 33)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wd4fh"]
-atlas = ExtResource("3_vt3dk")
-region = Rect2(16, 0, 16, 33)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kk4lp"]
-atlas = ExtResource("3_vt3dk")
-region = Rect2(32, 0, 16, 33)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1baj1"]
-atlas = ExtResource("3_vt3dk")
-region = Rect2(48, 0, 16, 33)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_c7j1q"]
-atlas = ExtResource("3_vt3dk")
-region = Rect2(64, 0, 16, 33)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_g0b8n"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3pwql")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wd4fh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kk4lp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1baj1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_c7j1q")
-}],
-"loop": false,
-"name": &"open",
-"speed": 5.0
-}]
 
 [node name="Map" type="Node2D" unique_id=1533926474 node_paths=PackedStringArray("entity_parent_node", "hud", "highlights", "inbetween_highlights", "walls")]
 script = ExtResource("1_k0hl5")
@@ -71,10 +28,11 @@ texture = ExtResource("6_rktsl")
 centered = false
 offset = Vector2(-4, -4)
 
-[node name="Gate" type="AnimatedSprite2D" parent="." unique_id=168199343]
-position = Vector2(60, 23)
-sprite_frames = SubResource("SpriteFrames_g0b8n")
-animation = &"open"
+[node name="Gate" parent="." unique_id=1985471365 instance=ExtResource("3_vt3dk")]
+position = Vector2(52, 7)
+frame = 0
+frame_progress = 0.0
+centered = false
 
 [node name="Ground" type="TileMapLayer" parent="." unique_id=209029703]
 modulate = Color(0.473976, 0.473976, 0.473976, 1)
@@ -98,9 +56,8 @@ tile_set = ExtResource("3_5pr1b")
 [node name="Entities" type="Node2D" parent="." unique_id=780403784]
 
 [node name="King" parent="Entities" unique_id=399381751 node_paths=PackedStringArray("map") instance=ExtResource("4_od2j2")]
-modulate = Color(1, 1, 1, 0.3708132)
+modulate = Color(1, 1, 1, 0.9637525)
 position = Vector2(0, 112)
-hframes = 90
 map = NodePath("../..")
 
 [node name="LevelLoader1" parent="Entities" unique_id=651259248 node_paths=PackedStringArray("map") instance=ExtResource("6_xuyau")]
