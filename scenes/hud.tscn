@@ -81,6 +81,7 @@ speed_scale = 1.5
 
 [node name="TutorialOverlay" type="TextureRect" parent="Control" unique_id=1478559083]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

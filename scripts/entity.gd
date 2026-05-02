@@ -3,7 +3,7 @@ class_name Entity extends Sprite2D
 
 @export_category("Movement")
 @export var moves: Array[Move];
-@export var possession_range := 3;
+@export var possessions: Array[Vector2i] = [ Vector2i.UP, Vector2i.DOWN, Vector2i.RIGHT, Vector2i.LEFT ];
 
 @export_category("Visuals")
 @export var animate := true;
@@ -32,6 +32,7 @@ var pos: Vector2i:
 var is_animating := false;
 var blinking := false;
 var blink_accumulator := 0.0;
+var movement_tween: Tween;
 
 signal entity_moved(Entity);
 signal entity_captured(Entity);
@@ -75,18 +76,20 @@ func set_pos(new_pos: Vector2i) -> void:
 		is_animating = true;
 		if tile_by_tile:
 			for tile in map.get_inbetween_tiles(pos, new_pos) + [new_pos]:
-				var tween := get_tree().create_tween();
-				tween.tween_property(self, "position", Vector2(tile * map.cell_size), 0.25);
-				tween.set_trans(Tween.TRANS_QUAD);
-				await tween.finished;
+				movement_tween = get_tree().create_tween();
+				movement_tween.tween_property(self, "position", Vector2(tile * map.cell_size), 0.25);
+				movement_tween.set_trans(Tween.TRANS_QUAD);
+				await movement_tween.finished;
 		else:
-			var tween := get_tree().create_tween();
-			tween.tween_property(self, "position", Vector2(new_pos * map.cell_size), 0.25);
+			movement_tween = get_tree().create_tween();
+			movement_tween.tween_property(self, "position", Vector2(new_pos * map.cell_size), 0.25);
 
-			await tween.finished;
+			await movement_tween.finished;
 			is_animating = false;
 			move_animation_finished.emit();
 	else:
+		if movement_tween and movement_tween.is_running():
+			movement_tween.stop();
 		position = Vector2(new_pos * map.cell_size);
 
 func capture(target_pos: Vector2i) -> bool:
@@ -151,20 +154,19 @@ func is_offset_move_legal(move: Move, s_pos: Vector2i) -> bool:
 	return true;
 
 func get_possessions() -> Array[MoveInstance]:
-	var possessions: Array[MoveInstance] = [];
-	if not is_player: return possessions;
+	var possession_instances: Array[MoveInstance] = [];
+	if not is_player: return possession_instances;
 
 	for entity in map.entities:
 		if entity == self:
 			continue;
 
-		var manhattan_dist: int = abs(pos.x - entity.pos.x) + abs(pos.y - entity.pos.y);
-		if manhattan_dist <= possession_range:
-			possessions.append(
+		if (entity.pos - self.pos) in possessions:
+			possession_instances.append(
 				MoveInstance.new(pos, entity.pos, false, true, true)
 			);
 
-	return possessions;
+	return possession_instances;
 
 func on_capture() -> void:
 	var king_reposess := is_player and not is_king;

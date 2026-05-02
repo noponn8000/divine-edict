@@ -50,7 +50,9 @@ func _ready() -> void:
 			add_entity(child);
 			
 	if is_world_map:
+		king.animate = false;
 		king.pos = SaveFile.get_player_worldmap_pos(world_id);
+		king.animate = true;
 		
 	edge_reached.connect(on_edge_reached);
 	
@@ -173,15 +175,12 @@ func show_highlights(entity: Entity) -> void:
 				inbetween_highlights.set_cell(inb, 0, Vector2i(6, 0));
 
 func show_posession_higlights(entity: Entity, range: int) -> void:
-	for x in range(entity.pos.x - range + 1, entity.pos.x + range):
-		for y in range(entity.pos.y - range + 1, entity.pos.y + range):
-			var c_pos = Vector2i(x, y);
-			var manhattan_dist: int = abs(x - entity.pos.x) + abs(y - entity.pos.y);
-			if c_pos != entity.pos and not is_cell_wall(c_pos) and manhattan_dist <= range:
-				if is_cell_occupied(c_pos):
-					highlights.set_cell(c_pos, 0, Vector2i(7, 0));
-				else:
-					highlights.set_cell(c_pos, 0, Vector2i(6, 0));
+	for offset in entity.possessions:
+		var c_pos = entity.pos + offset;
+		if is_cell_occupied(c_pos):
+			highlights.set_cell(c_pos, 0, Vector2i(7, 0));
+		else:
+			highlights.set_cell(c_pos, 0, Vector2i(6, 0));
 
 func clear_highlights() -> void:
 	for entity in entities:
